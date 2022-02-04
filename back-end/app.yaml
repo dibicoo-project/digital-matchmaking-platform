@@ -1,0 +1,12 @@
+runtime: nodejs12
+
+service: back-end
+
+env_variables:
+  GCLOUD_STORAGE_BUCKET: dibicoo-matchmaking-tool.appspot.com
+
+handlers:
+- url: /api/
+  secure: always
+  redirect_http_response_code: 301
+  script: auto

@@ -1,0 +1,30 @@
+@import 'dibicoo-theme';
+
+section.page-content {
+  img {
+    float: left;
+    width: 7rem;
+  }
+
+  h2,
+  p, ul {
+    margin-left: 9rem;
+  }
+
+  h2 {
+    margin-top: 2rem;
+  }
+
+  
+
+  @include layout-bp(lt-sm) {
+    img {
+      float: none;
+    }
+
+    h2,
+    p {
+      margin-left: 0;
+    }
+  }
+}

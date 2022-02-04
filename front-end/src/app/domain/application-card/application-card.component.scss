@@ -1,0 +1,46 @@
+@import "dibicoo-theme";
+
+:host-context(.clickable) .mat-card {
+  @include clickable;
+}
+
+.mat-card {
+  @include status-colors-app;
+}
+
+.mat-card-header {
+  .mat-card-subtitle {    
+    .mat-icon {
+      vertical-align: text-bottom;
+      font-size: 1rem;
+    }
+
+    span {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .controls {
+    margin-left: auto;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+.mat-card-content {
+  position: relative;
+  max-height: 5rem;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    display: block;
+    background: linear-gradient(transparent 1rem, white);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5rem;
+    width: 100%;
+  }
+}

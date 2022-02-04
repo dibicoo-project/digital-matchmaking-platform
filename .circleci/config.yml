@@ -1,0 +1,140 @@
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.1.0
+
+jobs:
+  checkout-code:
+    working_directory: ~/
+    docker:
+      - image: cimg/node:12.20
+    steps:
+      - checkout:
+          path: repo
+      - run: git -C ~/repo describe --always --long --tags | tr . x >> version.txt
+      - persist_to_workspace:
+          root: .
+          paths:
+            - repo
+            - version.txt
+
+  build-back-end:
+    working_directory: ~/repo/back-end
+    docker:
+      - image: cimg/node:12.20
+
+    steps:
+      - attach_workspace:
+          at: ~/
+
+      - restore_cache:
+          keys:
+            - back-end-{{ checksum "package-lock.json" }}
+            - back-end-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: back-end-{{ checksum "package-lock.json" }}
+
+      - run: npm test
+      - run: npm run build
+
+      - store_artifacts:
+          path: report-test
+          destination: test
+
+      - store_artifacts:
+          path: report-coverage
+          destination: coverage
+
+      - persist_to_workspace:
+          root: ~/repo/
+          paths:
+            - back-end/app.yaml
+            - back-end/package.json
+            - back-end/package-lock.json
+            - back-end/tsc-dist
+            - back-end/.gcloudignore
+
+  build-front-end:
+    working_directory: ~/repo/front-end
+    docker:
+      - image: cimg/node:12.20-browsers
+
+    steps:
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys:
+            - front-end-{{ checksum "package-lock.json" }}
+            - front-end-
+
+      - browser-tools/install-chrome
+      - run: npm install    
+      - run: npm test
+      - run: npm run build
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: front-end-{{ checksum "package-lock.json" }}
+
+      - store_artifacts:
+          path: report-test
+          destination: test
+
+      - store_artifacts:
+          path: report-coverage
+          destination: coverage
+
+      - persist_to_workspace:
+          root: ~/repo/
+          paths:
+            - front-end/app.yaml
+            - front-end/dist
+            - front-end/.gcloudignore
+
+  deploy-to-gcp:
+    working_directory: ~/
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      GOOGLE_PROJECT_ID: dibicoo-matchmaking-tool
+      GOOGLE_COMPUTE_ZONE: europe-west3
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: |
+          echo "export VERSION=${CIRCLE_BRANCH}-$(cat ~/version.txt)" >> $BASH_ENV
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run: |
+          gcloud --quiet app deploy --no-promote --version=${VERSION} ~/back-end
+          gcloud --quiet app deploy --no-promote --version=stage ~/back-end
+      - run: |
+          gcloud --quiet app deploy --no-promote --version=${VERSION} ~/front-end
+          gcloud --quiet app deploy --no-promote --version=stage ~/front-end
+      # - run: |
+      #     gcloud --quiet app services set-traffic --splits ${VERSION}=1
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - checkout-code
+      - build-back-end:
+          requires:
+            - checkout-code
+      - build-front-end:
+          requires:
+            - checkout-code
+      - deploy-to-gcp:
+          requires:
+            - build-back-end
+            - build-front-end
+          filters:
+            branches:
+              only: master

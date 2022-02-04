@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<div mat-dialog-content>
+  <p>{{data.content}}</p>
+  <p *ngIf="data.dialogType === 'input'">
+    <mat-form-field style="width: 100%;">
+      <mat-label>{{data.inputFieldLabel}}</mat-label>
+      <textarea matInput cdkTextareaAutosize [(ngModel)]="inputValue" maxlength=200></textarea>
+    </mat-form-field>
+  </p>
+</div>
+<div mat-dialog-actions style="float: right;">
+  <button *ngIf="data.dialogType === 'confirm'" mat-button cdkFocusInitial [mat-dialog-close]="[true]">Ok</button>
+  <button *ngIf="data.dialogType === 'input'" mat-button cdkFocusInitial [mat-dialog-close]="[true, inputValue]">Ok</button>
+  <button mat-button [mat-dialog-close]="[false]">Cancel</button>
+</div>

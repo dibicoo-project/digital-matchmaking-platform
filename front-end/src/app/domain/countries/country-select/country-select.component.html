@@ -1,0 +1,14 @@
+<mat-form-field>
+  <mat-label>{{label}}</mat-label>
+  <input matInput [placeholder]="label" [matAutocomplete]="auto" [formControl]="inputControl" [required]="required"
+    maxlength="250" (blur)="onTouched()">
+  <mat-icon matSuffix>search</mat-icon>
+  <mat-hint>{{hint}}</mat-hint>
+  <ng-content></ng-content>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected.next($event)">
+    <mat-option *ngFor="let item of filteredCountries$ | async" class="country" [value]="item.name">
+      <span class="flag-icon" [ngClass]="'flag-icon-' + item.cca2.toLowerCase()"></span>
+      <small>{{item.name}}</small>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

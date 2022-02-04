@@ -1,0 +1,63 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>My business opportunities</li>
+  </ul>
+  <h1>My business opportunites</h1>
+  <div class="controls">
+    <button mat-raised-button color="accent" routerLink="/user/applications/new">
+      <mat-icon>add</mat-icon> Add business opportunity
+    </button>
+  </div>
+</header>
+<section class="page-content">
+  <mat-tab-group (selectedIndexChange)="tabChanged($event)" [selectedIndex]="selectedTab">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="published.length" matBadgeOverlap="false" matBadgeSize="small">Published</span>
+      </ng-template>
+      <app-application-card *ngFor="let app of published" [app]="app" cardClass="published">
+        <button mat-stroked-button color="primary" [routerLink]="['/applications', app.id]">
+          <mat-icon>visibility</mat-icon> View details
+        </button>
+        <button mat-stroked-button color="warn" (click)="unpublish(app)">
+          <mat-icon>cancel</mat-icon> Unpublish
+        </button>
+      </app-application-card>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="drafts.length" matBadgeOverlap="false" matBadgeSize="small">Drafts</span>
+      </ng-template>
+      <app-application-card *ngFor="let app of drafts" [app]="app" [cardClass]="getCardClass(app)">
+        <span class="status" *ngIf="app.pendingReview">
+          <mat-icon inline="true">info</mat-icon> Pending review
+        </span>
+        <span class="status" *ngIf="app.rejectReason">
+          <mat-icon inline="true">info</mat-icon> Rejected
+        </span>
+
+        <button mat-stroked-button color="primary" [routerLink]="['/user/applications', app.id]">
+          <mat-icon>edit</mat-icon> Edit
+        </button>
+        <button mat-stroked-button color="warn" (click)="deleteApplication(app)">
+          <mat-icon>delete</mat-icon> Delete
+        </button>
+
+      </app-application-card>
+    </mat-tab>
+
+  </mat-tab-group>
+
+  <ng-template #applicationList let-apps let-bg='bg'>
+    <app-application-card *ngFor="let app of apps" [app]="app" [cardClass]="bg">
+      <button mat-stroked-button color="primary" [routerLink]="['/user/applications', app.id]">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+      <button mat-stroked-button color="warn" (click)="deleteApplication(app)">
+        <mat-icon>delete</mat-icon> Delete
+      </button>
+    </app-application-card>
+  </ng-template>
+
+</section>

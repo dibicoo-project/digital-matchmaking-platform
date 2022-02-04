@@ -1,0 +1,162 @@
+{
+  "$id": "http://dibicoo.org/common.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "defaultId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d+$"
+    },
+    "requiredId": {
+      "type": [
+        "string"
+      ],
+      "pattern": "^\\d+$"
+    },
+    "defaultString": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 250,
+      "transform": [
+        "trim"
+      ]
+    },
+    "defaultLongString": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 2000,
+      "transform": [
+        "trim"
+      ]
+    },
+    "nonEmptyString": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/defaultString"
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "nonEmptyLongString": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/defaultLongString"
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "nonEmptyArray": {
+      "type": "array",
+      "minItems": 1
+    },
+    "Contact": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "value": {
+          "$ref": "#/definitions/nonEmptyString"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "type": "object"
+    },
+    "ContactItem": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/defaultString"
+        },
+        "department": {
+          "$ref": "#/definitions/defaultString"
+        },
+        "elements": {
+          "items": {
+            "$ref": "#/definitions/Contact"
+          },
+          "type": "array",
+          "minItems": 1
+        }
+      },
+      "required": [
+        "elements"
+      ],
+      "type": "object"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "country": {
+          "$ref": "#/definitions/defaultString"
+        },
+        "city": {
+          "$ref": "#/definitions/defaultString"
+        },
+        "address": {
+          "$ref": "#/definitions/defaultString"
+        },
+        "zipCode": {
+          "$ref": "#/definitions/defaultString"
+        }
+      },
+      "type": "object"
+    },
+    "LocationRequired": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Location"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "country": {
+              "$ref": "#/definitions/nonEmptyString"
+            }
+          },
+          "required": [
+            "country"
+          ]
+        }
+      ]
+    },
+    "Attachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "fileName": {
+          "$ref": "#/definitions/defaultString"
+        },
+        "description": {
+          "$ref": "#/definitions/defaultLongString"
+        }
+      },
+      "required": ["id", "fileName"]
+    },
+    "AttachmentArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Attachment"
+      },
+      "maxItems": 5
+    }
+  }
+}

@@ -1,0 +1,138 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Business opportunities</li>
+  </ul>
+  <h1>Business opportunities</h1>
+  <div class="controls">
+    <button mat-raised-button color="accent" routerLink="/user/applications/new">
+      <mat-icon>add</mat-icon> Add business opportunity
+    </button>
+  </div>
+</header>
+<section class="page-content">
+  <p>This section is intended to create cooperative connections and realize business opportunities.
+    Stakeholders can post their business needs, project ideas and requests looking for various services to build a
+    successful business cooperation.</p>
+
+  <mat-card class="filter-options">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>manage_search</mat-icon>
+      <h2 mat-card-title>Find business opportunities by...</h2>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="filter-option-wrapper">
+        <mat-form-field class="filter-option" [matMenuTriggerFor]="categoriesMenu">
+          <mat-label>Business field</mat-label>
+          <input matInput readonly>
+          <mat-icon matSuffix>segment</mat-icon>
+          <div class="badge business-field" *ngIf="getSelectedFilterCount('business-field') as cnt">{{cnt}}</div>
+          <mat-hint>Field of business opportunity</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-option-wrapper">
+        <mat-form-field class="filter-option" [matMenuTriggerFor]="regions"
+          [matMenuTriggerData]="{group: 'project-region'}">
+          <mat-label>Target region</mat-label>
+          <input matInput readonly>
+          <mat-icon matSuffix>segment</mat-icon>
+          <div class="badge project-region"
+            *ngIf="getSelectedFilterCount('project-region', 'region', 'subregion') as cnt">{{cnt}}</div>
+          <mat-hint>Target region of the BO</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-option-wrapper">
+        <app-country-select class="filter-option" hint="Target country of the BO" label="Target country" #projectCountry
+          (optionSelected)="addFilter('project-region', {type: 'country', value: $event.option.value}, projectCountry)">
+          <div class="badge project-region" *ngIf="getSelectedFilterCount('project-region', 'country') as cnt">{{cnt}}
+          </div>
+        </app-country-select>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="anyFilterSelected">
+      <div class="selected-filters">
+        <mat-chip-list>
+          <ng-container *ngFor="let grp of ['business-field', 'project-region']">
+            <mat-chip *ngFor="let item of filters[grp]" [ngClass]="grp" [removable]="true" [selectable]="false"
+              (removed)="removeFilter(grp, item)">
+              {{item.label || item.value}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </ng-container>
+          <button mat-button class='clear-all' (click)="removeAllFilters()">
+            <mat-icon>highlight_off</mat-icon>
+            Clear all
+          </button>
+        </mat-chip-list>
+      </div>
+      <div class="controls" *ngIf="auth.loggedIn">
+        <button mat-stroked-button (click)="saveFilters()" [disabled]="isSaved">
+          <ng-container *ngIf="!isSaved">
+            <mat-icon>playlist_add</mat-icon> Save
+          </ng-container>
+          <ng-container *ngIf="isSaved">
+            <mat-icon>playlist_add_check</mat-icon> Saved
+          </ng-container>
+        </button>
+      </div>
+    </mat-card-actions>
+
+    <mat-menu #regions="matMenu" class="drop-down">
+      <ng-template matMenuContent let-group="group">
+        <ng-container *ngFor="let item of countriesService.regions$ | async">
+          <button mat-menu-item [matMenuTriggerFor]="subRegions"
+            (click)="addFilter(group, {type: 'region', value: item.region});">
+            {{item.region}}
+          </button>
+
+          <mat-menu #subRegions="matMenu">
+            <button mat-menu-item *ngFor="let sub of item.sub"
+              (click)="addFilter(group, {type: 'subregion', value: sub})">
+              {{sub}}
+            </button>
+          </mat-menu>
+        </ng-container>
+      </ng-template>
+    </mat-menu>
+
+    <mat-menu #categoriesMenu="matMenu" class="drop-down">
+      <ng-template matMenuContent>
+        <!-- Hard coded three levels of nested menus as dynamic recursive menus are not working properly (sub-levels are not shown) -->
+        <ng-container *ngFor="let item of categories.tree$| async">
+          <button mat-menu-item [matMenuTriggerFor]="subMenu">
+            {{item.title}}
+          </button>
+
+          <mat-menu #subMenu="matMenu">
+            <ng-container *ngFor="let child of item.childrenCategories">
+              <button mat-menu-item [matMenuTriggerFor]="subSubMenu"
+                (click)="addFilter('business-field', {type: 'categoryId', value: child.id, label: child.title});">
+                {{child.title}}
+              </button>
+
+              <mat-menu #subSubMenu="matMenu">
+                <ng-container *ngFor="let grandChild of child.childrenCategories">
+                  <button mat-menu-item
+                    (click)="addFilter('business-field', {type: 'categoryId', value: grandChild.id, label: grandChild.title});">
+                    {{grandChild.title}}
+                  </button>
+                </ng-container>
+              </mat-menu>
+
+            </ng-container>
+          </mat-menu>
+        </ng-container>
+      </ng-template>
+    </mat-menu>
+  </mat-card>
+
+  <div class="result-list">
+    <app-application-card *ngFor="let app of filteredApplications$ |  async" [app]="app"
+      [routerLink]="['/applications', app.id]" class="clickable">
+    </app-application-card>
+  </div>
+</section>

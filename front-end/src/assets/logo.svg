@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Direction_1"
+   data-name="Direction 1"
+   viewBox="0 0 230.00001 230.00001"
+   version="1.1"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.0.2 (1.0.2+r75+1)"
+   width="230"
+   height="230"
+   inkscape:export-filename="/home/vitaljok/Projects/dibicoo-matchmaking-tool/front-end/src/assets/favicon-96x96.png"
+   inkscape:export-xdpi="40.07"
+   inkscape:export-ydpi="40.07">
+  <metadata
+     id="metadata69">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>DiBiCoo logo collection 2</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     id="namedview67"
+     showgrid="false"
+     inkscape:zoom="2.3128922"
+     inkscape:cx="20.869544"
+     inkscape:cy="115.7444"
+     inkscape:window-x="1920"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Direction_1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs22">
+    <linearGradient
+       id="small-3"
+       x1="118.68"
+       y1="192.06"
+       x2="235.48"
+       y2="308.87"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-139.85935,-97.85)"
+       spreadMethod="pad">
+      <stop
+         offset="0"
+         stop-color="#b5d995"
+         id="stop922"
+         style="stop-color:#8b7aae;stop-opacity:1" />
+      <stop
+         offset="1"
+         stop-color="#599541"
+         id="stop932"
+         style="stop-color:#2b1657;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="large">
+      <stop
+         style="stop-color:#377013;stop-opacity:1"
+         offset="0"
+         id="stop912" />
+      <stop
+         style="stop-color:#b3e095;stop-opacity:1"
+         offset="1"
+         id="stop914" />
+    </linearGradient>
+    <style
+       id="style2">.cls-1{fill:#599541;}.cls-2{fill:url(#linear-gradient);}.cls-3{fill:url(#linear-gradient-2);}.cls-4{font-size:17.86px;fill:#aa8438;font-family:MyriadPro-Regular, Myriad Pro;}.cls-5{letter-spacing:0.01em;}.cls-6{letter-spacing:0em;}.cls-7{letter-spacing:0em;}.cls-8{letter-spacing:0.01em;}.cls-9{letter-spacing:0em;}.cls-10{letter-spacing:-0.01em;}.cls-11{letter-spacing:0em;}.cls-12{letter-spacing:0.02em;}.cls-13{letter-spacing:-0.01em;}.cls-14{letter-spacing:0em;}</style>
+    <linearGradient
+       id="small"
+       x1="118.68"
+       y1="192.06"
+       x2="235.48"
+       y2="308.87"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-139.85935,-97.85)"
+       spreadMethod="pad">
+      <stop
+         offset="0"
+         stop-color="#b5d995"
+         id="stop4" />
+      <stop
+         offset="0.18"
+         stop-color="#96c278"
+         id="stop6" />
+      <stop
+         offset="0.38"
+         stop-color="#7bae60"
+         id="stop8" />
+      <stop
+         offset="0.58"
+         stop-color="#68a04f"
+         id="stop10" />
+      <stop
+         offset="0.78"
+         stop-color="#5d9844"
+         id="stop12" />
+      <stop
+         offset="1"
+         stop-color="#599541"
+         id="stop14" />
+    </linearGradient>
+    <linearGradient
+       id="plug"
+       x1="186.07001"
+       y1="170.60001"
+       x2="243.03999"
+       y2="170.60001"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-127.00539,-96.995738)"
+       xlink:href="#small">
+      <stop
+         offset="0"
+         stop-color="#b5d995"
+         id="stop17"
+         style="stop-color:#ffe3aa;stop-opacity:1" />
+      <stop
+         offset="0.99"
+         stop-color="#599541"
+         id="stop19"
+         style="stop-color:#805c15;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#large"
+       id="linearGradient918"
+       x1="115.22324"
+       y1="226.26894"
+       x2="163.04042"
+       y2="1.2962636"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(12.853957,0.85426179)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#small-3"
+       id="linearGradient920"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-127.00539,-96.995738)"
+       x1="144.14105"
+       y1="170.44843"
+       x2="225.04997"
+       y2="327.65628"
+       spreadMethod="pad" />
+  </defs>
+  <title
+     id="title24">DiBiCoo logo collection 2</title>
+  <path
+     class="cls-1"
+     d="m 206.45461,120.78426 10,-6.16 c 2,29.54 0.47,57.59 -15.57,82.31 -14.64,22.54 -35.58,32.35 -62.74,32.21 35.41,-34.81 41.14,-76.81 34.23,-120.41 -2.6,16.79 -4.22,36.05 -8.78,54.5 a 118.65,118.65 0 0 1 -32.83,56.89 c -4.19,4.11 -7.21,4.07 -11.63,0.58 -18.86001,-14.94 -27.840006,-35.3 -28.170006,-59.58 -0.17,-12.73 2.09,-24.65 3.34,-37.4 0.11,-1.11 0.09,0.08 0.83,-7.4 2,3.47 6.089996,12.41 8.099996,15.88 l 2.27,-1.41 a 71,71 0 0 0 2,-7.62 c 2.46,-16.49 9.16001,-30.999998 18.13001,-44.529998 11.77,-17.77 23.29,-35.8 27.62,-57.53 1.23,-6.18 1.17,-12.6600002 1.8,-20.26000021 a 189.59,189.59 0 0 1 37.87,54.15000021 c 9.41,20.14 14.63,41.37 13.53,65.779998 z"
+     id="path26"
+     style="fill:url(#linearGradient918);fill-opacity:1" />
+  <path
+     class="cls-2"
+     d="m 12.994604,163.70426 8.34,1 c -14.3899999,-35.94 -9.06,-69.699998 5.46,-104.709998 3.61,15.77 12.3,25.52 22.3,34 9.75,8.259998 20.05,15.799998 30.09,23.689998 4.88,3.83 6.48,8 4.93,15.11 -6.37,29.23 -4.59,43.21 11.3,77.63 -24.33,-14.65 -40.71,-35 -50,-61.89 -1.95,23.47 19.37,52.91 52.58,73.86 -35.9,18.61 -74.08,-9.74 -85,-58.69 z"
+     id="path28"
+     style="fill:url(#linearGradient920);fill-opacity:1" />
+  <path
+     class="cls-3"
+     d="m 113.77461,64.404262 a 4.61,4.61 0 0 0 -5.21001,-3.88 c -1.47,0.21 -2.93,0.44 -4.4,0.66 v 0 a 1.45,1.45 0 0 1 -1.65,-1.22 c -0.37,-2.55 -0.73,-5 -1.08,-7.37 -0.46,-3.11 -0.89,-6.22 -1.38,-9.32 a 3.51,3.51 0 0 0 -4.419996,-3.11 c -1.81,0.44 -2.81,2.12 -2.49,4.34 q 1.2,8.24 2.43,16.48 l 0.2,1.35 -20,2.95 -0.2,-1.35 c -0.79,-5.37 -1.57,-10.75 -2.39,-16.12 a 6.42,6.42 0 0 0 -0.68,-2.16 3.45,3.45 0 0 0 -6.36,2.25 c 0.79,5.66 1.64,11.31 2.46,17 v 0.09 a 1.47,1.47 0 0 1 -1.23,1.65 l -4.19,0.61 a 4.87,4.87 0 0 0 -4.08,5.53 c 0.63,4.25 1.29,8.5 1.87,12.76 1.1,8.2 5.55,14 12.61,17.999998 a 28.91,28.91 0 0 0 13.75,3.46 h 0.93 a 14,14 0 0 1 2.2,0.05 h 0.77 a 5.42,5.42 0 0 0 3.3,-0.57 l 0.63,-0.23 0.74,-0.33 c 0.27,-0.1 0.49,-0.21 0.75,-0.31 3.759996,-1.48 7.439996,-3.06 10.479996,-5.749998 6.37001,-5.64 9.75001,-12.61 8.71001,-21.28 -0.57,-4.69 -1.35,-9.44 -2.07,-14.18 z"
+     id="path30"
+     style="fill:url(#plug);fill-opacity:1" />
+</svg>

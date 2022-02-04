@@ -1,0 +1,56 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>My companies</li>
+  </ul>
+  <h1>My companies</h1>
+  <div class="controls">
+    <button mat-raised-button color="accent" routerLink="/user/enterprises/new">
+      <mat-icon>add</mat-icon> Add company
+    </button>
+  </div>
+</header>
+<section class="page-content">
+  <mat-tab-group (selectedIndexChange)="tabChanged($event)" [selectedIndex]="selectedTab">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="publishedEnteprises?.length" matBadgeOverlap="false" matBadgeSize="small">Published</span>
+      </ng-template>
+
+      <div class="enterprise-list">
+        <app-enterprise-card [enterprise]="company" *ngFor="let company of publishedEnteprises" cardClass="published">
+          <button mat-stroked-button color="accent" [routerLink]="['/user/enterprises', company.id, 'statistics']">
+            <mat-icon>bar_chart</mat-icon> Statistics
+          </button>
+
+          <button mat-stroked-button color="warn" (click)="unpublish(company)">
+            <mat-icon>cancel</mat-icon> Unpublish
+          </button>
+        </app-enterprise-card>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="draftEnteprises?.length" matBadgeOverlap="false" matBadgeSize="small">Drafts</span>
+      </ng-template>
+
+      <div class="enterprise-list">
+        <app-enterprise-card [enterprise]="company" *ngFor="let company of draftEnteprises" [cardClass]="getCardClass(company)">
+          <button mat-stroked-button color="primary" [routerLink]="['/user/enterprises', company.id]">
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+
+          <button mat-stroked-button color="accent" [routerLink]="['/user/enterprises', company.id, 'share']">
+            <mat-icon>share</mat-icon> Share
+          </button>
+
+          <button mat-stroked-button color="warn" (click)="delete(company)">
+            <mat-icon>delete</mat-icon> Delete
+          </button>
+        </app-enterprise-card>
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+
+</section>

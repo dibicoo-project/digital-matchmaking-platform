@@ -1,0 +1,29 @@
+@import "dibicoo-theme";
+
+.enterprise-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  app-enterprise-card {
+    flex: 1 1 20rem;
+    max-width: 30rem;
+    margin: 0.25rem;    
+
+    button {
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    button[color="primary"] {
+      background-color: $bg-primary-xlight;
+    }
+    button[color="accent"] {
+      background-color: $bg-accent-xlight;
+    }
+
+    button[color="warn"] {
+      background-color: $bg-warn-xlight;
+    }
+  }
+}

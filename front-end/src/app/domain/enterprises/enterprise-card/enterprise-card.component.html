@@ -1,0 +1,22 @@
+<mat-card [ngClass]='cardClass' *ngIf="enterprise">  
+  <div mat-card-image>
+    <app-image-avatar [title]="enterprise.companyName" [imageUrl]="enterprise.imageUrl" text=" "></app-image-avatar>
+  </div>
+  <mat-icon class="watched" *ngIf="(watchlist.all$ | async).includes(enterprise.id)" title="Added to watchlist">star</mat-icon>
+  <mat-icon class="standards-sign" *ngIf="enterprise.standards?.length > 0" title="International standards">verified</mat-icon>
+  <mat-card-header>
+    <h2 mat-card-title>{{enterprise.companyName}}</h2>
+    
+    <p mat-card-subtitle>
+      <mat-icon inline="true">location_on</mat-icon>
+      <app-location-text [location]="enterprise.location"></app-location-text>
+    </p>
+    
+    <p mat-card-subtitle title="Updated on">
+      <mat-icon inline="true">event</mat-icon> {{enterprise.changedTs | date}}
+    </p>
+  </mat-card-header>
+  <mat-card-actions>
+    <ng-content> </ng-content>
+  </mat-card-actions>
+</mat-card>

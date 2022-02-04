@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://dibicoo.org/enterpriseFilterBean.json",
+    "additionalProperties": false,
+    "definitions": {
+        "Filter": {
+            "additionalProperties": false,
+            "type": "object",
+            "properties": {
+                "type": {
+                    "$ref": "http://dibicoo.org/common.json#/definitions/nonEmptyString"
+                },
+                "label": {
+                    "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
+                },
+                "value": {
+                    "anyOf": [
+                        {
+                            "$ref": "http://dibicoo.org/common.json#/definitions/nonEmptyString"
+                        },
+                        {
+                            "type": "number"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "value"
+            ]
+        },
+        "FilterArray": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Filter"
+            },
+            "minItems": 1
+        }
+    },
+    "properties": {
+        "label": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
+        },
+        "filters": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "business-field|company-region|project-region|profile-updates": {
+                    "$ref": "#/definitions/FilterArray"
+                }
+            },
+            "anyOf": [
+                {
+                    "required": [
+                        "business-field"
+                    ]
+                },
+                {
+                    "required": [
+                        "company-region"
+                    ]
+                },
+                {
+                    "required": [
+                        "project-region"
+                    ]
+                },
+                {
+                    "required": [
+                        "profile-updates"
+                    ]
+                }
+            ]
+        }
+    },
+    "type": "object",
+    "required": [
+        "filters"
+    ]
+}

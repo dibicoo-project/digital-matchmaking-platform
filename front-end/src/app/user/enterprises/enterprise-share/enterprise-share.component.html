@@ -1,0 +1,137 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink="../..">My companies</a></li>
+    <li><a routerLink="..">{{shares.companyName}}</a></li>
+    <li>...</li>
+  </ul>
+  <h1>{{shares.companyName}} sharing options</h1>
+</header>
+<section class="page-content">
+  <mat-card>
+    <mat-card-title>Company profile managers</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let owner of shares.owners">
+          <mat-icon matListIcon class="muted">person</mat-icon>
+          <p matLine>{{owner.name}}</p>
+
+          <button mat-button color="warn" [title]="owner.self ? 'Leave company' : 'Remove company manager'"
+           (click)="removeClicked(confirmRemove, owner)" *ngIf="shares.owners.length > 1">
+            <mat-icon>cancel</mat-icon>
+            {{owner.self ? 'Leave' : 'Remove'}}
+          </button>
+
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Pending invites</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let invite of shares.invites" class="invite-item">
+          <mat-icon matListIcon class="muted">person_search</mat-icon>
+          <h2 matLine>{{invite.name}} <small>@{{invite.createdTs | date}}</small></h2>
+          <p matLine>
+            <small>{{getInviteLink(invite.id)}}</small>
+            <button mat-icon-button class="copy-button" title="Copy link to clipboard" [cdkCopyToClipboard]="getInviteLink(invite.id)">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </p>
+          <button mat-button color="warn" title="Revoke invitation" class="text-left min-width"
+            (click)="revokeClicked(confirmRevoke, invite)">
+            <mat-icon>cancel</mat-icon>
+            Revoke
+          </button>
+        </mat-list-item>
+
+        <button mat-raised-button class="add-button" color="primary" (click)="inviteClicked(inviteDialog, resultDialog)">
+          <mat-icon>person_add</mat-icon> Invite profile manager
+        </button>
+
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <footer>
+    <a mat-raised-button title="Back to my companies" color="primary" routerLink="../..">
+      <mat-icon>arrow_left</mat-icon>
+      Back
+    </a>
+  </footer>
+</section>
+
+<ng-template #inviteDialog>
+  <h3 mat-dialog-title>Profile manager invitation</h3>
+  <div mat-dialog-content>
+    <p>
+      To make your invitation recognizable by invited person, please, specify his / her name.
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <mat-label>Invited person name</mat-label>
+        <input matInput #nameInput maxlength=50 cdkFocusInitial>
+      </mat-form-field>
+    </p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="nameInput.value">Ok</button>
+    <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #resultDialog let-result>
+  <h3 mat-dialog-title>Invitation link is ready</h3>
+  <div mat-dialog-content>
+    <p>
+      Please share this invitation link with <em>{{result.name}}</em> via communication channel available to
+      you.
+    </p>
+    <p>
+      <mat-form-field class="full-width">
+        <mat-label>Invitation link</mat-label>
+        <input matInput [value]="getInviteLink(result.id)" cdkFocusInitial readonly>
+        <button mat-button matSuffix mat-icon-button title="Copy link to clipboard"
+          [cdkCopyToClipboard]="getInviteLink(result.id)">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </mat-form-field>
+    </p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="">Ok</button>
+  </div>
+</ng-template>
+
+<ng-template #confirmRevoke let-name>
+  <h3 mat-dialog-title>Confirm revoke</h3>
+  <div mat-dialog-content>
+    <p>
+      Are you sure want to revoke invitation link for <em>{{name}}</em>?
+    </p>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">Yes</button>
+    <button mat-button [mat-dialog-close]="false">No</button>
+  </div>
+</ng-template>
+
+<ng-template #confirmRemove let-data>
+  <h3 mat-dialog-title>Confirm remove profile manager</h3>
+  <div mat-dialog-content>
+    <p>
+      Are you sure want to remove
+      <em *ngIf="data.self">yourself</em>
+      <span *ngIf="!data.self">manager <em>{{data.name}}</em></span>
+      from <em>{{data.companyName}}</em> company?
+    </p>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">Yes</button>
+    <button mat-button [mat-dialog-close]="false">No</button>
+  </div>
+</ng-template>

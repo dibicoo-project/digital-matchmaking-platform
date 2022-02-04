@@ -1,0 +1,36 @@
+<div class="wrapper" *ngIf="!mainCategory">
+  <div class="root" *ngFor="let root of categories.tree$ | async">
+    <div class="title">
+      <app-image-avatar [title]="root.title" [imageUrl]="root.imageUrl" [hue]="root.isAD ? 195 : 135">
+      </app-image-avatar>
+      <h3>{{root.title}}</h3>
+    </div>
+    <button mat-button class="child" *ngFor="let child of root.childrenCategories" (click)="setMainCategory(child)">
+      <app-image-avatar [title]="child.title" [imageUrl]="child.imageUrl" [hue]="child.isAD ? 195 : 135">
+      </app-image-avatar>
+      {{child.title}}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="mainCategory" class="wrapper">
+  <div class="root">
+    <div class="title">
+      <button mat-icon-button class="back" (click)="setMainCategory(null)">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <app-image-avatar [title]="mainCategory.title" [imageUrl]="mainCategory.imageUrl"
+        [hue]="mainCategory.isAD ? 195 : 135">
+      </app-image-avatar>
+      <h3>{{mainCategory.title}}</h3>
+    </div>
+    <div class="col-list">
+      <button mat-button class="child" *ngFor="let child of mainCategory.childrenCategories"
+        (click)="setCategory(child)" [class.selected]="child.id === value.categoryId">
+        <app-image-avatar [title]="child.title" [imageUrl]="child.imageUrl" [hue]="child.isAD ? 195 : 135">
+        </app-image-avatar>
+        {{child.title}}
+      </button>
+    </div>
+  </div>
+</div>

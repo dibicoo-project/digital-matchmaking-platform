@@ -1,0 +1,17 @@
+@import "dibicoo-theme";
+
+.tree-nested {
+  padding-left: 2rem;
+}
+
+.tree-header {
+  color: $default-muted;
+}
+
+.mat-tree-node {
+  min-height: 36px;
+}
+
+.mat-tree {
+  background-color: transparent;  
+}

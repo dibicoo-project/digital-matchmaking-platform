@@ -1,0 +1,5 @@
+@import "fonts";
+@import "~@angular/material/theming";
+@import 'dibicoo-theme';
+@include mat-core($dibicoo-typography); 
+@include angular-material-theme($app-theme);

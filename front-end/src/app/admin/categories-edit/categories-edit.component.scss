@@ -1,0 +1,19 @@
+@import "dibicoo-theme";
+
+.mat-tree-node {
+
+  @include default-hover;
+  border-bottom: solid 1px $bg-primary-light;
+  
+  .logo {
+    height: 2rem;
+    width: 4rem;
+    margin-right: 0.5rem;
+    text-align: center;
+  }
+
+  .controls {
+    margin-left: auto;
+    padding-right: 0.5rem;    
+  }  
+}

@@ -1,0 +1,71 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Administrator</li>
+    <li>...</li>
+  </ul>
+  <h1>Review company profiles</h1>
+</header>
+<section class="page-content">
+  <mat-tab-group (selectedIndexChange)="tabChanged($event)" [selectedIndex]="selectedTab">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="pending?.length" matBadgeOverlap="false" matBadgeSize="small">Pending review</span>
+      </ng-template>
+      <div class="company__list">
+        <app-enterprise-card *ngFor="let one of pending" [enterprise]="one">
+          <button mat-stroked-button color="primary" [routerLink]="[one.id]">
+            <mat-icon>view_list</mat-icon> Show details
+          </button>
+        </app-enterprise-card>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="reported?.length" matBadgeOverlap="false" matBadgeSize="small">Reported</span>
+      </ng-template>
+      <ng-container *ngTemplateOutlet="companyList; context: { $implicit: reported }">
+      </ng-container>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="published?.length" matBadgeOverlap="false" matBadgeSize="small">Published</span>
+      </ng-template>
+      <ng-container *ngTemplateOutlet="companyList; context: { $implicit: published }">
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>
+
+  <ng-template #companyList let-companies>
+    <div class="company__list">
+      <app-enterprise-card *ngFor="let one of companies" [enterprise]="one">
+        <button mat-stroked-button color="primary" [routerLink]="['/enterprises', one.id]">
+          <mat-icon>view_list</mat-icon> Show details
+        </button>
+  
+        <button mat-stroked-button color="accent" *ngIf="one?.reports?.length"
+          (click)="reportsClicked(reportDialog, one)">
+          <mat-icon>feedback</mat-icon>
+          View {{one?.reports?.length}} report{{one?.reports?.length > 1 ? 's' : ''}}
+        </button>
+  
+        <button mat-stroked-button color="warn" (click)="unpublish(one.id)">
+          <mat-icon>cancel</mat-icon> Unpublish
+        </button>
+      </app-enterprise-card>
+    </div>
+  </ng-template>
+
+  <ng-template #reportDialog let-data>
+    <h2 mat-dialog-title>Company reports</h2>
+    <div mat-dialog-content>
+      <p *ngFor="let rep of data">
+        <span class="date">{{rep.ts | date:'medium'}}</span> {{rep.message}}
+      </p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+    </div>
+  </ng-template>
+</section>

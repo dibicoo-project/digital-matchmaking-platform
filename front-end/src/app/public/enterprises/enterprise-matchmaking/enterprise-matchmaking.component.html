@@ -1,0 +1,180 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Companies matchmaking</li>
+  </ul>
+  <h1>Companies matchmaking</h1>
+</header>
+<section class="page-content">
+  <p>Use this section to filter companies according to specific criteria and save filter combinations for later use.</p>
+
+  <mat-card class="filter-options">    
+    <mat-card-header>
+      <mat-icon mat-card-avatar>manage_search</mat-icon>
+      <h2 mat-card-title>Find company profiles by...</h2>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="filter-option-wrapper">
+        <mat-form-field class="filter-option" [matMenuTriggerFor]="categoriesMenu">
+          <mat-label>Business fields</mat-label>
+          <input matInput readonly>
+          <mat-icon matSuffix>segment</mat-icon>
+          <div class="badge business-field" *ngIf="getSelectedFilterCount('business-field') as cnt">{{cnt}}</div>
+          <mat-hint>Company business field</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="filter-option-wrapper">
+        <mat-form-field class="filter-option" [matMenuTriggerFor]="regions"
+          [matMenuTriggerData]="{group: 'company-region'}">
+          <mat-label>Company region</mat-label>
+          <input matInput readonly>
+          <mat-icon matSuffix>segment</mat-icon>
+          <mat-hint>Company region of origin</mat-hint>
+          <div class="badge company-region"
+            *ngIf="getSelectedFilterCount('company-region', 'region', 'subregion') as cnt">{{cnt}}</div>
+        </mat-form-field>
+      </div>
+      <div class="filter-option-wrapper">
+        <app-country-select class="filter-option" hint="Company country of origin" label="Company country"
+          #companyCountry
+          (optionSelected)="addFilter('company-region', { type: 'country', value: $event.option.value}, companyCountry)">
+          <div class="badge company-region" *ngIf="getSelectedFilterCount('company-region', 'country') as cnt">{{cnt}}
+          </div>
+        </app-country-select>
+      </div>
+
+      <div class="filter-option-wrapper">
+        <mat-form-field class="filter-option" [matMenuTriggerFor]="profileUpdates">
+          <mat-label>Profile updates</mat-label>
+          <input matInput readonly>
+          <mat-icon matSuffix>segment</mat-icon>
+          <div class="badge profile-updates" *ngIf="getSelectedFilterCount('profile-updates') as cnt">{{cnt}}</div>
+          <mat-hint>When company profile was updated</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-option-wrapper">
+        <mat-form-field class="filter-option" [matMenuTriggerFor]="regions"
+          [matMenuTriggerData]="{group: 'project-region'}">
+          <mat-label>Project region</mat-label>
+          <input matInput readonly>
+          <mat-icon matSuffix>segment</mat-icon>
+          <div class="badge project-region"
+            *ngIf="getSelectedFilterCount('project-region', 'region', 'subregion') as cnt">{{cnt}}</div>
+          <mat-hint>Reference project region</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="filter-option-wrapper">
+        <app-country-select class="filter-option" hint="Country of reference project" label="Project country"
+          #projectCountry
+          (optionSelected)="addFilter('project-region', {type: 'country', value: $event.option.value}, projectCountry)">
+          <div class="badge project-region" *ngIf="getSelectedFilterCount('project-region', 'country') as cnt">{{cnt}}
+          </div>
+        </app-country-select>
+      </div>
+    </mat-card-content>
+    <mat-card-actions *ngIf="anyFilterSelected">
+      <div class="selected-filters">
+        <mat-chip-list>
+          <ng-container *ngFor="let grp of ['business-field', 'company-region', 'profile-updates', 'project-region']">
+            <mat-chip *ngFor="let item of filters[grp]" [ngClass]="grp" [removable]="true" [selectable]="false"
+              (removed)="removeFilter(grp, item)">
+              {{item.label || item.value}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </ng-container>
+          <button mat-button class='clear-all' (click)="removeAllFilters()">
+            <mat-icon>highlight_off</mat-icon>
+            Clear all
+          </button>
+        </mat-chip-list>
+      </div>
+      <div class="controls" *ngIf="auth.loggedIn">
+        <button mat-stroked-button (click)="saveFilters()" [disabled]="isSaved">
+          <ng-container *ngIf="!isSaved">
+            <mat-icon>playlist_add</mat-icon> Save
+          </ng-container>
+          <ng-container *ngIf="isSaved">
+            <mat-icon>playlist_add_check</mat-icon> Saved
+          </ng-container>
+        </button>
+      </div>
+    </mat-card-actions>
+
+    <mat-menu #regions="matMenu" class="drop-down">
+      <ng-template matMenuContent let-group="group">
+        <ng-container *ngFor="let item of countriesService.regions$ | async">
+          <button mat-menu-item [matMenuTriggerFor]="subRegions"
+            (click)="addFilter(group, {type: 'region', value: item.region});">
+            {{item.region}}
+          </button>
+
+          <mat-menu #subRegions="matMenu">
+            <button mat-menu-item *ngFor="let sub of item.sub"
+              (click)="addFilter(group, {type: 'subregion', value: sub})">
+              {{sub}}
+            </button>
+          </mat-menu>
+        </ng-container>
+      </ng-template>
+    </mat-menu>
+
+    <mat-menu #profileUpdates="matMenu" class="drop-down">
+      <button mat-menu-item
+        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 2, label: 'Updated recenlty'});">
+        Recenlty
+      </button>
+      <button mat-menu-item
+        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 7, label: 'Updated last week'});">
+        Last week
+      </button>
+      <button mat-menu-item
+        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 30, label: 'Updated last month'});">
+        Last month
+      </button>
+    </mat-menu>
+
+    <mat-menu #categoriesMenu="matMenu" class="drop-down">
+      <ng-template matMenuContent>
+        <!-- Hard coded three levels of nested menus as dynamic recursive menus are not working properly (sub-levels are not shown) -->
+        <ng-container *ngFor="let item of categories.tree$ | async">
+          <button mat-menu-item [matMenuTriggerFor]="subMenu"
+            (click)="addFilter('business-field', {type: 'categoryId', value: item.id, label: item.title});">
+            {{item.title}}
+          </button>
+
+          <mat-menu #subMenu="matMenu">
+            <ng-container *ngFor="let child of item.childrenCategories">
+              <button mat-menu-item [matMenuTriggerFor]="subSubMenu"
+                (click)="addFilter('business-field', {type: 'categoryId', value: child.id, label: child.title});">
+                {{child.title}}
+              </button>
+
+              <mat-menu #subSubMenu="matMenu">
+                <ng-container *ngFor="let grandChild of child.childrenCategories">
+                  <button mat-menu-item
+                    (click)="addFilter('business-field', {type: 'categoryId', value: grandChild.id, label: grandChild.title});">
+                    {{grandChild.title}}
+                  </button>
+                </ng-container>
+              </mat-menu>
+
+            </ng-container>
+          </mat-menu>
+        </ng-container>
+      </ng-template>
+    </mat-menu>
+  </mat-card>
+
+  <app-enterprise-list-paged [list$]="filteredCompanies$">
+    <ng-container emptyListMessage>
+      <h3>
+        No companies found matching provided criteria.
+      </h3>
+      <p>
+        Please, refine matchmaking options or <a routerLink="/enterprises">browse companies</a> by categories.
+      </p>
+    </ng-container>
+  </app-enterprise-list-paged>
+
+</section>

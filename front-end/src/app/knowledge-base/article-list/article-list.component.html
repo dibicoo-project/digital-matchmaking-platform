@@ -1,0 +1,16 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Factsheets</li>
+  </ul>
+  <h1>Factsheets</h1>
+</header>
+<section class="page-content">
+  <mat-nav-list>
+    <a mat-list-item *ngFor="let item of articles" [routerLink]="item.id">
+      <mat-icon>description</mat-icon>
+      {{item.name}}
+    </a>
+  </mat-nav-list>
+
+</section>

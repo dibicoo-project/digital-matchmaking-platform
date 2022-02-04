@@ -1,0 +1,60 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink="../..">My companies</a></li>
+    <li><a routerLink="..">{{companyName}}</a></li>
+    <li>...</li>
+  </ul>
+  <h1>{{companyName}} statistics</h1>
+</header>
+<section class="page-content">
+  <p>The table below shows the statistics about the company profile page visits. Statistics are updated approximately every 12 hours.</p>
+
+  <table mat-table [dataSource]="dataSource" matSort matSortActive="weeklyUsers" matSortDirection="desc" class="mat-elevation-z1">
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header title="Visitor's country">Country</th>
+      <td mat-cell *matCellDef="let item">{{item.country}}</td>
+      <td mat-footer-cell *matFooterCellDef><strong>Total</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="weeklyUsers">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header title="Number of unique visitors within last 7 days">Users (week)</th>
+      <td mat-cell *matCellDef="let item">{{item.weeklyUsers}}</td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{totals.weeklyUsers}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="weeklyViews">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header title="Number of total page views within last 7 days">Views (week)</th>
+      <td mat-cell *matCellDef="let item">{{item.weeklyViews}}</td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{totals.weeklyViews}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="monthlyUsers">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header title="Number of unique visitors within last month (28 days)">Users (month)</th>
+      <td mat-cell *matCellDef="let item">{{item.monthlyUsers}}</td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{totals.monthlyUsers}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="monthlyViews">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header title="Number of total page views within last month (28 days)">Views (month)</th>
+      <td mat-cell *matCellDef="let item">{{item.monthlyViews}}</td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{totals.monthlyViews}}</strong></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="9999">
+        No statistics available, yet!
+      </td>
+    </tr>
+    <tr mat-footer-row *matFooterRowDef="columns"></tr>
+  </table>
+
+  <footer>
+    <a mat-raised-button title="Back to my companies" color="primary" routerLink="../..">
+      <mat-icon>arrow_left</mat-icon>
+      Back
+    </a>
+  </footer>
+</section>

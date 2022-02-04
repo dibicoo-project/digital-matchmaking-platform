@@ -1,0 +1,83 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink="..">All business opportunities</a></li>
+    <li>...</li>
+  </ul>
+  <h1>
+    <div class='avatar'>
+      <app-image-avatar [title]="category?.title" [imageUrl]="category?.imageUrl" [hue]="category?.isAD ? 195 : 135">
+      </app-image-avatar>
+    </div>
+    {{mainCategory?.title}} / {{category?.title}}
+
+  </h1>
+
+</header>
+<section class="page-content">
+  <ul class="metadata">
+    <li>Published: {{app?.changedTs | date}}</li>
+    <li>Due date: {{app?.dueDate | date}}</li>
+  </ul>
+
+  <section class="section">
+    <p class="section__content">
+      <mat-icon inline>location_on</mat-icon>
+      <app-location-text [location]="app?.location"></app-location-text>
+    </p>
+    <p class="section__content section__text">{{app?.description | fixNewLines}}</p>
+  </section>
+
+  <section class="hero contacts">
+    <div class="contacts__header section section--no-margin">
+      <mat-icon class="section__icon">business</mat-icon>
+      <div>
+        <h3 class="section__title" *ngIf="app?.companyName">{{app?.companyName}}</h3>
+        <app-location-text class="section__content" [location]="app?.contactLocation"></app-location-text>
+      </div>
+    </div>
+
+    <app-contact-item *ngFor="let item of app?.contacts" [item]="item"></app-contact-item>
+  </section>
+
+  <section class="section" *ngIf="hasDetails">
+    <mat-icon class="section__icon">description</mat-icon>
+    <h2 class="section__title">Specific details</h2>
+    <div class="section__content" *ngFor="let item of app.details | keyvalue">
+      <ng-container *ngIf="getDetailByCode(item.key) as detail">
+        <h3 class="section__title">{{detail.name}}</h3>
+        <p class="section__text" *ngIf="detail.type === 'text'">{{item?.value | fixNewLines}}</p>
+        <p *ngIf="detail.type !== 'text'">{{item.value}} <span [innerHTML]="detail.units"></span></p>
+      </ng-container>
+    </div>
+  </section>
+
+  <section class="section" *ngIf="app?.attachments?.length > 0">
+    <mat-icon class="section__icon">note_add</mat-icon>
+    <h2 class="section__title">Attachments</h2>
+
+    <ul class="section__content list">
+      <li class="list-item" *ngFor="let one of app?.attachments">
+        <mat-icon class="list-item__icon">attach_file</mat-icon>
+        <h3 class="list-item__title">
+          <a target="_blank"
+            [href]="'https://storage.googleapis.com/dibicoo-matchmaking-tool.appspot.com/attachments/'+one.id"
+            [title]="one.fileName">{{one.fileName}}</a>
+        </h3>
+        <p class="list-item__text">{{one.description | fixNewLines}}</p>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <a mat-raised-button title="Back to all business opportunities" color="primary" routerLink="..">
+      <mat-icon>arrow_left</mat-icon>
+      Back
+    </a>
+    <button *ngIf="app?.id" mat-button title="Report inappropriate content" class="report" (click)="reportClicked()">
+      <mat-icon>flag</mat-icon>
+      Report
+    </button>
+  </footer>
+
+</section>

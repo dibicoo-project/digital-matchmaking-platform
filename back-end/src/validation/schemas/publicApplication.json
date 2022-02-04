@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://dibicoo.org/publicApplication.json",
+    "type": "object",
+    "properties": {
+        "mainCategoryId": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/requiredId"
+        },
+        "categoryId": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/requiredId"
+        },
+        "description": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/nonEmptyLongString"
+        },
+        "location": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/LocationRequired"
+        },
+        "contactLocation": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/LocationRequired"
+        },
+        "contacts": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/nonEmptyArray"
+        },
+        "dueDate": {
+            "type": [
+                "string"
+            ],
+            "format": "date-time"
+        }
+    },
+    "required": [
+        "mainCategoryId",
+        "categoryId",
+        "description",
+        "location",
+        "contactLocation",
+        "contacts",
+        "dueDate"
+    ]
+}

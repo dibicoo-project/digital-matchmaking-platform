@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "tsc-dist",
+  },
+  "include": [
+    "src/**/*",
+  ],
+  "exclude": [    
+    "**/*.spec.ts",
+    "**/*.mock.ts",
+    "src/scripts/**"
+  ]
+}

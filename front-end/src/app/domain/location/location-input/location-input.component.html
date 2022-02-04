@@ -1,0 +1,15 @@
+<ng-container [formGroup]="locationForm">
+  <app-country-select formControlName="country" required class="mat-form-field country"></app-country-select>
+  <mat-form-field class="city">
+    <mat-label>City</mat-label>
+    <input matInput formControlName="city" maxlength="250">
+  </mat-form-field>
+  <mat-form-field class="zip">
+    <mat-label>Zip code</mat-label>
+    <input matInput formControlName="zipCode" maxlength="250">
+  </mat-form-field>
+  <mat-form-field class="address">
+    <mat-label>Address</mat-label>
+    <input matInput formControlName="address" maxlength="250">
+  </mat-form-field>
+</ng-container>

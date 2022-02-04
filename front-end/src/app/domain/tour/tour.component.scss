@@ -1,0 +1,47 @@
+@import "dibicoo-theme";
+
+.tour-button {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 5;
+
+  background-color: $neutral;
+  border: 0;
+  outline: none;
+  border-radius: 1.5rem;
+  padding: 0.75rem;
+  // vertical-align: middle;
+  color: $neutral-xlight;
+  cursor: pointer;
+  
+  .icon {
+    font-weight: bold;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  .text {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0; 
+    color: $neutral;
+    transition: max-width 0.5s, color 0.5s, padding 0.5s;
+  }
+
+  &:hover {
+    .text {
+      max-width: 10rem;
+      padding-right: 0 0.5rem;
+      color: $neutral-xlight;
+    }
+  }
+}

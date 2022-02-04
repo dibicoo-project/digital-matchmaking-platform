@@ -1,0 +1,96 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>
+      <span *ngIf="!currentCategory">All company profiles</span>
+      <a *ngIf="currentCategory" routerLink="." [queryParams]="{categoryId: null, p: null}"
+        queryParamsHandling="merge">All company profiles</a>
+    </li>
+    <li *ngFor="let cat of ancCategories">
+      <a routerLink="." [queryParams]="{categoryId: cat.id, p: null}" queryParamsHandling="merge">{{cat.title}}</a>
+    </li>
+    <li *ngIf="currentCategory">{{currentCategory.title}}</li>
+  </ul>
+  <h1>
+    <span *ngIf="!currentCategory" [matBadge]="(service.public$ | async)?.length" matBadgeOverlap="false">
+      All company profiles
+    </span>
+    <span *ngIf="currentCategory" [matBadge]="currentCategory?.numCompanies" matBadgeOverlap="false">
+      <a routerLink="." [queryParams]="{categoryId: currentCategory.parentId}">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </a>
+      {{currentCategory.title}}
+    </span>
+
+  </h1>
+  <div class="controls">
+    <button mat-raised-button color="accent" routerLink="/user/enterprises/new">
+      <mat-icon>add</mat-icon> Register your company
+    </button>
+  </div>
+</header>
+<section class="page-content">
+  <div *ngIf="!subCategories">
+    <div class="category-list">
+      <div class="category-item category-item--skeleton" *ngFor="let i of [1, 2]">
+        <div class="category-avatar">
+          <div></div>
+        </div>
+        <div class="category-text">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="subCategories?.length > 0">
+    <div class="category-list">
+      <div class="category-item" *ngFor="let cat of subCategories" [routerLink]="[]"
+        [queryParams]="{categoryId: cat.id, p: null}" queryParamsHandling="merge"
+        [title]="cat.numCompanies + ' companies, '+ cat.numChildren + ' sub-categories'">
+        <div class="category-avatar">
+          <app-image-avatar [title]="cat.title" [imageUrl]="cat.imageUrl" [hue]="cat.isAD ? 195 : 135">
+          </app-image-avatar>
+        </div>
+        <div class="category-text">
+          <h3>{{cat.title}}</h3>
+          <p>
+            <span>
+              <mat-icon inline>business</mat-icon> {{cat.numCompanies}}
+            </span>
+            <span *ngIf="cat.numChildren">
+              <mat-icon inline>category</mat-icon> {{cat.numChildren}}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <mat-form-field>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput type="search" [formControl]="searchControl" placeholder="Search by name">
+    </mat-form-field>
+
+    <button mat-button color="primary" title="Show full tree of categories" (click)="showTree(treeDialog)">
+      <mat-icon>account_tree</mat-icon>
+      Show categories tree
+    </button>
+  </div>
+
+  <app-enterprise-list-paged [list$]="filteredCompanies$"> </app-enterprise-list-paged>
+
+  <ng-template #treeDialog>
+    <div mat-dialog-title class="tree-dialog-title">
+      <h2>
+        <mat-icon>account_tree</mat-icon>
+        Categories tree
+      </h2>
+      <button mat-icon-button mat-dialog-close="">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <app-category-chart (categorySelected)="categorySelected($event)" showAllCategories="true"></app-category-chart>
+  </ng-template>
+</section>

@@ -1,0 +1,42 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": [
+      "tsconfig.json",
+      "tsconfig.app.json"
+    ]
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": [
+    "node_modules/**/*",
+    "tsc-dist/**/*",
+    "test/**/*"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": [
+      "off"
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.spec.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": [
+          false
+        ],
+        "@typescript-eslint/no-non-null-assertion": [
+          false
+        ]
+      }
+    }
+  ]
+}

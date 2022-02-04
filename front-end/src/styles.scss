@@ -1,0 +1,125 @@
+@import "dibicoo-theme";
+
+body,
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: $bg-primary-xlight;
+}
+
+header.page-header {
+  display: flex;
+  flex-wrap: wrap;
+
+  color: $accent;
+  border-bottom: solid 1px $accent-xlight;
+  margin: 2rem 2rem 1rem;
+  @include layout-bp(lt-sm) {
+    margin: 1rem;
+  }
+    
+  ul.breadcrumbs {
+    flex: 1 1 100%;
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: inline;
+
+      a {
+        color: $accent;
+      }
+
+      & + li:before {
+        content: "\00a0/\00a0";
+      }
+    }
+  }
+
+  h1 {
+    flex: 1 1 auto;
+
+    a {
+      color: $accent;
+    }
+  }
+
+  .controls {
+    margin-bottom: 1rem;    
+  }
+}
+
+section.page-content {
+  margin: 0 2rem;
+  @include layout-bp(lt-sm) {
+    margin: 0 1rem;
+  }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+
+    button {
+      margin-right: 0.5rem;
+    }
+
+    button.delete {
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    @include layout-bp(lt-sm) {
+      button {
+        margin: 0 0 0.5rem 0;
+        flex: 1 1 100%;
+      }
+    }
+  }
+}
+
+.mat-checkbox.consent {
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.mat-form-field-suffix {
+  bottom: -0.25rem;
+}
+
+.hint-tooltip {
+  white-space: pre-line;
+  max-width: 40rem !important;
+}
+
+// TODO: increase font size for all forms
+.mat-form-field {
+  .mat-form-field-label {
+    font-size: 14px;
+  }
+
+  .mat-hint {
+    font-size: 13px;
+    .mat-icon {
+      font-size: 16px;
+      vertical-align: middle;
+    }
+  }
+}
+
+// Intro.js
+.introjs-tooltip-header {
+  display: none;
+}
+
+.introjs-tooltiptext {
+  padding: 1rem 1rem 0.25rem;
+}

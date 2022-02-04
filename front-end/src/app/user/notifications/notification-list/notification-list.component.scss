@@ -1,0 +1,78 @@
+@import "dibicoo-theme";
+
+.page-header > .controls {
+  button:not(:first-child) {
+    margin-left: 1rem;
+  }
+}
+
+.mat-card {
+  & + .mat-card {
+    margin-top: 0.5rem;
+  }
+
+  &.unread {
+    border-left: solid 5px $accent;
+  }
+
+  @include muted-icons;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  .mat-card-header {
+    flex: 1 1 20rem;
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .mat-card-actions {
+    margin: 0;
+    padding: 0;
+    flex: 0 0 auto;
+  }
+
+  .mat-card-content {
+    flex: 1 1 100%;
+    margin-top: 0.5rem;
+
+    ::ng-deep .notification__body {
+      margin-bottom: 0.5rem;      
+
+      a {
+        color: $accent;
+      }
+
+      blockquote {
+        margin: 0.5rem 0;
+        max-width: 60em;
+        padding-left: 2rem;
+        position: relative;
+        
+        &::before {          
+          content: "\201D";
+          position: absolute;
+          left: 0;
+          color: $neutral-xlight;
+          font-size: 4em;
+          font-family: 'Material Icons';
+        }
+      }
+    }
+
+    a {
+      color: $accent;
+    }
+
+    a + a {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .mat-icon.mat-card-avatar {
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 2.5rem;
+  }
+}

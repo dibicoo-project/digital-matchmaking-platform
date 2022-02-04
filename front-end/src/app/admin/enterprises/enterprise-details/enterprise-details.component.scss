@@ -1,0 +1,67 @@
+@import "dibicoo-theme";
+
+.diff {
+  display: grid;
+  grid-template-columns: minmax(min-content, 15rem) 1fr;
+
+  border: solid 1px $bg-neutral;
+
+  h2,
+  h3,
+  p,
+  app-category-tree,
+  .logo__container {
+    margin: 0;
+    padding: 1rem;
+  }
+
+  .logo__container > app-image-avatar {
+    max-height: 5rem;
+    max-width: 5rem;
+    display: block;
+  }
+
+  & > *:nth-child(3n-1) {
+    display: none;
+  }
+
+  & > *:nth-child(2n) {
+    background-color: $bg-neutral-xlight;
+  }
+
+  & > *:nth-child(2n + 1) {
+    background-color: $bg-neutral-light;
+  }
+
+  &--with-published {
+    grid-template-columns: minmax(min-content, 15rem) 1fr 1fr;
+
+    & > *:nth-child(3n-1) {
+      display: block;
+    }
+
+    & > *:nth-child(6n + 1),
+    & > *:nth-child(6n + 2),
+    & > *:nth-child(6n + 3) {
+      background-color: $bg-neutral-light;
+
+      &.changes {
+        background-color: $bg-accent;
+      }
+    }
+
+    & > *:nth-child(6n + 4),
+    & > *:nth-child(6n + 5),
+    & > *:nth-child(6n + 6) {
+      background-color: $bg-neutral-xlight;
+
+      &.changes {
+        background-color: $bg-accent-light;
+      }
+    }
+  }
+}
+
+footer {
+  justify-content: center;
+}

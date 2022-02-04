@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+    "target": "https://dibicoo-matchmaking-tool.appspot.com/",
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

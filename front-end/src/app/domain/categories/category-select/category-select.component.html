@@ -1,0 +1,22 @@
+<h3>Selected: </h3>
+  <p *ngFor="let one of getSelectedCategories()">
+    {{one.title}}
+  </p>
+<div>
+  <p>
+    <button *ngIf="currentCategory !== root" (click)="currentCategory = root">{{root.title}} &rarr;</button>
+    <button *ngFor="let one of currentCategory?.ancestorCategories" (click)="currentCategory = one">{{one.title}} &rarr;</button>
+    <span>{{currentCategory?.title}} &rarr;</span>
+  </p>
+
+  <div *ngFor="let one of currentCategory?.childrenCategories">
+    <button *ngIf="one.childrenCategories?.length > 0" (click)="currentCategory = one">
+      <p>{{one.title}}</p>
+      <ul>
+        <li *ngFor="let child of one.childrenCategories | slice:0:4">{{child.title}}</li>
+        <li *ngIf="one.childrenCategories?.length > 4">...</li>
+      </ul>
+    </button>
+    <mat-checkbox *ngIf="!one.childrenCategories?.length" [checked]="isSelected(one.id)" (change)="toggleSelected(one.id)">{{one.title}}</mat-checkbox>
+  </div>
+</div>

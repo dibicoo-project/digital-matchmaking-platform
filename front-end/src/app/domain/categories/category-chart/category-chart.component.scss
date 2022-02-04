@@ -1,0 +1,49 @@
+@import "dibicoo-theme";
+
+.category-chart {
+  border: solid 1px $neutral-light;
+  border-radius: 2px;
+
+  &__controls {
+    background-color: $bg-neutral;
+  }
+
+  &__hint {
+    margin: 0 0.5rem;
+  }
+
+  &__container {
+    overflow: hidden;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      box-shadow: inset 0px 0px 10px 0px $neutral-light;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  }
+
+  &__node {
+    height: 100%;
+    text-align: center;
+    
+    h3 {
+      margin: 0;
+    }
+  }
+
+  &__button {
+    border: solid 1px $neutral-light;
+    border-radius: 4px;
+    background-color: $bg-neutral;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 40px;
+  }
+}

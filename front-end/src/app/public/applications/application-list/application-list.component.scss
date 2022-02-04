@@ -1,0 +1,7 @@
+app-application-card {
+  display: block;
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+}

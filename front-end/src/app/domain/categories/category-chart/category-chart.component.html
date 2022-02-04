@@ -1,0 +1,16 @@
+<div class="category-chart">
+  <div class="category-chart__controls">
+    <span class="category-chart__hint">Use cursor to pan, scroll to zoom, click to select the category. </span>
+    <button mat-button (click)="fit()">
+      <mat-icon>fit_screen</mat-icon>Fit to view
+    </button>
+    <button mat-button (click)="expandAll()">
+      <mat-icon>unfold_more</mat-icon>Expand all
+    </button>
+    <button mat-button (click)="collapseAll()">
+      <mat-icon>unfold_less</mat-icon>Collapse all
+    </button>
+  </div>
+
+  <div #chartContainer class="category-chart__container"></div>
+</div>

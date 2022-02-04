@@ -1,0 +1,17 @@
+@import "dibicoo-theme";
+
+.mat-form-field {
+  @include muted-icons;
+
+  width: 100%;
+}
+
+.mat-option.country {
+  .flag-icon {
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    width: 2rem;
+    height: 1.5rem;
+    line-height: 2rem;
+  }
+}

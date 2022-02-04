@@ -1,0 +1,32 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>...</li>
+  </ul>
+  <h1>Invitation to company profile</h1>
+</header>
+<section class="page-content" *ngIf="state === 'ok'">
+  <p>Hello, <strong>{{invitation.name}}</strong>!</p>
+  <p>You have been invited to join the Biogas and Gasification Matchmaking Platform (<a routerLink="/" target="_blank">BMP</a>) as a manager of
+    <strong>{{invitation.companyName}}</strong> company
+    <a *ngIf="invitation.enterpriseId" [routerLink]="['/enterprises', invitation.enterpriseId]">profile</a>
+    <span *ngIf="!invitation.enterpriseId">profile</span>.
+  </p>
+  <p *ngIf="!auth.loggedIn">If you accept the invitation, you will be redirected to Log In / Sign Up page of the BMP
+    for the authentication.</p>
+  <footer>
+    <button mat-raised-button color="primary" [routerLink]="['/user/enterprises/invite/', invitation.id]">
+      <mat-icon>check</mat-icon> Accept invitation
+    </button>
+    <button mat-stroked-button color="accent" routerLink="/">Cancel</button>
+  </footer>
+</section>
+
+<section class="page-content error" *ngIf="state === 'error'">
+  <p>
+    <mat-icon>warning</mat-icon> Unfortunatelly the provided invitation link is not valid
+    or is already used.
+  </p>
+  <p>Please verify the link and, if needed, request a new invitation link.</p>
+
+</section>

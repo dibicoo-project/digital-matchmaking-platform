@@ -1,0 +1,20 @@
+runtime: nodejs12
+
+handlers:
+- url: /
+  static_files: dist/front-end/index.html
+  upload: dist/front-end/index.html
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.*\..*)
+  static_files: dist/front-end/\1
+  upload: dist/front-end/.*\..*
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /.*
+  static_files: dist/front-end/index.html
+  upload: dist/front-end/index.html
+  secure: always
+  redirect_http_response_code: 301

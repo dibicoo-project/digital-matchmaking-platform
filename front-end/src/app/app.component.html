@@ -1,0 +1,259 @@
+<header>
+  <mat-toolbar color="primary">
+    <button type="button" aria-label="Toggle navigation menu" mat-icon-button class="menu-button"
+      (click)="sidebar.toggle()">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+
+    <a routerLink="" class="brand">
+      <img src="assets/logo.png" />
+      <span *ngIf="(isHandset$ | async) === false">Biogas and Gasification Matchmaking Platform</span>
+    </a>
+
+    <span class="mr-auto"></span>
+
+    <mat-menu #infoMenu="matMenu" xPosition="before">
+      <button mat-menu-item routerLink="about">
+        About
+      </button>
+      <a mat-menu-item
+        href="https://storage.googleapis.com/dibicoo-matchmaking-tool.appspot.com/DiBiCoo%20platform%20user%20manual.pdf"
+        target="_blank">
+        User manual <mat-icon inline>open_in_new</mat-icon>
+      </a>
+      <button mat-menu-item routerLink="faq">
+        FAQ
+      </button>
+      <a mat-menu-item
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfzwMA99cBBHpYuDhF8GM3hmKMVzc1rNRolhSOjgb3NrWWTrQ/viewform"
+        target="_blank">
+        Feedback <mat-icon inline>open_in_new</mat-icon>
+      </a>      
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="infoMenu">
+      <mat-icon>info</mat-icon>
+    </button>
+
+    <ng-container *ngIf="auth.userProfile$ | async as profile">
+
+      <ng-container *ngIf="notifications.unread$ | async as items">
+
+        <mat-menu #notificationMenu="matMenu" class="notification-menu">
+          <div class="notification-header">
+            <h3>Notifications</h3>
+            <a routerLink="/user/notifications">View all</a>
+            <a routerLink="/user/notifications/settings" title="Notification settings">
+              <mat-icon>settings</mat-icon>
+            </a>
+          </div>
+
+          <div class="notification-items">
+            <div *ngFor="let item of items" class="notification-item">
+              <mat-icon class="notification-icon">{{item.icon}}</mat-icon>
+              <button mat-icon-button class="cancel-button" (click)="notifications.markAsRead(item.id)">
+                <mat-icon>cancel</mat-icon>
+              </button>
+              <h3>{{item.title}}</h3>
+              <div class="notification-item__body" [innerHtml]="item.body"></div>
+              <p>
+                <ng-container *ngFor="let link of item.links">
+                  <a *ngIf="!link.external" [routerLink]="link.url" [fragment]="link.fragment">{{link.label}}</a>
+                  <a *ngIf="link.external" [href]="link.url" target="_blank">{{link.label}}</a>
+                </ng-container>
+              </p>
+            </div>
+            <div *ngIf="items.length === 0" class="notification-empty">
+              You have no new notifications.
+            </div>
+          </div>
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="notificationMenu" class="notification-button">
+          <mat-icon [class.unread]="items?.length > 0">notifications_active</mat-icon>
+        </button>
+
+      </ng-container>
+
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="/admin/categories" *ngIf="auth.userHasRoles$(['admin']) | async">
+          <mat-icon>category</mat-icon>
+          Manage categories
+        </button>
+        <button mat-menu-item routerLink="/admin/enterprises" *ngIf="auth.userHasRoles$(['admin']) | async">
+          <mat-icon>fact_check</mat-icon>
+          Review company profiles
+        </button>
+        <button mat-menu-item routerLink="/admin/applications" *ngIf="auth.userHasRoles$(['admin']) | async">
+          <mat-icon>feedback</mat-icon>
+          Review business opportunities
+        </button>
+        <button mat-menu-item routerLink="/admin/notifications/send" *ngIf="auth.userHasRoles$(['admin']) | async">
+          <mat-icon>campaign</mat-icon>
+          Send notification
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="auth.logout()">
+          <mat-icon>logout</mat-icon>
+          Log Out
+        </button>
+      </mat-menu>
+
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+        <img src="{{profile.picture}}" class="user-avatar" alt="User avatar" />
+        <span *ngIf="(isHandset$ | async) === false" class="pl-1"> {{profile.name}}</span>
+      </button>
+    </ng-container>
+    <button mat-button (click)="auth.login()" *ngIf="!auth.loggedIn">
+      Log In / Sign Up
+    </button>
+
+  </mat-toolbar>
+</header>
+<mat-sidenav-container autosize>
+  <mat-sidenav #sidebar class="sidebar" fixedInViewport="true" [fixedTopGap]="(isHandset$ | async) ? 56 : 64"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(showSidebar$ | async) === true && (isHandset$ | async) === false">
+    <mat-nav-list>
+      <div mat-subheader>
+        Company profiles
+      </div>
+      <a mat-list-item routerLink="enterprises" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon svgIcon="companies-explorer"></mat-icon> Companies explorer
+      </a>
+      <a mat-list-item routerLink="enterprises/matchmaking" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon svgIcon="companies-matchmaking"></mat-icon> Companies matchmaking
+      </a>
+      <a mat-list-item routerLink="user/enterprises/matchmaking" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <span class="sub"></span>
+        <mat-icon>playlist_add_check</mat-icon>Saved filters
+      </a>
+      <a mat-list-item routerLink="enterprises/globalmap" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon svgIcon="companies-global-map"></mat-icon> Companies on global map
+      </a>
+      <a mat-list-item routerLink="user/enterprises/watchlist" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <mat-icon>star</mat-icon> My watchlist
+      </a>
+      <a mat-list-item routerLink="user/enterprises" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+        *ngIf="auth.loggedIn">
+        <mat-icon>person</mat-icon> My companies
+      </a>
+      <a mat-list-item routerLink="user/enterprises/new" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <span class="sub"></span>
+        <mat-icon>add</mat-icon> Add company profile
+      </a>
+      <mat-divider></mat-divider>
+      <div mat-subheader>
+        Business opportunities
+      </div>
+      <a mat-list-item routerLink="applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon svgIcon="business-opportunities"></mat-icon> All business opportunities
+      </a>
+      <a mat-list-item routerLink="user/applications/matchmaking" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <span class="sub"></span>
+        <mat-icon>playlist_add_check</mat-icon>Saved filters
+      </a>
+      <a mat-list-item routerLink="user/applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+        *ngIf="auth.loggedIn">
+        <mat-icon>person</mat-icon>
+        My business opportunities
+      </a>
+      <a mat-list-item routerLink="user/applications/new" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <span class="sub"></span>
+        <mat-icon>add</mat-icon>
+        Add business opportunity
+      </a>
+      <mat-divider></mat-divider>
+      <div mat-subheader>
+        Knowledge base
+      </div>
+      <a mat-list-item routerLink="knowledge-base/factsheets" routerLinkActive="active">
+        <mat-icon svgIcon="factsheets"></mat-icon> Factsheets
+      </a>
+      <a mat-list-item routerLink="knowledge-base/literature" routerLinkActive="active">
+        <mat-icon svgIcon="literature-sources"></mat-icon>
+        Literature sources
+      </a>
+      <a mat-list-item routerLink="knowledge-base/links" routerLinkActive="active">
+        <mat-icon>open_in_new</mat-icon>
+        Links and Videos
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="content">
+    <main [style.margin-top]="(isHandset$ | async) ? '56px' : '64px'">
+      <div class="outlet" [class.full-width]="(fullWidth$ | async) === true">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+    <footer>
+      <small class="text-muted">
+        ITF &copy; {{year}} |
+        <a routerLink="about">About</a> |
+        <a href="https://storage.googleapis.com/dibicoo-matchmaking-tool.appspot.com/DiBiCoo%20platform%20user%20manual.pdf"
+          target="_blank">
+          User manual <mat-icon inline>open_in_new</mat-icon>
+        </a> |
+        <a routerLink="fgp">FGP</a> |
+        <a routerLink="faq">FAQ</a> |
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzwMA99cBBHpYuDhF8GM3hmKMVzc1rNRolhSOjgb3NrWWTrQ/viewform"
+          target="_blank">
+          Feedback <mat-icon inline>open_in_new</mat-icon>
+        </a> |
+        <a routerLink="imprint">Imprint</a> |
+        <a routerLink="privacy">Privacy statement</a> |
+        <a routerLink="contact-us">Contact us</a> |
+        <a href="" (click)="resetCookiePreferences(); $event.preventDefault();">Cookie settings</a> |
+        API version: {{api?.version}}
+      </small>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<app-tour *ngIf="(showTour$ | async) === true"></app-tour>
+
+<div class="cookie-consent" *ngIf="!cookiesSaved" [formGroup]="consents">
+  <div class="consent-text">
+    <h2>We need your consent to use cookies</h2>
+    <h3>
+      <mat-checkbox checked="true" disabled="true">Mandatory</mat-checkbox>
+    </h3>
+    <p>
+      We have to use cookies to ensure that You are authenticated to the platform’s services and to keep You
+      signed in between sessions.
+    </p>
+    <h3>
+      <mat-checkbox formControlName="tracking">Tracking</mat-checkbox>
+    </h3>
+    <p>
+      We would like to improve the platform and provide <strong>statistics services</strong> for our users.
+      For it we are using the third party cookies. You can be sure that collected information:
+    </p>
+    <ul>
+      <li>is used only in summarized form;</li>
+      <li>is presented to the platform participants in the form of page view statistics;</li>
+      <li>is <strong>not used for advertisements</strong> or sales.</li>
+    </ul>
+    <h3>
+      <mat-checkbox formControlName="media">Media</mat-checkbox>
+    </h3>
+    <p>We are using <strong>Google Maps</strong> for platform participants visualization on a global scale.</p>
+
+    <p class="info">
+      To learn more about our data protection rules, cookies and third
+      party applications that we are using, please, read our <a routerLink="privacy">Privacy policy</a>.
+      <br />You can change your cookies preferences at any time.
+    </p>
+  </div>
+
+  <div class="consent-controls">
+    <button mat-raised-button (click)="saveCookiePreferences()" color="accent">Save preferences</button>
+  </div>
+</div>

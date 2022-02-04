@@ -1,0 +1,35 @@
+@import "dibicoo-theme";
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+
+  .mat-form-field {
+    flex: 0 0 auto;
+  }
+
+  .country,
+  .city {
+    margin-right: 0.5rem;
+  }
+
+  .city {
+    flex-grow: 1;
+  }
+
+  .address {
+    flex-basis: 100%;
+    order: 4
+  }
+
+  @include layout-bp(lt-sm) {    
+    .city {
+      margin-right: 0;
+      order: 3;
+    }
+
+    .country, .zip {
+      flex-grow: 1;
+    }
+  }
+}

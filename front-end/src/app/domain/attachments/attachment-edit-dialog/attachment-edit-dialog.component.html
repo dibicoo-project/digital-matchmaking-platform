@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>{{item.fileName}}</h2>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10" [(ngModel)]="item.description"
+      #text maxlength="2000"></textarea>
+    <mat-hint>Brief description of file content</mat-hint>
+    <mat-hint align="end">{{text.value?.length}}/2000</mat-hint>
+  </mat-form-field>
+
+  <mat-progress-bar [mode]="uploadProgress > 99 ? 'indeterminate' : 'determinate'" *ngIf="file" [value]="uploadProgress"
+    [class.hidden]="!uploadProgress"></mat-progress-bar>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button type="button" color="primary" (click)="save()">{{file ? 'Upload' : 'Update'}}</button>
+  <button mat-button mat-dialog-close type="button">Cancel</button>
+</div>

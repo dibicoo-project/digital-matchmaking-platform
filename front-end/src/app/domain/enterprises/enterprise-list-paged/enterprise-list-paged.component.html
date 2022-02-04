@@ -1,0 +1,62 @@
+<ng-template #emptyList>
+  <div class="empty-list">
+    <mat-icon>search_off</mat-icon>
+    <div #ref>
+      <ng-content select="[emptyListMessage]"></ng-content>
+    </div>
+    <ng-container *ngIf="!ref.hasChildNodes()">
+      <h3>No companies found.</h3>
+      <p>Please, refine your search options.</p>
+    </ng-container>
+  </div>
+</ng-template>
+
+<div *ngIf="(list$ | async) === null" class="company-list company-list--skeleton">
+  <mat-card *ngFor="let item of [1, 2, 3, 4, 5, 6]" class="company-skeleton">
+    <div mat-card-image>
+      <div></div>
+    </div>
+    <mat-card-header>
+      <div></div>
+      <div></div>
+      <div></div>
+    </mat-card-header>
+  </mat-card>
+</div>
+
+<ng-container *ngIf="(list$ | async) as list">
+  <div *ngIf="list.length as totalCount; else emptyList">
+    <div class="company-list-header">
+      <div class="sorting">
+        Order by:
+        <mat-button-toggle-group name="Order" [(ngModel)]="currentSort">
+          <mat-button-toggle value="ts">
+            <mat-icon>update</mat-icon> Recenlty updated
+          </mat-button-toggle>
+          <mat-button-toggle value="cn">
+            <mat-icon>vertical_align_bottom</mat-icon> Company name
+          </mat-button-toggle>
+          <mat-button-toggle value="cnr">
+            <mat-icon>vertical_align_top</mat-icon> Company name
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <mat-paginator class="paginator" [length]="totalCount" pageSize="12" hidePageSize="true" [pageIndex]="currentPage"
+        (page)="currentPage = $event.pageIndex">
+      </mat-paginator>
+    </div>
+
+    <div class="company-list">
+      <app-enterprise-card *ngFor="let item of pagedList$ | async" [enterprise]="item"
+        [routerLink]="['/enterprises', item.id]" queryParamsHandling="merge">
+      </app-enterprise-card>
+    </div>
+
+    <div class="company-list-footer">
+      <mat-paginator class="paginator" [length]="totalCount" pageSize="12" hidePageSize="true" [pageIndex]="currentPage"
+        (page)="currentPage = $event.pageIndex">
+      </mat-paginator>
+    </div>
+  </div>
+</ng-container>

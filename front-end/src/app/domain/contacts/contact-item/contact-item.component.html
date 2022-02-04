@@ -1,0 +1,35 @@
+<mat-icon>{{ item?.name ? "person" : "business"}}</mat-icon>
+<ul>
+  <li *ngIf="item?.name"><strong>{{item.name}}</strong></li>
+  <li *ngIf="item?.department"><em>{{item.department}}</em></li>
+  <li *ngFor="let one of mainElements">
+    <a [href]="url(one)" target="_blank">
+      {{one.value}}
+    </a>
+  </li>
+</ul>
+<ul class="social__list">
+  <li class="social__item" *ngFor="let one of socialElements" [ngSwitch]="one.type">
+    <a *ngSwitchCase="'twitter'" [href]="url(one)" target="_blank">
+      <i class="fab fa-2x fa-twitter-square"></i>
+    </a>
+    <a *ngSwitchCase="'facebook'" [href]="url(one)" target="_blank">
+      <i class="fab fa-2x fa-facebook-square"></i>
+    </a>
+    <a *ngSwitchCase="'linkedin'" [href]="url(one)" target="_blank">
+      <i class="fab fa-2x fa-linkedin"></i>
+    </a>
+    <a *ngSwitchCase="'youtube'" [href]="url(one)" target="_blank">
+      <i class="fab fa-2x fa-youtube-square"></i>
+    </a>
+    <a *ngSwitchCase="'instagram'" [href]="url(one)" target="_blank">
+      <i class="fab fa-2x fa-instagram-square"></i>
+    </a>
+    <a *ngSwitchCase="'other'" [href]="url(one)" target="_blank">
+      <i class="fa fa-2x fa-share-alt-square"></i>
+    </a>
+  </li>
+</ul>
+<div>
+  <ng-content></ng-content>
+</div>

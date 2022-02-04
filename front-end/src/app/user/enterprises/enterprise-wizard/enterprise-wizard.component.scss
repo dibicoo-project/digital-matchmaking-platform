@@ -1,0 +1,279 @@
+@import "dibicoo-theme";
+
+/* Wizard steps */
+
+@mixin line {
+  display: block;
+  position: absolute;
+  background-color: red;
+  width: 50%;
+  height: 0.5rem;
+  top: 2.25rem;
+  z-index: -1;
+  content: "";
+}
+
+@mixin tab-color($color, $bg-color: $color) {
+  color: $color;
+  .mat-icon {
+    background-color: $bg-color;
+  }
+
+  &::before {
+    background-color: $bg-color;
+  }
+
+  &::after {
+    background-color: $bg-color;
+  }
+}
+
+.steps {
+  display: flex;
+
+  list-style: none;
+  padding: 0;
+
+  li {
+    flex: 1 0 1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+
+    text-align: center;
+    position: relative;
+
+    &:not(:last-child)::after {
+      @include line;
+      right: 0px;
+    }
+
+    &:not(:first-child)::before {
+      @include line;
+      left: 0px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+
+      .mat-icon {
+        margin: 1rem;
+        padding: 0.75rem;
+        border-radius: 50%;
+        color: $bg-primary-xlight;
+      }
+
+      h2 {
+        padding: 1rem;
+      }
+    }
+
+    &.pending {
+      @include tab-color($neutral, $neutral-light);
+    }
+
+    &.valid {
+      @include tab-color($primary);
+    }
+
+    &.invalid {
+      @include tab-color($warn);
+    }
+
+    &.active {
+      @include tab-color($accent);
+    }
+  }
+}
+
+/* Card contents */
+.mat-card-header {
+  @include muted-icons;
+  .mat-icon.mat-card-avatar {
+    height: auto;
+    width: auto;
+  }
+  .status-text {
+    margin-left: auto;
+    color: $neutral;
+    .mat-icon {
+      vertical-align: bottom;
+    }
+  }
+}
+
+.step-content {
+  margin: 0;
+  &:not(.active) {
+    display: none;
+  }
+
+  h3 {
+    @include muted-icons;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .mat-2-line {
+    height: unset;
+    padding: 0.25rem 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+
+    h3 {
+      grid-row: 1;
+    }
+
+    &__all,
+    &__selected {
+      border: solid 1px $primary-xlight;
+      border-radius: 0.25rem;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    &__selected {
+      padding-left: 1rem;
+    }
+
+    &__required {
+      margin: 0;
+      line-height: 36px;
+      color: $warn;
+    }
+  }
+
+  .param-row + .param-row {
+    margin-top: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    flex-wrap: wrap;
+
+    .logo-container {
+      max-height: 20rem;
+      max-width: 20rem;
+      margin-top: 0.5rem;
+      padding-right: 0.5rem;
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+        border: solid 1px $bg-primary-light;
+      }
+    }
+    input[type="file"] {
+      display: none;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+
+      button {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  .key-project {
+    border-left: solid 2px $bg-neutral;
+    margin-left: 0.25rem;
+    padding-left: 0.75rem;
+
+    p {
+      @include muted-icons;
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+    }
+
+    em {
+      color: $default-muted;
+    }
+  }
+
+  .rejected-message {
+    color: $rejected;
+    .mat-icon {
+      float: left;
+      padding: 0 0.5rem 2rem 0;
+    }
+  }
+
+  .validation-errors {
+    color: $warn;
+    a {
+      color: $warn;
+    }
+    p {
+      margin: 0;
+    }
+    ul {
+      list-style: none;
+      padding-left: 2rem;
+      margin: 0;
+    }
+  }
+
+  .profile-status {
+    .draft {
+      color: $neutral;
+    }
+    .pending {
+      color: $accent;
+    }
+    .rejected {
+      color: $rejected;
+    }
+    .published {
+      color: $primary;
+    }
+
+    em {
+      color: $default-muted;
+    }
+  }
+}
+
+.key-project-dialog {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+
+  .mat-form-field {
+    flex: 1 1 auto;
+    margin-bottom: 1rem;
+  }
+
+  .mat-checkbox {
+    margin-bottom: 1rem;
+    flex-basis: 100%;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}
+
+/* Footer */
+button.right {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.addinf {
+  color: grey;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}

@@ -1,0 +1,46 @@
+@import "dibicoo-theme";
+
+:host {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+
+  align-items: center;
+  padding: 0;
+
+  @include muted-icons;
+  
+  mat-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2.5rem;
+  }  
+
+  .social__list {
+    line-height: 0;
+    margin-top: 0.5rem;
+  }
+
+  .social__item {
+    display: inline-block;
+
+    .fa, .fab {
+      color: $default-icon;
+      
+      &:hover {
+        color: $accent;
+      }
+    }
+
+    line-height: 0;
+    margin: 0 0.25rem;        
+  }
+  
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}

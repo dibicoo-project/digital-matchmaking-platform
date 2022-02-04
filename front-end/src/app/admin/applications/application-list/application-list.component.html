@@ -1,0 +1,71 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Administrator</li>
+    <li>...</li>
+  </ul>
+  <h1>Review business opportunities</h1>
+</header>
+<section class="page-content">
+  <mat-tab-group (selectedIndexChange)="tabChanged($event)" [selectedIndex]="selectedTab">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="pending.length" matBadgeOverlap="false" matBadgeSize="small">Pending review</span>
+      </ng-template>
+
+      <app-application-card *ngFor="let app of pending" [app]="app">
+        <button mat-stroked-button color="primary" [routerLink]="[app.id]">
+          <mat-icon>view_list</mat-icon> Show details
+        </button>
+      </app-application-card>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="reported.length" matBadgeOverlap="false" matBadgeSize="small">Reported</span>
+      </ng-template>
+      <ng-container *ngTemplateOutlet="applicationList; context: { $implicit: reported }">
+      </ng-container>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="published.length" matBadgeOverlap="false" matBadgeSize="small">Published</span>
+      </ng-template>
+      <ng-container *ngTemplateOutlet="applicationList; context: { $implicit: published }">
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>
+
+  <ng-template #applicationList let-apps>
+    <app-application-card *ngFor="let app of apps" [app]="app"
+      [cardClass]="app?.reports?.length ? 'rejected': 'published'">
+      <button mat-stroked-button color="primary" [routerLink]="['/applications', app.id]">
+        <mat-icon>view_list</mat-icon> Show details
+      </button>
+
+      <button mat-stroked-button color="accent" *ngIf="app?.reports?.length"
+        (click)="reportsClicked(reportDialog, app)">
+        <mat-icon>feedback</mat-icon>
+        View {{app?.reports?.length}} report{{app?.reports?.length > 1 ? 's' : ''}}
+      </button>
+
+      <button mat-stroked-button color="warn" (click)="unpublish(app.id)">
+        <mat-icon>cancel</mat-icon> Unpublish
+      </button>
+
+    </app-application-card>
+  </ng-template>
+
+  <ng-template #reportDialog let-data>
+    <h2 mat-dialog-title>Business opportunity reports</h2>
+    <div mat-dialog-content>
+      <p *ngFor="let rep of data">
+        <span class="date">{{rep.ts | date:'medium'}}</span> {{rep.message}}
+      </p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+    </div>
+
+  </ng-template>
+
+</section>

@@ -1,0 +1,48 @@
+<p class="required-label">Please, specify at least one contact item</p>
+<ul class="contacts">
+  <li *ngFor="let item of contacts; let i = index" class="contact__item">
+    <app-contact-item [item]="item">
+      <ng-container *ngIf="!readonly">
+        <button mat-icon-button type="button" color="primary" (click)="editContact(i, item)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button type="button" color="warn" (click)="removeContact(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-container>
+    </app-contact-item>
+  </li>
+</ul>
+
+<div *ngIf="!readonly" class="buttons">
+  <button mat-stroked-button color="primary" type="button" (click)="addContact()">
+    <mat-icon>person_add</mat-icon>
+    Add contact item
+  </button>
+
+  <button mat-stroked-button color="accent" type="button" (click)="selectContact(selectContactDialog)">
+    <mat-icon>people</mat-icon>
+    Use registered contact
+  </button>
+</div>
+
+<ng-template #selectContactDialog>
+  <h2 mat-dialog-title>Select from registered contacts</h2>
+  <div mat-dialog-content>
+    <mat-action-list>
+      <button mat-list-item [mat-dialog-close]="profile" *ngIf="profile$ | async as profile">
+        <mat-icon mat-list-icon>person</mat-icon>
+        {{contactText(profile)}}
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-list-item *ngFor="let one of service.all$ | async" [mat-dialog-close]="one">
+        <mat-icon mat-list-icon>{{ one?.name ? "person" : "business"}}</mat-icon>
+        {{contactText(one)}}
+      </button>
+    </mat-action-list>
+
+    <ng-template #emptyList>
+      <p>No contacts found!</p>
+    </ng-template>
+  </div>
+</ng-template>

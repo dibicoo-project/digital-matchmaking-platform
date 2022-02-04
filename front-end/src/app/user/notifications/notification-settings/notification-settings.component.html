@@ -1,0 +1,41 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink="..">Notifications</a></li>
+    <li>Notification settings</li>
+  </ul>
+  <h1>Notification settings</h1>
+</header>
+<section class="page-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="settingsForm">
+        <p>
+          <mat-checkbox formControlName="enabled">
+            Subscribe for e-mail notifications
+          </mat-checkbox>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Your email address</mat-label>
+            <input matInput formControlName="email" required>
+          </mat-form-field>
+        </p>
+        <p [class.muted]="!settingsForm.get('enabled').value">A weekly summary about the platform events and
+          notifications related to your profile will be sent to the
+          provided e-mail address.</p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <footer>
+    <button mat-stroked-button type="button" color="accent" routerLink="..">
+      <mat-icon>navigate_before</mat-icon> Back to notifications
+    </button>
+
+    <button mat-raised-button type="button" color="primary" [disabled]="!settingsForm.valid" (click)="save()">
+      <mat-icon>check_circle</mat-icon> Save settings
+    </button>
+  </footer>
+
+</section>

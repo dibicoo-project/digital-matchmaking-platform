@@ -1,0 +1,294 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink="..">My companies</a></li>
+    <li>...</li>
+  </ul>
+  <h1>{{company.companyName || 'Company profile wizard'}}</h1>
+</header>
+<section class="page-content">
+  <ul class="steps" role="tablist">
+    <li *ngFor="let step of steps; let idx = index;" role="tab" [ngClass]="step.status"
+      [class.active]="step === activeStep">
+      <a routerLink="." [fragment]="step.code">
+        <mat-icon>{{step.icon}}</mat-icon>
+        <h3>{{step.name}}</h3>
+      </a>
+    </li>
+  </ul>
+  <form [formGroup]="companyForm">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>{{activeStep.icon}}</mat-icon>
+        <h2 mat-card-title>{{activeStep.name}}</h2>
+
+        <div class="status-text" [ngSwitch]="autoSaveStatus">
+          <span *ngSwitchCase="'saved'">
+            <mat-icon inline>cloud_done</mat-icon>
+            Saved as {{company.status}} {{company.changedTs | timeAgo}}
+          </span>
+          <span *ngSwitchCase="'saving'">
+            <mat-icon inline>cloud_queue</mat-icon>
+            Saving company profile...
+          </span>
+          <span *ngSwitchCase="'error'" class="rejected-message">
+            <mat-icon inline>warning</mat-icon>
+            Error saving company profile
+          </span>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="step-content" [class.active]="activeStep.code === 'general'" formGroupName="general">
+        <mat-form-field class="param-row">
+          <mat-label>Name of the company</mat-label>
+          <input matInput formControlName="companyName" maxlength="250" required>
+        </mat-form-field>
+
+        <mat-form-field class="param-row">
+          <mat-label>Company profile</mat-label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10" maxlength="2000"
+            required #profileText formControlName="companyProfile"></textarea>
+          <mat-hint>Brief description of the company profile</mat-hint>
+          <mat-hint align="end">{{profileText.value?.length}}/2000</mat-hint>
+        </mat-form-field>
+
+        <div class="param-row logo">
+          <div *ngIf="company.imageUrl" class="logo-container">
+            <img [src]="company.imageUrl" />
+          </div>
+
+          <input type="file" accept=".png, .jpg, .jpeg" (change)="logoChanged($event)" #fileInput>
+          <div class="controls">
+            <button mat-stroked-button color="primary" (click)="fileInput.click()" type="button">
+              <mat-icon>image_search</mat-icon> {{ company.imageUrl ? 'Change Company Logo' : 'Select Company Logo'}}
+            </button>
+            <button mat-stroked-button color="warn" (click)="deleteLogoClicked()" *ngIf="company.imageUrl"
+              type="button">
+              <mat-icon>delete</mat-icon> Delete Logo
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-content class="step-content" [class.active]="activeStep.code === 'contacts'" formGroupName="contacts">
+        <mat-form-field class="param-row">
+          <mat-label>Website</mat-label>
+          <input matInput type="url" formControlName="webPage" placeholder="http://" pattern="^https?:\/\/[\w.-]+[^\s]*"
+            maxlength="250">
+          <mat-error *ngIf="companyForm.get('contacts').get('webPage').errors?.pattern">Please enter a valid url
+          </mat-error>
+        </mat-form-field>
+
+        <h3>
+          <mat-icon inline>contacts</mat-icon> Contact options
+        </h3>
+        <app-contact-list formControlName="contacts" required="true"></app-contact-list>
+
+        <h3>
+          <mat-icon inline>location_on</mat-icon> Address information
+        </h3>
+
+        <div class="param-row">
+          <app-location-input formControlName="location"></app-location-input>
+        </div>
+
+        <div class="param-row">
+          <mat-checkbox formControlName="displayOnGlobalMap" color="primary">
+            Display company on the global map
+          </mat-checkbox>
+          <p class="addinf">By selecting this checkbox, you agree that the company address will be visible to all users of the platform.</p>
+          <p class="addinf">Provided contact information will be visible for all platform users. Read more about privacy
+            <a routerLink="/privacy" target="_blank">here</a>.
+          </p>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-content class="step-content" [class.active]="activeStep.code === 'business'" formGroupName="business">
+        <p>Categories relevant to the company business field.</p>
+        <p>Please choose at least one category or specify a sub-category. This category will be used for company filtering
+          and automatic matching with the business opportunities.</p>
+
+        <div class="param-row category-grid">
+          <h3>All categories</h3>
+          <app-category-tree-select formControlName="categoryIds" class="category-grid__all"></app-category-tree-select>
+
+          <h3>Selected categories</h3>
+          <div class="category-grid__selected">
+            <p *ngIf="companyForm.get('business').get('categoryIds').invalid" class="category-grid__required">Please,
+              select at least one category.</p>
+            <app-category-tree [selectedIds]="companyForm.get('business').get('categoryIds').value"></app-category-tree>
+          </div>
+        </div>
+
+        <div class="param-row">
+          <h3>The company applies the following standards:</h3>
+          <mat-selection-list formControlName="standards">
+            <mat-list-option checkboxPosition="before" *ngFor="let item of standards" [value]="item.code">
+              <p matLine>{{item.code}}</p>
+              <p matLine [innerHtml]="item.label"></p>
+            </mat-list-option>
+          </mat-selection-list>
+          <mat-form-field>
+            <mat-label>Other standards</mat-label>
+            <input matInput maxlength="250" formControlName="otherStandards">
+          </mat-form-field>
+
+
+        </div>
+      </mat-card-content>
+
+      <mat-card-content class="step-content" [class.active]="activeStep.code === 'projects'" formGroupName="projects">
+        <mat-form-field class="param-row">
+          <mat-label>General description of implemented projects</mat-label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"
+            formControlName="referenceProjects" #referenceProjects maxlength="2000"></textarea>
+          <mat-hint align="end">{{referenceProjects.value?.length}}/2000</mat-hint>
+        </mat-form-field>
+
+        <h3>
+          <mat-icon inline>bookmarks</mat-icon> Key projects implemented in specific countries
+          ({{keyProjects.length}}/{{maxKeyProjects}})
+        </h3>
+
+        <div class="param-row key-project" *ngFor="let proj of keyProjects; let i = index;">
+          <h3>{{proj.title}}</h3>
+
+          <p>
+            <mat-icon inline>location_on</mat-icon>
+            <app-location-text [location]="proj.location"></app-location-text>
+            <em *ngIf="proj.showOnMap"> (shown on map)</em>
+          </p>
+          <p>{{proj.description}}</p>
+          <button mat-icon-button type="button" color="primary" (click)="editKeyProject(keyProjectDialog, proj)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button type="button" color="warn" (click)="removeKeyProject(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <button class="param-row" mat-stroked-button color="primary" type="button" aria-label="Add key project"
+          [disabled]="keyProjects.length >= maxKeyProjects" (click)="addKeyProject(keyProjectDialog)">
+          <mat-icon>add</mat-icon> Add key project
+        </button>
+
+      </mat-card-content>
+
+      <mat-card-content class="step-content" [class.active]="activeStep.code === 'attachments'"
+        formGroupName="attachments">
+        <p class="addinf">Additional files can be uploaded to provide additional information about the company. Some
+          examples include: marketing information, reports, quality certificates etc.<br>
+          Attachments shall be uploaded in English.<br>
+          Uploaded files can be documents (e.g. .pdf) or images (e.g. .png), there is a limit of <strong>5
+            files</strong> with size up to <strong>5MB per file</strong>.</p>
+        <app-attachment-list formControlName="attachments"></app-attachment-list>
+
+      </mat-card-content>
+
+      <mat-card-content class="step-content" [class.active]="activeStep.code === 'publishing'">
+
+        <p class="param-row" *ngIf="company.isPublic">
+          Previous version of this company profile <strong>has been published</strong>.
+          However, you can make changes in this draft and submit new version for the publishing.
+        </p>
+
+        <p class="param-row" *ngIf="company?.pendingReview">
+          Current version of this company profile is <strong>pending review</strong> before publishing.
+        </p>
+
+        <div *ngIf="company?.rejectReason" class="rejected-message param-row">
+          <mat-icon>report</mat-icon>
+          <p>This company profile previously has been rejected by the Administrator with reason:
+            <br>
+            <em>{{company.rejectReason}}</em>.
+          </p>
+
+          <p>Please, fix mentioned shortcommings and re-submit the company profile for the publishing again.</p>
+        </div>
+
+        <div class="validation-errors param-row" *ngIf="validationErrors.length > 0">
+          <p>
+            Required information is missing in following sections:
+          </p>
+          <ul>
+            <li *ngFor="let err of validationErrors">
+              <a routerLink="." [fragment]="err.code">{{err.name}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <h3>
+          <mat-checkbox [(ngModel)]="readyForPublishing" [ngModelOptions]="{standalone: true}" color="primary"
+            [disabled]="companyForm.invalid" class="consent">
+            The specified information is <strong>correct and can be published</strong> in Biogas and Gasification
+            Matchmaking Platform.
+          </mat-checkbox>
+        </h3>
+
+        <p>This means that all provided information (including contact information) will be visible for any
+          platform user.</p>
+        <p>Before publishing, company profile is <strong>reviewed by the platform administrators</strong>. You will
+          recieve a notification when company profile will be published.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <footer>
+      <button mat-stroked-button type="button" color="accent" *ngIf="!activeStep.isFirst" (click)="back()">
+        <mat-icon>navigate_before</mat-icon> Go back
+      </button>
+      <button mat-stroked-button type="button" color="accent" *ngIf="activeStep.isFirst" routerLink="..">
+        <mat-icon>cancel</mat-icon> Exit wizard
+      </button>
+
+      <button mat-raised-button type="button" color="primary" class="right" *ngIf="!activeStep.isLast" (click)="next()">
+        Continue
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+
+      <button mat-raised-button type="button" color="primary" class="right" *ngIf="activeStep.isLast"
+        [disabled]="!(companyForm.valid && readyForPublishing)" (click)="publish()">
+        <mat-icon>check_circle</mat-icon> Submit for publishing
+      </button>
+    </footer>
+
+  </form>
+
+  <ng-template #keyProjectDialog let-data>
+    <h2 mat-dialog-title>Key project</h2>
+    <div mat-dialog-content class="key-project-dialog">
+      <mat-form-field class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput required [(ngModel)]="data.title" maxlength="250">
+      </mat-form-field>
+
+      <div class="full-width">
+        <app-location-input [(ngModel)]="data.location"></app-location-input>
+      </div>
+
+      <mat-checkbox [(ngModel)]="data.showOnMap" color="primary">
+        Show project on the global map
+      </mat-checkbox>
+
+      <mat-form-field class="full-width">
+        <mat-label>Website</mat-label>
+        <input matInput type="url" [(ngModel)]="data.webPage" placeholder="http://" pattern="^https?:\/\/[\w.-]+[^\s]*"
+          maxlength="250" #webPageInput="ngModel">
+        <mat-error *ngIf="webPageInput.errors?.pattern">Please enter a valid url
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"
+          placeholder="Project description" [(ngModel)]="data.description" maxlength="2000" required></textarea>
+        <mat-hint align="end">{{data.description?.length}}/2000</mat-hint>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button [mat-dialog-close]="data" type="button" color="primary"
+        [disabled]="!data.title || !data.description || !data.location.country">Done</button>
+      <button mat-button mat-dialog-close type="button">Cancel</button>
+    </div>
+  </ng-template>
+</section>

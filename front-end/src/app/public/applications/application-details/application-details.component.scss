@@ -1,0 +1,132 @@
+@import "dibicoo-theme";
+
+$section-gap: 3rem;
+
+.page-header {
+  h1 {
+    .avatar {
+      display: inline-block;
+      height: 3rem;
+      vertical-align: bottom;
+      margin-bottom: -0.5rem;
+    }
+  }
+}
+
+.metadata {
+  list-style: none;
+  padding: 0;
+  color: $accent;
+  margin: 0;
+
+  li {
+    display: inline;
+    margin-right: 2rem;
+  }
+}
+
+.hero {
+  margin: $section-gap -20rem 0 -20rem;
+  padding: $section-gap 20rem;
+}
+
+.contacts {
+  background: linear-gradient(90deg, $bg-primary-xlight, $bg-accent-light, $bg-primary-xlight);
+  display: flex;
+  flex-wrap: wrap;
+
+  &__header {
+    flex: 1 1 100%;
+    display: flex;
+    align-items: center !important;
+    margin-bottom: $section-gap;
+  }
+}
+
+.section {
+  @include muted-icons;
+  margin-top: $section-gap;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+
+  &--no-margin {
+    margin-top: 0;
+  }
+
+  &__icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 3rem;
+    margin-right: 1rem;
+  }
+
+  &__title {
+    margin-bottom: 0.5rem;
+    flex: 1 1 auto;
+  }
+
+  &__content {
+    flex: 1 1 100%;
+    margin: 0.5rem 0 0 0;
+  }
+
+  &__text {
+    column-count: 2;
+    column-gap: 2rem;
+    white-space: pre-line;
+
+    @include layout-bp(lt-md) {
+      column-count: 1;
+    }
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  display: flex;
+  margin-top: 2rem;
+  align-items: baseline;
+
+  &__icon {
+    align-self: flex-start;
+    margin-right: 0.5rem;
+  }
+
+  &__title {
+    h3 {
+      margin-bottom: 0.25rem;
+    }
+    margin-right: 2rem;
+    margin-bottom: 0.5rem;
+    flex: 0 0 18rem;
+  }
+
+  &__text {
+    margin: 0;
+  }
+
+  @include layout-bp(lt-md) {
+    flex-wrap: wrap;
+
+    &__title {
+      flex-grow: 1;
+    }
+  }
+}
+
+footer {
+  margin-top: 2rem;
+  display: flex;
+
+  color: $default-muted;
+
+  .report {
+    margin-left: auto;
+  }
+}

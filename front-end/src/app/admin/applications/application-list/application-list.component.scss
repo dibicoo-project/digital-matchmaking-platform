@@ -1,0 +1,19 @@
+@import 'dibicoo-theme';
+
+.date {
+  color: $default-muted;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+app-application-card {
+  display: block;
+  margin: 0.5rem 0.1rem 0.1rem;
+
+  button + button {
+    margin-left: 0.5rem;
+  }
+}

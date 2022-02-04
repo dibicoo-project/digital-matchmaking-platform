@@ -1,0 +1,21 @@
+@import "dibicoo-theme";
+
+.tree-node-closed {
+  display: none;
+}
+
+.tree-toggle {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding-left: 0.5rem;
+}
+
+.tree-node-leaf {
+  padding-left: 1rem;
+  min-height: 36px;
+}
+
+.tree-nested {
+  padding-left: 1.5rem;
+}

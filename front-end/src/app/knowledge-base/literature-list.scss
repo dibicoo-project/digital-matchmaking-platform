@@ -1,0 +1,59 @@
+@import "dibicoo-theme";
+
+.literature-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+
+  ::ng-deep .mat-card-header-text {
+    margin: 0;
+  }
+
+
+  .mat-card {
+    display: flex;
+    flex-direction: column;
+    background-color: $bg-accent-xlight;
+
+    .mat-card-image {
+      max-height: 20rem;
+      object-fit: contain;
+     
+    }
+
+    .mat-card-content {
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .mat-button {
+      color: $accent;
+
+      .mat-icon {
+        color: $accent-xlight;
+      }
+    }
+  }
+
+  h2 {
+    grid-column-start: span 3;
+    margin-top: 2rem;
+  }
+
+  @include layout-bp(lt-md) {
+    grid-template-columns: repeat(2, 1fr);
+
+    h2 {
+      grid-column-start: span 2;
+    }
+  }
+
+  @include layout-bp(lt-sm) {
+    grid-template-columns: 1fr;
+
+    h2 {
+      grid-column-start: 1;
+    }
+  }
+}

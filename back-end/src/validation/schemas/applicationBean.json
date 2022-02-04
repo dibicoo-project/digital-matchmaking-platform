@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://dibicoo.org/applicationBean.json",
+    "additionalProperties": false,
+    "definitions": {},
+    "properties": {
+        "mainCategoryId": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultId"
+        },
+        "categoryId": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultId"
+        },
+        "description": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultLongString"
+        },
+        "location": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/Location"
+        },
+        "details": {
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "number"
+                        }
+                    ]
+                }
+            }
+        },
+        "attachments": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/AttachmentArray"
+        },
+        "companyName": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
+        },
+        "contactLocation": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/Location"
+        },
+        "contacts": {
+            "items": {
+                "$ref": "http://dibicoo.org/common.json#/definitions/ContactItem"
+            },
+            "type": "array"
+        },
+        "dueDate": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "format": "date-time"
+        },        
+        "rejectReason": {
+            "anyOf": [
+                {
+                    "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        }
+    },
+    "type": "object"
+}

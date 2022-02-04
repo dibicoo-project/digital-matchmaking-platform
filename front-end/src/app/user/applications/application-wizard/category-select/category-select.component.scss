@@ -1,0 +1,62 @@
+@import "dibicoo-theme";
+
+.wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.root {
+  flex: 1 1 100%;
+  flex-direction: column;
+  display: flex;
+
+  .title {
+    display: flex;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
+    border-bottom: solid 1px $neutral-light;
+
+    .back {
+      @include muted-icons;
+      margin: auto 0;
+    }
+
+    app-image-avatar {
+      height: 4rem;
+      width: 4rem;
+      display: block;
+    }
+
+    h3 {
+      margin: auto 1rem;
+    }
+  }
+
+  .col-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .child {
+      flex: 0 1 24%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .child {
+    text-align: left;
+    padding: 0.25rem;
+    margin: 0.25rem;
+    
+    app-image-avatar {
+      height: 3rem;
+      width: 3rem;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .selected {
+    background-color: $bg-neutral;
+  }
+}

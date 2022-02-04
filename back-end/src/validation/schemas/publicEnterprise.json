@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://dibicoo.org/publicEnterprise.json",
+    "type": "object",
+    "required": [
+        "companyName",
+        "companyProfile",
+        "contacts",
+        "location",
+        "categoryIds"
+    ]
+}

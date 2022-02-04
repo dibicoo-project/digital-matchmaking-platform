@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Contact item</h2>
+<div mat-dialog-content>
+  <mat-form-field >
+    <mat-label>Person name</mat-label>
+    <input matInput [(ngModel)]="item.name" maxlength="250">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Department</mat-label>
+    <input matInput [(ngModel)]="item.department" maxlength="250">
+  </mat-form-field>
+
+  <div class="elements" *ngFor="let el of item.elements; let i = index">
+    <mat-form-field class="type">
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="el.type" required>
+        <mat-option value="phone">Phone</mat-option>
+        <mat-option value="email">E-mail</mat-option>
+        <mat-option value="facebook">Facebook</mat-option>
+        <mat-option value="twitter">Twitter</mat-option>
+        <mat-option value="linkedin">Linkedin</mat-option>
+        <mat-option value="instagram">Instagram</mat-option>
+        <mat-option value="youtube">YouTube</mat-option>
+        <mat-option value="other">Other</mat-option>
+      </mat-select>      
+    </mat-form-field>
+
+    <mat-form-field class="value">
+      <mat-label>Value</mat-label>
+      <input matInput [(ngModel)]="el.value" required maxlength="250">
+    </mat-form-field>
+
+    <button mat-icon-button color="warn" type="button" aria-label="Remove element" (click)="removeElement(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  <button mat-stroked-button color="primary" type="button" aria-label="Add element"
+    (click)="addElement()">
+    <mat-icon>add</mat-icon> Add contact
+  </button>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="item" type="button" color="primary" [disabled]="!isValid()">Done</button>
+  <button mat-button mat-dialog-close type="button">Cancel</button>
+</div>

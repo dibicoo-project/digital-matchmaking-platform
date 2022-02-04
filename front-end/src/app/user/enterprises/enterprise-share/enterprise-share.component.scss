@@ -1,0 +1,48 @@
+@import 'dibicoo-theme';
+
+.mat-card + .mat-card {
+  margin-top: 0.5rem;
+}
+
+.muted {
+  color: $default-icon;
+}
+
+.invite-item {
+  p {
+    color: $default-muted;
+  }
+
+  .copy-button {
+    padding-left: 0.5rem;
+
+    $size: 1rem;
+    height: $size;
+    width: $size;
+    line-height: $size;
+
+    .mat-icon {
+      font-size: $size;  
+      height: $size;
+      width: $size;
+      line-height: $size;
+    }
+  }
+}
+
+.add-button {
+  margin-top: 0.5rem;
+}
+
+.mat-list-item:hover {
+  $background-palette: map-get($app-theme, background);
+  background-color: mat-color($background-palette, hover);
+}
+
+.full-width {
+  width: 100%;
+}
+
+footer {
+  margin-top: 1rem;
+}

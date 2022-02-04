@@ -1,0 +1,55 @@
+@import "dibicoo-theme.scss";
+
+.page-wrapper {
+  position: relative;
+
+  .media-message {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: $bg-neutral;
+
+    height: calc(100vh - 64px);
+    padding: 5rem;
+    box-sizing: border-box;
+
+    @include layout-bp(lt-sm) {
+      height: calc(100vh - 56px);
+      padding: 1rem;
+    }
+  }
+
+  .map-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    agm-map {
+      height: calc(100vh - 64px);
+
+      @include layout-bp(lt-sm) {
+        height: calc(100vh - 56px);
+      }
+    }
+  }
+
+  .filters {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: $bg-accent-xlight;
+    border: solid 1px $bg-accent-light;
+    border-radius: 0.5rem;
+
+    @include shadow(2px);
+
+    .mat-selection-list,
+    .mat-list {
+      color: $accent;
+      padding: 0;
+    }
+  }
+}

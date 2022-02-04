@@ -1,0 +1,23 @@
+markdown ::ng-deep img {
+  max-width: 90%;
+}
+
+footer {
+  display: flex;
+  div {
+    flex: 1 0 33%;
+
+    &:nth-child(1) {
+      text-align: left;
+    }
+
+    &:nth-child(2) {
+      text-align: center;
+
+    }
+
+    &:nth-child(3) {
+        text-align: right;
+    }
+  }
+}

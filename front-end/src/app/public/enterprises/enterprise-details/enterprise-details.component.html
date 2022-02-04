@@ -1,0 +1,122 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink=".." queryParamsHandling="merge">Company profiles</a></li>
+    <li>...</li>
+  </ul>
+
+  <div class="controls">
+    <button mat-icon-button color="accent" routerLink="." fragment="contact-form" title="Send message">
+      <mat-icon>message</mat-icon>
+    </button>
+
+    <button mat-icon-button color="accent" *ngIf="auth.loggedIn && watchlist.all$ | async as watched"
+      (click)="watchlist.toggle(enterprise?.id)"
+      [title]="(watched.includes(enterprise?.id) ? 'Remove from' : 'Add to') + ' watchlist'">
+      <mat-icon>{{watched.includes(enterprise?.id) ? 'star' : 'star_outline'}}</mat-icon>
+    </button>
+  </div>
+
+  <div class="company-header">
+    <div class="company-header__logo-container">
+      <img class="company-header__logo" [src]="enterprise?.imageUrl">
+    </div>
+
+    <div class="company-header__name-container">
+      <h1 class="company-header__name">{{enterprise?.companyName}}</h1>
+      <ul class="metadata">
+        <li>Updated: {{enterprise?.changedTs | date}}</li>
+        <li>Address:
+          <app-location-text [location]="enterprise?.location"></app-location-text>
+        </li>
+        <li *ngIf="enterprise?.webPage">Web page:
+          <a target="_blank" [href]="enterprise.webPage">{{enterprise.webPage}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<section class="page-content">
+  <section class="section">
+    <p class="section__content section__text">{{enterprise?.companyProfile | fixNewLines}}</p>
+  </section>
+
+  <section class="hero contacts">
+    <app-contact-item *ngFor="let item of enterprise?.contacts" [item]="item"></app-contact-item>
+  </section>
+
+  <section class="section" *ngIf="enterprise?.referenceProjects || enterprise?.keyProjects?.length > 0">
+    <mat-icon class="section__icon">work</mat-icon>
+    <h2 class="section__title">Reference projects</h2>
+    <p class="section__content section__text">{{enterprise.referenceProjects | fixNewLines}}</p>
+
+    <ul class="section__content list" *ngIf="enterprise.keyProjects">
+      <li class="list-item" *ngFor="let proj of enterprise.keyProjects">
+        <mat-icon class="list-item__icon">location_on</mat-icon>
+        <div class="list-item__title">
+          <h3>
+            <a *ngIf="proj.webPage; else onlyTitle" [href]="proj.webPage" target="_blank">{{proj.title}}</a>
+            <ng-template #onlyTitle>
+              {{proj.title}}
+            </ng-template>
+          </h3>
+
+          <app-location-text [location]="proj.location"></app-location-text>
+        </div>
+
+        <p class="list-item__text">{{proj.description | fixNewLines}}</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section" *ngIf="enterprise?.attachments?.length > 0">
+    <mat-icon class="section__icon">note_add</mat-icon>
+    <h2 class="section__title">Attachments</h2>
+
+    <ul class="section__content list">
+      <li class="list-item" *ngFor="let one of enterprise?.attachments">
+        <mat-icon class="list-item__icon">attach_file</mat-icon>
+        <h3 class="list-item__title">
+          <a target="_blank"
+            [href]="'https://storage.googleapis.com/dibicoo-matchmaking-tool.appspot.com/attachments/'+one.id"
+            [title]="one.fileName">{{one.fileName}}</a>
+        </h3>
+        <p class="list-item__text">{{one.description | fixNewLines}}</p>
+      </li>
+    </ul>
+  </section>
+
+  <ul class="hero standards" *ngIf="enterprise?.standards?.length > 0 || enterprise?.otherStandards">
+    <li class="standards__item" *ngFor="let item of enterprise.standards">
+      <mat-icon>verified</mat-icon>
+      <h3>{{item}}</h3>
+      <p [innerHtml]="getStandardLabel(item)"></p>
+    </li>
+    <li class="standards__item" *ngIf="enterprise?.otherStandards">
+      <mat-icon>verified</mat-icon>
+      <p>{{enterprise.otherStandards}}</p>
+    </li>
+  </ul>
+
+  <section class="section">
+    <mat-icon class="section__icon">category</mat-icon>
+    <h2 class="section__title">Company categories</h2>
+    <div class="section__content">
+      <app-category-chart [categoryIds]="enterprise?.categoryIds" [expandAllOnInit]="true"></app-category-chart>
+    </div>
+  </section>
+
+  <footer>
+    <a mat-raised-button title="Back to all company profiles" color="primary" routerLink=".." fragment="list"
+      queryParamsHandling="merge">
+      <mat-icon>arrow_left</mat-icon>
+      Back
+    </a>
+
+    <button *ngIf="enterprise?.id" mat-button title="Report inappropriate content" class="report" (click)="report()">
+      <mat-icon>flag</mat-icon>
+      Report
+    </button>
+  </footer>
+</section>

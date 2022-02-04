@@ -1,0 +1,9 @@
+@import 'dibicoo-theme';
+
+table {
+  width: 100%;
+}
+
+.mat-row {
+  @include default-hover;
+}

@@ -1,0 +1,35 @@
+@import 'dibicoo-theme';
+
+mat-form-field.mat-form-field {
+  width: 100%;
+}
+
+.image {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: -0.5rem;
+
+  .image-container {
+    height: 10rem;
+    margin-top: 0.5rem;
+    padding-right: 0.5rem;    
+
+    img {
+      height: 10rem;
+      width: auto;
+      border: solid 1px $bg-primary-light;
+    }
+  }
+  input[type="file"] {
+    display: none;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      margin-top: 0.5rem;
+    }
+  }
+}

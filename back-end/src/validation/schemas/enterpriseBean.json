@@ -1,0 +1,126 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://dibicoo.org/enterpriseBean.json",
+    "additionalProperties": false,
+    "definitions": {
+        "KeyProject": {
+            "additionalProperties": false,
+            "properties": {
+                "location": {
+                    "$ref": "http://dibicoo.org/common.json#/definitions/LocationRequired"
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                },
+                "showOnMap": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "webPage": {
+                    "anyOf": [
+                        {
+                            "format": "uri",
+                            "type": "string"
+                        },
+                        {
+                            "maxLength": 0,
+                            "type": "string"
+                        }
+                    ]
+                },
+                "latlng": {
+                    "readOnly": true,
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "type": "array"
+                },
+                "title": {
+                    "$ref": "http://dibicoo.org/common.json#/definitions/nonEmptyString"
+                }
+            },
+            "required": [
+                "location",
+                "description",
+                "title"
+            ],
+            "type": "object"
+        }
+    },
+    "properties": {
+        "companyName": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
+        },
+        "companyProfile": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultLongString"
+        },
+        "webPage": {
+            "anyOf": [
+                {
+                    "format": "uri",
+                    "type": "string"
+                },
+                {
+                    "maxLength": 0,
+                    "type": "string"
+                }
+            ]
+        },
+        "contacts": {
+            "items": {
+                "$ref": "http://dibicoo.org/common.json#/definitions/ContactItem"
+            },
+            "type": "array"
+        },
+        "location": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/Location"
+        },
+        "displayOnGlobalMap": {
+            "default": false,
+            "type": "boolean"
+        },
+        "categoryIds": {
+            "items": {
+                "$ref": "http://dibicoo.org/common.json#/definitions/nonEmptyString"
+            },
+            "type": "array"
+        },
+        "standards": {
+            "items": {
+                "$ref": "http://dibicoo.org/common.json#/definitions/nonEmptyString"
+            },
+            "type": "array"
+        },
+        "otherStandards": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
+        },
+        "referenceProjects": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/defaultLongString"
+        },
+        "keyProjects": {
+            "items": {
+                "$ref": "#/definitions/KeyProject"
+            },
+            "maxItems": 5,
+            "type": "array"
+        },
+        "attachments": {
+            "$ref": "http://dibicoo.org/common.json#/definitions/AttachmentArray"
+        },
+        "rejectReason": {
+            "anyOf": [
+                {
+                    "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        }
+    },
+    "type": "object"   
+}

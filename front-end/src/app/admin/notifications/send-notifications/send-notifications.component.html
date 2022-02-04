@@ -1,0 +1,88 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Administrator</li>
+    <li>...</li>
+  </ul>
+  <h1>Send notification</h1>
+</header>
+<section class="page-content">
+  <mat-card>
+    <form [formGroup]="messageForm">
+      <mat-card-content>
+        <mat-form-field class="form__row">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" required maxlength="100">
+          <mat-hint>Short title of the notification</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="form__row">
+          <mat-label>Content</mat-label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"
+            formControlName="body" #body maxlength="500" required></textarea>
+          <mat-hint>The content of the notification</mat-hint>
+          <mat-hint align="end">{{body.value?.length}}/500</mat-hint>
+        </mat-form-field>
+
+        <div class="form__row" formArrayName="links">
+          <p>Optional links for the notification:</p>
+          <div class="form__link" *ngFor="let i of [0, 1]" [formGroupName]="i">
+            <mat-form-field class="form__label">
+              <mat-label>Label</mat-label>
+              <input matInput formControlName="label" maxlength="50">
+            </mat-form-field>
+            <mat-form-field class="form__url">
+              <mat-label>URL</mat-label>
+              <input matInput formControlName="url" type="url" pattern="https?://.*" placeholder="https://">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+
+  <footer>
+    <button mat-stroked-button type="button" color="accent" routerLink="/">
+      <mat-icon>navigate_before</mat-icon> Cancel
+    </button>
+
+    <button mat-raised-button type="button" color="primary" [disabled]="!messageForm.valid"
+      (click)="preview(previewDialog)">
+      <mat-icon>pageview</mat-icon> Preview notification
+    </button>
+  </footer>
+
+
+
+  <ng-template #previewDialog let-data>
+    <h2 mat-dialog-title>Notification preview</h2>
+    <div mat-dialog-content class="notification__preview">
+      <div class="notification__item">
+        <mat-icon class="notification__icon">info</mat-icon>
+        <h3>{{data.title}}</h3>
+        <div class="notification__body">{{data.body}}</div>
+        <p>
+          <ng-container *ngFor="let link of data.links">
+            <a [href]="link.url" target="_blank">{{link.label}}</a>
+          </ng-container>
+        </p>
+      </div>
+      <div class="warning">
+        <mat-icon>warning</mat-icon>
+        <p>This message will be sent to <strong>all</strong> active platform users in a form of the
+          <strong>internal notification</strong>.
+        </p>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="false" type="button" color="accent">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+      <button mat-raised-button [mat-dialog-close]="true" type="button" color="primary">
+        <mat-icon>send</mat-icon> Send notification
+      </button>
+    </div>
+
+  </ng-template>
+
+</section>

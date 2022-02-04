@@ -1,0 +1,221 @@
+@import "~@angular/material/theming";
+@import "~@angular/flex-layout/mq";
+
+$dibicoo-typography: mat-typography-config(
+  $font-family: '"Open sans", sans-serif',
+  $display-2: mat-typography-level(3rem, 3rem, 500, '"Roboto", sans-serif'),
+  $display-1: mat-typography-level(2.5rem, 2.5rem, 400, '"Roboto", sans-serif'),
+  $headline: mat-typography-level(2rem, 2rem, 400, '"Roboto", sans-serif'),
+  $title: mat-typography-level(1.5rem, 1.5rem, 400, '"Roboto", sans-serif'),
+  $subheading-2: mat-typography-level(1rem, 1rem, 400, '"Roboto", sans-serif'),
+  $input: mat-typography-level(14px, 1.4, 400),
+  /* to match Open sans font */
+);
+
+// for checkboxes with long labels
+.mat-checkbox-layout {
+  white-space: initial !important;
+  .mat-checkbox-inner-container {
+    margin-bottom: auto;
+    margin-top: 0.25rem;
+  }
+}
+
+// new potential colors
+// Palette URL: http://paletton.com/#uid=b2R000L0klWticlJ3hHyvrnr6takS */
+
+// SASS style sheet */
+// Palette color codes */
+// Palette URL: http://paletton.com/#uid=32D180kllllaFw0g0qFqFg0w0aF */
+$color-primary-0: #599532; // Main Primary color */
+$color-primary-1: #b3e095;
+$color-primary-2: #82bb5d;
+$color-primary-3: #377013;
+$color-primary-4: #1d4b00;
+$color-secondary-1-0: #aa8439; // Main Secondary color (1) */
+$color-secondary-1-1: #ffe3aa;
+$color-secondary-1-2: #d4b16a;
+$color-secondary-1-3: #805c15;
+$color-secondary-1-4: #553900;
+$color-secondary-2-0: #452f74; // Main Secondary color (2) */
+$color-secondary-2-1: #8b7aae;
+$color-secondary-2-2: #655091;
+$color-secondary-2-3: #2b1657;
+$color-secondary-2-4: #17063a;
+$light-text: #ffffff;
+$dark-text: #000000;
+// Palettes
+// Primary
+$colors-primary: (
+  main: $color-primary-0,
+  xlight: $color-primary-1,
+  light: $color-primary-2,
+  dark: $color-primary-3,
+  xdark: $color-primary-4,
+  // 200: $color-primary-0, // For slide toggle,
+  contrast:
+    (
+      main: $light-text,
+      light: $dark-text,
+      dark: $light-text,
+    ),
+);
+$pal-primary: mat-palette($colors-primary, main, light, dark);
+$colors-accent: (
+  main: $color-secondary-2-0,
+  xlight: $color-secondary-2-1,
+  light: $color-secondary-2-2,
+  dark: $color-secondary-2-3,
+  xdark: $color-secondary-2-4,
+  contrast: (
+    main: $light-text,
+    light: $dark-text,
+    dark: $light-text,
+  ),
+);
+$pal-accent: mat-palette($colors-accent, main, light, dark);
+$colors-warn: (
+  main: $color-secondary-1-0,
+  xlight: $color-secondary-1-1,
+  light: $color-secondary-1-2,
+  dark: $color-secondary-1-3,
+  xdark: $color-secondary-1-4,
+  contrast: (
+    main: $light-text,
+    light: $dark-text,
+    dark: $light-text,
+  ),
+);
+$pal-warn: mat-palette($colors-warn, main, light, dark);
+$app-theme: mat-light-theme($pal-primary, $pal-accent, $pal-warn);
+
+// Colors
+$primary: map-get($colors-primary, main);
+$primary-xlight: map-get($colors-primary, xlight);
+$primary-light: map-get($colors-primary, light);
+$primary-dark: map-get($colors-primary, dark);
+$primary-xdark: map-get($colors-primary, xdark);
+$accent: map-get($colors-accent, main);
+$accent-xlight: map-get($colors-accent, xlight);
+$accent-light: map-get($colors-accent, light);
+$accent-dark: map-get($colors-accent, dark);
+$accent-xdark: map-get($colors-accent, xdark);
+$warn: map-get($colors-warn, main);
+$warn-xlight: map-get($colors-warn, xlight);
+$warn-light: map-get($colors-warn, light);
+$warn-dark: map-get($colors-warn, dark);
+$warn-xdark: map-get($colors-warn, xdark);
+
+$neutral: change-color(#000000, $lightness: 40%);
+$neutral-light: change-color($neutral, $lightness: 60%);
+$neutral-xlight: change-color($neutral, $lightness: 80%);
+
+$default: rgba(0, 0, 0, 0.87);
+$default-icon: rgba(0, 0, 0, 0.63);
+$default-muted: rgba(0, 0, 0, 0.5);
+
+/* Background shades */
+$bg-primary-xlight: change-color($primary, $lightness: 98%);
+$bg-primary-light: change-color($primary, $lightness: 93%);
+$bg-primary: change-color($primary, $lightness: 88%);
+$bg-accent-xlight: change-color($accent, $lightness: 98%);
+$bg-accent-light: change-color($accent, $lightness: 93%);
+$bg-accent: change-color($accent, $lightness: 88%);
+$bg-warn: change-color($warn, $lightness: 88%);
+$bg-warn-light: change-color($warn, $lightness: 93%);
+$bg-warn-xlight: change-color($warn, $lightness: 98%);
+$bg-neutral: change-color(#000000, $lightness: 88%);
+$bg-neutral-light: change-color(#000000, $lightness: 93%);
+$bg-neutral-xlight: change-color(#000000, $lightness: 98%);
+
+$rejected: #e93434;
+$bg-rejected: change-color($rejected, $lightness: 93%);
+
+// @deprecated TODO: remove
+$color_draft: #ebebeb;
+$color_pending: #d9edff;
+$color_published: #d9ffe6;
+$color_rejected: #ffd9d9;
+
+@mixin default-hover {
+  &:hover {
+    $background-palette: map-get($app-theme, background);
+    background-color: mat-color($background-palette, hover);
+  }
+}
+
+@mixin status-colors {
+  &.draft {
+    background: linear-gradient(white 55%, $bg-neutral);
+  }
+
+  &.pending {
+    background: linear-gradient(white 55%, $bg-accent);
+  }
+
+  &.published {
+    background-image: linear-gradient(white 55%, $bg-primary);
+  }
+
+  &.rejected {
+    background: linear-gradient(white 55%, $bg-warn);
+  }
+}
+
+@mixin status-colors-app {
+  &.draft {
+    border-left: solid 5px $neutral;
+  }
+
+  &.published {
+    border-left: solid 5px $primary;
+  }
+
+  &.rejected {
+    border-left: solid 5px $warn;
+  }
+
+  &.pending {
+    border-left: solid 5px $accent;
+  }
+}
+
+@mixin muted-icons {
+  mat-icon {
+    color: $default-icon;
+  }
+}
+
+// shadows
+@mixin shadow($depth) {
+  box-shadow: 0 0 $depth * 2 $depth rgba(0, 0, 0, 0.36);
+}
+
+@mixin clickable($depth: 2px) {
+  cursor: pointer;
+
+  &:hover {
+    @include shadow($depth);
+  }
+}
+
+@mixin hoverPopOut {
+  z-index: 1;
+  transform: scale(1.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, z-index 0s 0s ease;
+  box-shadow: 0 0.5rem 2rem rgba(#000, 0.3);
+}
+
+@mixin loadingSkeleton {
+  @keyframes loading {
+    0% {
+      background-color: hsl(0, 0%, 85%);
+    }
+
+    100% {
+      background-color: hsl(0, 0%, 95%);
+    }
+  }
+
+  animation: loading 0.8s infinite alternate;
+}

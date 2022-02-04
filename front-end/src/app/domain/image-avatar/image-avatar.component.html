@@ -1,0 +1,4 @@
+<div>
+  <app-svg-avatar *ngIf="!imageUrl || !imageLoaded" [title]="title" [text]="text" [hue]="hue"></app-svg-avatar>
+  <img *ngIf="imageUrl" [hidden]="!imageLoaded" [src]="imageUrl" (load)="imageLoaded = true" /> 
+</div>

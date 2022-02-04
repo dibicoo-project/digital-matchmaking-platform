@@ -1,0 +1,30 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li><a routerLink="..">Factsheets</a></li>
+    <li>{{article?.name}}</li>
+  </ul>
+  <h1>{{article?.name}}</h1>
+</header>
+<section class="page-content">
+
+  <markdown [data]="article?.text"></markdown>
+
+  <footer>
+    <div>
+      <a *ngIf="article?.prev as item" [routerLink]="['..', item.id]">
+        Previous: {{item.name}}
+      </a>
+    </div>
+    <div>
+      <a routerLink="..">
+        Table of contents
+      </a>
+    </div>
+    <div>
+      <a *ngIf="article?.next as item" [routerLink]="['..', item.id]">
+        Next: {{item.name}}
+      </a>
+    </div>
+  </footer>
+</section>

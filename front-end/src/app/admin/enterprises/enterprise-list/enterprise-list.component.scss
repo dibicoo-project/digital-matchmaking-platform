@@ -1,0 +1,22 @@
+@import "dibicoo-theme";
+
+.company__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 0.5rem 0.25rem;
+
+  @include layout-bp(lt-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include layout-bp(lt-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+app-enterprise-card {
+  button {
+    margin-bottom: 0.5rem;
+  }
+}

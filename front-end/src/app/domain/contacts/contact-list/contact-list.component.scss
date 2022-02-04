@@ -1,0 +1,36 @@
+@import "dibicoo-theme";
+
+.contacts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  
+  .contact__item {    
+    flex: 0 0 15rem;
+    display: flex;
+  }
+
+}
+
+
+.buttons {
+  button + button {
+    margin-left: 0.5rem;
+  }
+
+}
+
+:host {
+  .required-label {
+    display: none;
+  }
+
+  &.ng-invalid {
+    .required-label {
+      display: block;
+      color: $warn;
+    }
+  }
+}

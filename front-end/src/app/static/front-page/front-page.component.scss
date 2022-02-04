@@ -1,0 +1,114 @@
+@import "dibicoo-theme";
+
+.beta {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30rem;
+  height: 20rem;
+  overflow-x: hidden;
+
+  a {
+    position: absolute;
+    right: -7rem;
+    top: 8rem;
+    background-color: $warn-xlight;
+    transform: rotate(30deg);
+    color: $warn-dark;
+
+    @include layout-bp(lt-sm) {
+      display: none;
+    }
+
+    h2 {
+      .mat-icon {
+        vertical-align: bottom;
+      }
+
+      text-align: center;
+      border: dashed 2px $warn-light;
+      padding: 0.7rem;
+      margin: 3px;
+      width: 30rem;
+    }
+  }
+}
+
+header {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  text-align: center;
+
+  img {
+    margin-bottom: 1rem;
+    height: 10rem;
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+  }
+}
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 1rem;
+  @include clickable;
+
+  &.no-radius {
+    border-radius: 0;
+  }
+
+  .mat-card-content {
+    flex-grow: 1;
+    overflow: auto;
+  }
+
+  .mat-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.25rem;
+
+    .mat-button {
+      flex: 0 0 auto;
+      margin: 0.25rem;
+      color: $accent;
+
+      .mat-icon {
+        color: $accent-xlight;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+.message {
+  text-align: center;
+  padding: 2rem 0.5rem;
+
+  h2 {
+    margin-top: 1rem;
+  }
+}
+
+.join-button {
+  font-size: 1.2rem;
+  font-family: mat-font-family($dibicoo-typography, title);
+  padding: 0.5rem 1rem;
+}
+
+footer {
+  padding: 1rem 0;
+  border-top: solid 1px $accent;
+  border-bottom: solid 1px $accent;
+
+  img {
+    height: 4rem;
+  }
+
+  p {
+    margin-bottom: 0.5rem;
+  }
+}

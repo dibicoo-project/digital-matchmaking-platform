@@ -1,0 +1,38 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Development roadmap</li>
+  </ul>
+  <h1>Development roadmap</h1>
+</header>
+<section class="page-content">
+  <p>
+    We are actively working to make the Biogas and Gasification Matchmaking Platform attractive and functional, to satisfy the
+    majority of user needs. For now basic platform functionality is already developed, but some interesting and useful
+    features will be coming out in the future. Now we are in a testing phase by the selected stakeholders.
+  </p>
+
+  <p>To inform you about the development progress we would like to list already
+    available functionality, as well as information about the planned features.
+  </p>
+
+  <h2>Implemented</h2>  
+  <mat-list class="done">
+    <mat-list-item *ngFor="let item of done">
+      <mat-icon matListIcon>done</mat-icon>
+      <p mat-line>{{item}}</p>
+    </mat-list-item>    
+  </mat-list>
+
+  <h2>Coming soon</h2>
+  <mat-list class="comingSoon">
+    <mat-list-item *ngFor="let item of comingSoon">
+      <mat-icon matListIcon>construction</mat-icon>
+      <p mat-line>{{item}}</p>
+    </mat-list-item>    
+  </mat-list>
+
+  <p></p>
+  <p>If you have additional ideas on missing functionality, please, <a routerLink="/contact-us">contact us</a>.</p>
+
+</section>

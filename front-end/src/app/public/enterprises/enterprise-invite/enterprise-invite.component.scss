@@ -1,0 +1,23 @@
+@import "dibicoo-theme.scss";
+
+footer {
+  button + button {
+    margin-left: 0.5rem;
+  }
+}
+
+.error {
+  border-radius: 0.5rem;
+  background-color: $bg-rejected;
+  color: $rejected;
+
+  padding:1rem;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  .mat-icon {
+    vertical-align: text-bottom;
+  }
+}

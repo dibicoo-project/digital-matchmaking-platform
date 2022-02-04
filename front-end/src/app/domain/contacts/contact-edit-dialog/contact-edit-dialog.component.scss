@@ -1,0 +1,27 @@
+@import "dibicoo-theme";
+
+.mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.elements {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .type {
+    margin-right: 1rem;
+    width: 8rem;
+  }
+
+  .value {
+    flex-grow: 1;
+  }
+
+  @include layout-bp(lt-sm) {
+    flex-wrap: wrap;
+  }
+
+}

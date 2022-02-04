@@ -1,0 +1,37 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Notifications</li>
+  </ul>
+  <h1>Notifications</h1>
+  <div class="controls">
+    <button mat-stroked-button color="accent" routerLink="settings">
+      <mat-icon>settings</mat-icon> Settings
+    </button>
+    <button mat-raised-button color="accent" (click)="service.markAllAsRead()">
+      <mat-icon>mark_email_read</mat-icon> Mark all as read
+    </button>
+  </div>
+</header>
+<section class="page-content">
+
+  <mat-card *ngFor="let item of service.all$ | async" [class.unread]="!item.isRead" [id]="item.id">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>{{item.icon}}</mat-icon>
+      <h2 mat-card-title>{{item.title}}</h2>
+      <p mat-card-subtitle>{{item.ts | timeAgo}}</p>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-stroked-button *ngIf="!item.isRead" (click)="service.markAsRead(item.id)">
+        <mat-icon>mark_email_read</mat-icon> Mark as read
+      </button>
+    </mat-card-actions>
+    <mat-card-content>
+      <div class="notification__body" [innerHtml]="item.body"></div>
+      <ng-container *ngFor="let link of item.links">
+        <a *ngIf="!link.external" [routerLink]="link.url" [fragment]="link.fragment">{{link.label}}</a>
+        <a *ngIf="link.external" [href]="link.url" target="_blank">{{link.label}}</a>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</section>

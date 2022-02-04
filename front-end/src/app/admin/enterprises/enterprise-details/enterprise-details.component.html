@@ -1,0 +1,106 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Administrator</li>
+    <li><a routerLink="..">Review company profiles</a></li>
+  </ul>
+  <h1>Changes overview</h1>
+</header>
+<section class="page-content">
+  <ng-template #valueRow let-title="title" let-a="a" let-b="b">
+    <ng-container *ngIf="a || b">
+      <h3>{{title}}</h3>
+      <p>{{a}}</p>
+      <p [class.changes]="a != b">{{b}}</p>
+    </ng-container>
+  </ng-template>
+
+  <div class="diff" [class.diff--with-published]="published">
+    <h2>Field</h2>
+    <h2>Published version</h2>
+    <h2>Pending version</h2>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Company name', 
+      a: published?.companyName, b: pending?.companyName}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Company profile', 
+      a: published?.companyProfile, b: pending?.companyProfile}">
+    </ng-container>
+
+    <h3>Logo</h3>
+    <div class="logo__container">
+      <app-image-avatar [title]="published?.companyName" [imageUrl]="published?.imageUrl" text=" "></app-image-avatar>
+    </div>
+    <div class="logo__container">
+      <app-image-avatar [title]="pending?.companyName" [imageUrl]="pending?.imageUrl" text=" "></app-image-avatar>
+    </div>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Website', 
+      a: published?.webPage, 
+      b: pending?.webPage}">
+    </ng-container>
+
+    <ng-container *ngFor="let idx of range(published?.contacts, pending?.contacts)">
+      <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Contacts #'+(idx+1), 
+      a: contactsText(published?.contacts[idx]), 
+      b: contactsText(pending?.contacts[idx])}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Location', 
+      a: locationText(published?.location), 
+      b: locationText(pending?.location)}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Display on global map', 
+      a: published?.displayOnGlobalMap, 
+      b: pending?.displayOnGlobalMap}">
+    </ng-container>
+
+    <h3>Selected categories</h3>
+    <app-category-tree [selectedIds]="published?.categoryIds"></app-category-tree>
+    <app-category-tree [class.changes]="categoriesChanged"
+      [selectedIds]="pending?.categoryIds"></app-category-tree>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Standards', 
+      a: published?.standards?.join(', '), 
+      b: pending?.standards?.join(', ')}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Other standards', 
+      a: published?.otherStandards, 
+      b: pending?.otherStandards}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Reference projects', 
+      a: published?.referenceProjects, 
+      b: pending?.referenceProjects}">
+    </ng-container>
+
+    <ng-container *ngFor="let idx of range(published?.keyProjects, pending?.keyProjects)">
+      <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Key project #'+(idx+1), 
+      a: keyProjectText(published?.keyProjects[idx]), 
+      b: keyProjectText(pending?.keyProjects[idx])}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngFor="let idx of range(published?.attachments, pending?.attachments)">
+      <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Attachment #'+(idx+1), 
+      a: attachmentText(published?.attachments[idx]), 
+      b: attachmentText(pending?.attachments[idx])}">
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <footer>
+    <button mat-stroked-button color="primary" (click)="publish()">
+      <mat-icon>check</mat-icon> Publish
+    </button>
+
+    <button mat-stroked-button color="warn" (click)="reject()">
+      <mat-icon>cancel</mat-icon> Reject
+    </button>
+  </footer>
+
+</section>

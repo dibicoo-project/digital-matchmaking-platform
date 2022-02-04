@@ -1,0 +1,27 @@
+<ul class="item-list">
+  <li *ngFor="let item of attachments; let i = index" class="item">
+    <mat-icon class="avatar">attach_file</mat-icon>
+    <p class="file-name">
+      <a target="_blank"
+        [href]="'https://storage.googleapis.com/dibicoo-matchmaking-tool.appspot.com/attachments/'+item.id"
+        [title]="item.fileName">{{item.fileName}}</a>
+    </p>
+    <p class="description">{{item.description}}</p>
+    <div class="controls" *ngIf="!readonly">
+      <button mat-icon-button type="button" color="primary" (click)="editItem(i)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button type="button" color="warn" (click)="removeItem(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </li>
+</ul>
+
+<ng-container *ngIf="!readonly && attachments?.length < maxItems">
+  <button mat-stroked-button color="primary" type="button" (click)="addItem()">
+    <mat-icon>file_upload</mat-icon>
+    Upload new file
+  </button>
+  <input type="file" style="display: none;" #fileInput [accept]="allowedMimeTypes.join(',')">
+</ng-container>

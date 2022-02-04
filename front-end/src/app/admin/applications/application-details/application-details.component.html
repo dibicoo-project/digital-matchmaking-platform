@@ -1,0 +1,90 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Administrator</li>
+    <li><a routerLink="..">Review business opportunities</a></li>
+  </ul>
+  <h1>Changes overview</h1>  
+</header>
+<section class="page-content">
+
+  <ng-template #valueRow let-title="title" let-a="a" let-b="b">
+    <ng-container *ngIf="a || b">
+      <h3>{{title}}</h3>
+      <p>{{a}}</p>
+      <p [class.changes]="a != b">{{b}}</p>
+    </ng-container>
+  </ng-template>
+
+  <div class="diff" [class.diff--with-published]="published">
+    <h2>Field</h2>
+    <h2>Published version</h2>
+    <h2>Pending version</h2>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Main category', 
+      a: publishedMainCategory?.title, b: pendingMainCategory?.title}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Category', 
+      a: publishedCategory?.title, b: pendingCategory?.title}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Description', 
+      a: published?.description, b: pending?.description}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Target location', 
+      a: locationText(published?.location), 
+      b: locationText(pending?.location)}">
+    </ng-container>
+
+    <ng-container *ngFor="let item of allDetails">
+      <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: item.name, 
+      a: published?.details[item.code], 
+      b: pending?.details[item.code]}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngFor="let idx of range(published?.attachments, pending?.attachments)">
+      <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Attachment #'+(idx+1), 
+      a: attachmentText(published?.attachments[idx]), 
+      b: attachmentText(pending?.attachments[idx])}">
+      </ng-container>
+    </ng-container>
+
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Company name', 
+      a: published?.companyName, 
+      b: pending?.companyName}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Contact location', 
+      a: locationText(published?.contactLocation), 
+      b: locationText(pending?.contactLocation)}">
+    </ng-container>
+
+
+    <ng-container *ngFor="let idx of range(published?.contacts, pending?.contacts)">
+      <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Contacts #'+(idx+1), 
+      a: contactsText(published?.contacts[idx]), 
+      b: contactsText(pending?.contacts[idx])}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Due date', 
+      a: published?.dueDate | date, 
+      b: pending?.dueDate | date}">
+    </ng-container>
+  </div>
+
+  <footer>
+    <button mat-stroked-button color="primary" (click)="publish()">
+      <mat-icon>check</mat-icon> Publish
+    </button>
+
+    <button mat-stroked-button color="warn" (click)="reject()">
+      <mat-icon>cancel</mat-icon> Reject
+    </button>
+  </footer>
+
+</section>

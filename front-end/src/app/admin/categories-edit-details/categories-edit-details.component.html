@@ -1,0 +1,61 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Administrator</li>    <li><a routerLink="..">Categories</a></li>
+    <li *ngFor="let ancestor of category?.ancestorCategories">
+      <a [routerLink]="['/admin/categories', ancestor?.id]">{{ancestor?.title}}</a>
+    </li>
+    <li>...</li>
+  </ul>
+  <h1>{{title || 'New category'}} details</h1>
+</header>
+<section class="page-content" *ngIf="category">
+
+  <mat-card >
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="category.title" name="title">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput cdkTextareaAutosize placeholder="Description" [(ngModel)]="category.description"
+          name="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Order within parent category</mat-label>
+        <input matInput type="number" [(ngModel)]="category.order" name="order" required>
+      </mat-form-field>
+
+      <div class="image">
+        <input type="file" accept=".png, .jpg, .jpeg" (change)="onImgChanged($event)" #fileInput>
+
+        <div *ngIf="imgPreviewUrl" class="image-container">
+          <img [src]="imgPreviewUrl" />
+        </div>
+        <div class="controls">
+          <button mat-stroked-button color="primary" (click)="fileInput.click()">
+            <mat-icon>image_search</mat-icon> Select Image
+          </button>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <footer>
+    <button mat-raised-button color="primary" (click)="doSave();">
+      <mat-icon>save</mat-icon> Save
+    </button>
+    <button mat-stroked-button (click)="navigateBack();" color="accent">
+      <mat-icon>cancel</mat-icon> Cancel
+    </button>
+
+    <!-- <button mat-stroked-button type="submit" color="warn" (click)="openDeleteDialog()" *ngIf="category.id"
+      class="delete">
+      <mat-icon>delete</mat-icon> Delete
+    </button> -->
+  </footer>
+</section>

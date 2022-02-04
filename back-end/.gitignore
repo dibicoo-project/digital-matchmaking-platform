@@ -1,0 +1,15 @@
+
+# compiled output
+/tsc-dist
+
+
+# dependencies
+/node_modules
+
+# test reports
+/report-test
+/report-coverage
+.nyc_output
+
+# local env
+.env

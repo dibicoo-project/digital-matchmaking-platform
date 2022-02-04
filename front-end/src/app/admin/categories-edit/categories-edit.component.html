@@ -1,0 +1,43 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>Administrator</li>
+    <li>...</li>
+  </ul>
+  <h1>Categories</h1>
+  <div class="controls">
+    <button mat-raised-button color="accent" [routerLink]="['/admin/categories/new']">
+      <mat-icon>add</mat-icon> Add root category
+    </button>
+  </div>
+</header>
+<section class="page-content">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="toggleNode(node);">
+      <!-- For leaf nodes (making left side space) -->
+      <button *ngIf="!node.expandable" mat-icon-button disabled></button>
+      <!-- For parent nodes -->
+      <button *ngIf="node.expandable" mat-icon-button [attr.aria-label]="'toggle ' + node.title">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>    
+      <div class="logo">
+        <app-image-avatar [title]="node.title" [imageUrl]="node.imageUrl"></app-image-avatar>
+      </div>  
+      <div>
+        {{node.title}}
+      </div>
+      <!-- Action buttons -->
+      <div class="controls">
+        <button mat-icon-button color="primary" title="Add subcategory"
+          [routerLink]="['/admin/categories', node.id, 'new']">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" title="Edit category" [routerLink]="['/admin/categories', node.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </mat-tree-node>
+  </mat-tree>
+</section>

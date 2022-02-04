@@ -1,0 +1,10 @@
+cron:
+- description: "Collect company profile statistics"
+  url: /api/cron/analytics/enterprises
+  schedule: every 12 hours
+  target: back-end
+
+- description: "Send e-mail notifications"
+  url: /api/cron/notifications/emails
+  schedule: every 12 hours
+  target: back-end

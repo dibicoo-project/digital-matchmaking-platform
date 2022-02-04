@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+  {
+    "name": "Attach to back-end",
+    "port": 9229,
+    "request": "attach",
+    "restart": true,
+    "skipFiles": [
+      "<node_internals>/**"
+    ],
+    "type": "pwa-node"
+  },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Jasmine (single spec)",
+      "program": "node_modules/ts-node/dist/bin.js",
+      "cwd": "${workspaceFolder}/back-end",      
+      "args": [
+        "-P", 
+        "tsconfig.spec.json",     
+        "test/start.ts",   
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/front-end/",
+      "userDataDir": "${workspaceFolder}/tmp"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+@import 'dibicoo-theme';
+
+.mat-form-field {
+  min-width: 20rem;
+}
+
+.muted {
+  color: $default-muted;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    margin: 0;
+  }
+}
+

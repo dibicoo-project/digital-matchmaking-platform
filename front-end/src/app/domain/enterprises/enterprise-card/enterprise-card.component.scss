@@ -1,0 +1,56 @@
+@import "dibicoo-theme";
+
+:host-context(.clickable) .mat-card {
+  @include clickable;
+}
+
+.mat-card {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  @include status-colors;
+  
+  .watched {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: $accent;    
+  }
+
+  .standards-sign {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: $primary;    
+  }
+
+  .mat-card-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 7rem;
+    text-align: center;
+    padding-top: 1rem;
+    
+    app-image-avatar {
+      max-height: 100%;
+      height: 100%;
+    }
+  }
+
+  .mat-card-header {
+    text-align: center;
+    justify-content: center;
+    .mat-card-title {
+      word-break: break-word;
+    }
+  }
+
+  .mat-card-actions {
+    text-align: center;
+    margin-top: auto;
+  }
+}

@@ -1,0 +1,19 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>All business opportunities</li>
+  </ul>
+  <h1><span [matBadge]="applications?.length" matBadgeOverlap="false">Business opportunities</span></h1>
+  <div class="controls">
+    <button mat-raised-button color="accent" routerLink="/user/applications/new">
+      <mat-icon>add</mat-icon> Add business opportunity
+    </button>
+  </div>
+</header>
+<section class="page-content">
+  <p>This section is intended to create cooperative connections and realize business opportunities.
+    Stakeholders can post their business needs, project ideas and requests looking for various services to build a
+    successful business cooperation.</p>
+  <app-application-card *ngFor="let app of applications" [app]="app" [routerLink]="app.id" class="clickable">
+  </app-application-card>
+</section>

@@ -1,0 +1,24 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>My watchlist of companies</li>
+  </ul>
+  <h1>My watchlist of companies</h1>
+  <!-- <div class="controls">
+    <button mat-raised-button color="accent">
+      <mat-icon>print</mat-icon> Print
+    </button>
+  </div> -->
+</header>
+<section class="page-content">
+  <app-enterprise-list-paged [list$]="companies$">
+    <ng-container emptyListMessage>
+      <h3>
+        Your watchlist is empty.
+      </h3>
+      <p>
+        Please, use <a routerLink="/enterprises">companies explorer</a> and add your favourite company profiles to the watchlist.
+      </p>
+    </ng-container>
+  </app-enterprise-list-paged>
+</section>
