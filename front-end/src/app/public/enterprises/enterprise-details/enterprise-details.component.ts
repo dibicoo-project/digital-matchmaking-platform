@@ -18,8 +18,6 @@ export class EnterpriseDetailsComponent implements OnInit {
   enterprise: Enterprise;
   logoLoaded = false;
 
-  categoryId: string;
-
   constructor(private route: ActivatedRoute,
     private router: Router,
     private service: EnterpriseService,
@@ -54,8 +52,6 @@ export class EnterpriseDetailsComponent implements OnInit {
       }
       this.router.navigate([], { fragment: undefined });
     });
-
-    this.route.queryParamMap.subscribe(map => this.categoryId = map.get('categoryId'));
 
     this.route.paramMap.pipe(
       switchMap(map => this.service.getEnterprise(map.get('enterpriseId'))),

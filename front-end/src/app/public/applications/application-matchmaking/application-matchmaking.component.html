@@ -53,7 +53,7 @@
       </div>
     </mat-card-content>
 
-    <mat-card-actions *ngIf="anyFilterSelected">
+    <mat-card-actions *ngIf="anyFilterSelected$ | async">
       <div class="selected-filters">
         <mat-chip-list>
           <ng-container *ngFor="let grp of ['business-field', 'project-region']">

@@ -109,7 +109,7 @@ describe('JSON schema validators', () => {
           },
         ],
         attachments: [
-          { id: '123-123', fileName: 'test.txt', comment: 'testing file' }
+          { id: '123-123', fileName: 'test.txt', description: 'testing file' }
         ]
       };
       expect(validate(item)).toBeTruthy();
@@ -150,6 +150,7 @@ describe('JSON schema validators', () => {
           b: 'asd'
         },
         companyName: 'Eco-bio-green-smart',
+        webPage: 'https://example.test/',
         contactLocation: { country: 'Neverwinter' },
         contacts: [{ name: 'John', elements: [{ type: 'email', value: '123' }] }],
         dueDate: new Date().toISOString()
@@ -160,7 +161,8 @@ describe('JSON schema validators', () => {
     it('should pass empty bean', () => {
       const bean: ApplicationBean = {
         mainCategoryId: '1234567890',
-        description: null
+        description: null,
+        webPage: null
       } as any;
       expect(validate(bean)).toBeTruthy();
     });
@@ -200,11 +202,12 @@ describe('JSON schema validators', () => {
           { id: '4', fileName: 'd' },
           { id: '5', fileName: 'e' },
         ],
+        webPage: 'test://invalid url//',
         contactLocation: { zipCode: '94568' },
         contacts: [{ elements: [] }]
       } as any;
       expect(validate(bean)).toBeFalsy();
-      expect(validate.errors!.length).toBe(12);
+      expect(validate.errors!.length).toBe(16);
     });
   });
 
@@ -224,9 +227,10 @@ describe('JSON schema validators', () => {
           b: 'asd'
         },
         attachments: [
-          { id: '123-123', fileName: 'test.txt', comment: 'testing file' }
+          { id: '123-123', fileName: 'test.txt', description: 'testing file' }
         ],
         companyName: 'Eco-bio-green-smart',
+        webPage: 'https://example.com/about.html',
         contactLocation: { country: 'Neverwinter', city: 'x', zipCode: 'y', address: 'z' },
         contacts: [{ name: 'John', elements: [{ type: 'email', value: '123' }] }],
         dueDate: new Date().toISOString()

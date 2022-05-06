@@ -1,0 +1,38 @@
+<mat-card [ngClass]='cardClass'>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <app-image-avatar [title]="category?.title" [imageUrl]="category?.imageUrl"
+        [hue]="category?.isAD || mainCategory?.isAD ? 195 : 135">
+      </app-image-avatar>
+    </div>
+    <h2 mat-card-title>
+      <span>
+        {{mainCategory?.title || 'Topic not selected'}}
+      </span>
+      <span *ngIf="category">
+        / {{category.title}}
+      </span>
+    </h2>
+
+    <p mat-card-subtitle>
+      <span *ngIf="app?.location">
+        <app-location-text [location]="{ country: app.location.country, city: app.location.city }"></app-location-text>
+      </span>
+      <span class="bullet"></span>
+      <span title="Published">
+        {{app?.changedTs | date}}
+      </span>
+    </p>
+
+    <p mat-card-subtitle>
+      <ng-content select="span.status"></ng-content>
+    </p>
+
+    <div class="controls">
+      <ng-content> </ng-content>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <app-multiline-text [value]="app?.description"></app-multiline-text>
+  </mat-card-content>
+</mat-card>

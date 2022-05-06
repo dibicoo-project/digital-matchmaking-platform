@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApplicationListComponent } from './application-list.component';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EMPTY, of } from 'rxjs';
 

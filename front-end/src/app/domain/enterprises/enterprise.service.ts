@@ -1,32 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Enterprise, EnterpriseShare, FiltersBean, Invitation } from './enterprise-domain';
+import { Enterprise, EnterpriseShare, Invitation } from './enterprise-domain';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CacheKey, CacheService } from '@domain/cache.service';
 import { filter, map } from 'rxjs/operators';
 import { ContactMessage } from '@domain/common-domain';
+import { select } from '@domain/rxjs-utils';
+import { FiltersBean } from './filters-domain';
 
 interface State {
   public: Enterprise[];
-  own: Enterprise[];
+  publicById: { [id: string]: Enterprise };
 }
 
 @Injectable()
 export class EnterpriseService {
 
-  private stateSubject = new BehaviorSubject<State>({ public: null, own: [] });
+  private publicByIdCache: { [id: string]: Observable<Enterprise> } = {};
+  private stateSubject = new BehaviorSubject<State>({ public: null, publicById: {} });
   private get state() { return this.stateSubject.getValue(); }
   private set state(val: State) { this.stateSubject.next(val); }
 
   public$ = this.stateSubject.asObservable().pipe(
-    map(state => state.public),
+    select(state => state.public),
     filter(all => all != null)
   );
+
+  public publicById$(id: string) {
+    if (!this.publicByIdCache[id]) {
+      this.publicByIdCache[id] = this.stateSubject.asObservable().pipe(
+        map(state => state.publicById[id]),
+        filter(one => one != null)
+      );
+    }
+    return this.publicByIdCache[id];
+  }
 
   constructor(private http: HttpClient, private cache: CacheService) { }
 
   fetchPublic() {
-    this.getEnterprises().subscribe(list => this.state = { ...this.state, public: list });
+    this.getEnterprises()
+      .subscribe(list => this.state = {
+        ...this.state,
+        public: list,
+        publicById: Object.fromEntries(list.map(one => [one.id, one]))
+      });
   }
 
   getEnterprises(): Observable<Enterprise[]> {

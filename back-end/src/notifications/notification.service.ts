@@ -14,6 +14,7 @@ import { isValidNotificationBean as isValid } from '../validation/validators';
 
 @injectable()
 export class NotificationService {
+  
   constructor(
     private repository: NotificationRepository,
     private settingsRepository: NotificationSettingsRepository,
@@ -93,6 +94,15 @@ export class NotificationService {
     this.repository.save(one, user.userName, id);
 
     return this.toBean(one);
+  }
+
+  public async delete(user: DiBiCooPrincipal, id: string): Promise<void> {
+    const one = await this.repository.findOneByUser(user.userName, id);
+    if (!one) {
+      return Promise.reject(notFound);
+    }
+
+    await this.repository.delete(user.userName, id);    
   }
 
   public async saveSettings(bean: NotificationSettings, user: DiBiCooPrincipal) {

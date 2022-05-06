@@ -67,6 +67,12 @@ header {
       height: 2.5rem;
       margin-right: 0.5rem;
     }
+
+    @include layout-bp(lt-md) {
+      span {
+        display: none;
+      }
+    }
   }
 
   a.beta {
@@ -94,12 +100,70 @@ header {
     }
   }
 
+  .user-button {
+    padding: 0;
+  }
+
   .user-avatar {
     border-radius: 50%;
     height: 2.5em;
-    margin-left: -1rem;
   }
+
+  .user-name {
+    padding-left: 0.5rem;
+
+    @include layout-bp(lt-sm) {
+      display: none;
+    }
+  }
+
   @include shadow(2px);
+
+  .search {
+    display: flex;
+
+    @include layout-bp(lt-lg) {
+      display: none;
+    }
+
+    flex-wrap: nowrap;
+    align-items: center;
+    border: solid 1px white;
+    border-radius: 0.25rem;
+    background-color: $primary;
+    padding: 0 0.5rem;
+    margin-right: 1rem;
+    box-sizing: content-box;
+
+    &:focus-within {
+      border: solid 2px white;
+      margin-right: calc(1rem - 1px);
+    }
+
+    &__input {
+      font-size: 1rem;
+      padding: 0.5rem;
+      border: none;
+      outline: none;
+      background: none;
+      width: 10rem;
+      color: white;
+
+      &::placeholder {
+        color: white;
+      }
+    }
+
+    &__icon {
+      color: white;
+    }
+  }
+
+  .search-button {
+    @include layout-bp(gt-md) {
+      display: none;
+    }
+  }
 }
 
 ::ng-deep .mat-menu-panel.notification-menu {
@@ -124,6 +188,7 @@ header {
       line-height: 1.5rem;
       margin: 0;
     }
+
     a {
       color: $accent;
       line-height: 1.5rem;
@@ -173,7 +238,7 @@ header {
         color: $accent;
       }
 
-      a + a {
+      a+a {
         margin-left: 0.5rem;
       }
 
@@ -250,6 +315,12 @@ header {
     display: flex;
     justify-content: center;
 
+    margin-top: 64px;
+
+    @include layout-bp(lt-sm) {
+      margin-top: 56px;
+    }
+
     .outlet {
       flex: 0 1 80rem;
       width: 100%;
@@ -275,6 +346,7 @@ header {
 }
 
 @media print {
+
   header,
   .sidebar,
   button {

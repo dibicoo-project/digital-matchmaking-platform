@@ -33,6 +33,16 @@ describe('NotificationController', () => {
     expect(service.markAsRead).toHaveBeenCalledWith(user, '123', true);
   });
 
+  it('should delete notification', async () => {
+    spyOn(service, 'delete').and.returnValue(Promise.resolve());
+    const spy = jasmine.createSpy();
+
+    await controller.delete(user, '123', { sendStatus: spy } as any);
+
+    expect(service.delete).toHaveBeenCalledWith(user, '123');
+    expect(spy).toHaveBeenCalledWith(204);
+  });
+
   it('should mark all notifications as read', async () => {
     spyOn(service, 'markAllAsRead').and.returnValue(Promise.resolve({} as any));
     await controller.markAllAsRead(user, { isRead: true });

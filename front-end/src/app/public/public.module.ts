@@ -15,6 +15,8 @@ import { EnterpriseInviteComponent } from './enterprises/enterprise-invite/enter
 import { DiBiCooMaterialModule } from '../material.module';
 import { EnterpriseMatchmakingComponent } from './enterprises/enterprise-matchmaking/enterprise-matchmaking.component';
 import { ApplicationMatchmakingComponent } from './applications/application-matchmaking/application-matchmaking.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
+import { SearchService } from './search/search.service';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { ApplicationMatchmakingComponent } from './applications/application-matc
     ApplicationDetailsComponent,
     EnterpriseInviteComponent,
     EnterpriseMatchmakingComponent,
-    ApplicationMatchmakingComponent
+    ApplicationMatchmakingComponent,
+    SearchResultsComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +39,9 @@ import { ApplicationMatchmakingComponent } from './applications/application-matc
     ReactiveFormsModule,
     AgmCoreModule,
     DomainModule
+  ],
+  providers: [
+    SearchService
   ]
 })
 export class PublicModule { }

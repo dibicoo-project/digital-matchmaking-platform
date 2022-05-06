@@ -30,10 +30,11 @@ export class AppComponent implements OnInit {
   @ViewChild('sidebar', { static: true })
   sidebar: MatSidenav;
 
-  isHandset$: Observable<boolean>;
+  isSmall$: Observable<boolean>;
   showSidebar$: Observable<boolean>;
   fullWidth$: Observable<boolean>;
   showTour$: Observable<boolean>;
+  showSearch$: Observable<boolean>;
 
   private isActive = true;
 
@@ -47,7 +48,7 @@ export class AppComponent implements OnInit {
     private tracking: TrackingService,
     private fb: FormBuilder) {
 
-    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
+    this.isSmall$ = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall])
       .pipe(
         map(result => result.matches),
         shareReplay(1)
@@ -60,7 +61,7 @@ export class AppComponent implements OnInit {
 
     combineLatest([
       navigationEnd$,
-      this.isHandset$
+      this.isSmall$
     ]).subscribe(([_, isHandset]) => {
       if (isHandset) {
         this.sidebar.close();
@@ -89,6 +90,14 @@ export class AppComponent implements OnInit {
 
     this.showTour$ = data$.pipe(
       map(data => data.tour != null)
+    );
+
+    this.showTour$ = data$.pipe(
+      map(data => data.tour != null)
+    );
+
+    this.showSearch$ = data$.pipe(
+      map(data => !data.hideSearch)
     );
 
     navigationEnd$.subscribe((ev: NavigationEnd) => tracking.pageView(ev.urlAfterRedirects));
@@ -128,5 +137,9 @@ export class AppComponent implements OnInit {
 
   resetCookiePreferences() {
     this.cookies.reset();
+  }
+
+  doSearch(query: string) {
+    this.router.navigate(['/search/all'], { queryParams: { q : query}});
   }
 }

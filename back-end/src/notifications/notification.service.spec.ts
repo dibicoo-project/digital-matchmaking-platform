@@ -92,6 +92,16 @@ describe('EnterpriseService', () => {
     expect(repository.saveMulti).toHaveBeenCalledWith([{ ...data, title: 'two', isRead: true }]);
   });
 
+  it('should delete notification', async () => {
+    spyOn(repository, 'findOneByUser').and.returnValue(Promise.resolve({ ...data }));
+    spyOn(repository, 'delete').and.returnValue(Promise.resolve());
+
+    await service.delete(user, '123');
+
+    expect(repository.findOneByUser).toHaveBeenCalledWith('john', '123');
+    expect(repository.delete).toHaveBeenCalledWith('john', '123');
+  });
+
   it('should save settings', async () => {
     spyOn(settingsRepository, 'findOne').and.returnValue(Promise.resolve(undefined));
     spyOn(settingsRepository, 'upsert');

@@ -66,7 +66,7 @@
               <mat-label>{{item.name}}</mat-label>
               <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="5"
                 [formControlName]="item.code" #text maxlength="2000"></textarea>
-              <mat-hint [matTooltip]="item.hintEx" matTooltipClass="hint-tooltip" matTooltipPosition="after">
+              <mat-hint [matTooltip]="item.hintEx" matTooltipClass="tooltip-large" matTooltipPosition="after">
                 {{item.hint}}
                 <mat-icon color="accent" *ngIf="item.hintEx">help_outline</mat-icon>
               </mat-hint>
@@ -118,17 +118,48 @@
       </mat-card-content>
 
       <mat-card-content class="step-content" [class.active]="activeStep.code === 'contacts'">
+        <button class="param-row" mat-stroked-button color="accent" type="button" (click)="selectCompany(companyDialog)">
+          <mat-icon>domain_add</mat-icon>
+          Use registered company
+        </button>
+
+        <ng-template #companyDialog>
+          <h2 mat-dialog-title>Select registered company</h2>
+          <div mat-dialog-content>
+            <mat-action-list>                            
+              <button class="company__item" mat-list-item *ngFor="let one of companies$ | async" [mat-dialog-close]="one">
+                <div class="company__avatar">
+                  <app-image-avatar [title]="one.companyName" [imageUrl]="one.imageUrl" text=" "></app-image-avatar>                
+                </div>
+                {{one.companyName}}
+              </button>
+              <p class="company__empty">No companies found!</p>
+            </mat-action-list>      
+          </div>
+        </ng-template>
+
         <mat-form-field class="param-row">
           <mat-label>Organization / Company</mat-label>
           <input matInput formControlName="companyName">
           <mat-hint>Name of represented organization or company</mat-hint>
         </mat-form-field>
 
+
+        <mat-form-field class="param-row">
+          <mat-label>Website</mat-label>
+          <input matInput type="url" formControlName="webPage" placeholder="http://" pattern="^https?:\/\/[\w.-]+[^\s]*"
+            maxlength="250">
+          <mat-error *ngIf="applicationForm.get('webPage').errors?.pattern">Please enter a valid url
+          </mat-error>
+        </mat-form-field>
+
         <div class="param-row">
           <app-location-input formControlName="contactLocation"></app-location-input>
         </div>
 
-        <app-contact-list formControlName="contacts" required="true"></app-contact-list>
+        <div class="param-row">
+          <app-contact-list formControlName="contacts" required="true"></app-contact-list>
+        </div>
 
         <p class="addinf">Provided contact information will be visible for all platform users. Read more about privacy
           <a routerLink="/privacy" target="_blank">here</a>.

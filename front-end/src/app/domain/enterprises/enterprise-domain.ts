@@ -65,24 +65,6 @@ export const standards: { code: string; label: string }[] = [
   },
   {
     code: 'ISO 24252',
-    label: 'Biogas systems &mdash; Non-household and non-gasification <em>(close to be published)</em>'
+    label: 'Biogas systems &mdash; Non-household and non-gasification'
   }
 ];
-
-export type FilterGroup = 'company-region' | 'business-field' | 'project-region' | 'profile-updates';
-
-export type FilterType = 'region' | 'subregion' | 'country' | 'categoryId' | 'updatedAgo';
-
-export interface FilterDefinition {
-  type: FilterType;
-  value: string | number;
-  label?: string;
-};
-
-export type Filters = { [key in FilterGroup]?: FilterDefinition[] };
-
-export interface FiltersBean {
-  id?: string;
-  label: string;
-  filters: Filters;
-}

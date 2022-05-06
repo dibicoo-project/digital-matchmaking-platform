@@ -3,8 +3,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Application } from '@domain/application-domain';
+import { Application } from '@domain/applications/application-domain';
 import { CategoryService } from '@domain/categories/category.service';
+import { DialogService } from '@domain/dialog.service';
+import { EnterpriseService } from '@domain/enterprises/enterprise.service';
 import { BehaviorSubject, EMPTY, of, Subject } from 'rxjs';
 
 import { ApplicationWizardComponent } from './application-wizard.component';
@@ -24,6 +26,19 @@ describe('ApplicationWizardComponent', () => {
           provide: CategoryService,
           useValue: {
             all$: new BehaviorSubject([])
+          }
+        },
+        {
+          provide: EnterpriseService,
+          useValue: {
+            getUserEnterprises: () => EMPTY,
+            getUserEnterprise: () => EMPTY,
+          }
+        },
+        {
+          provide: DialogService,
+          useValue: {
+            open: () => ({ afterClosed: () => EMPTY})
           }
         }
       ],
@@ -125,5 +140,19 @@ describe('ApplicationWizardComponent', () => {
     (service.applicationId$ as any).next('987');
 
     expect(router.navigate).toHaveBeenCalledWith(['..', '987'], jasmine.objectContaining({ state: { savedNew: true } }));
+  });
+
+  it('should use existing company', () => {
+    const dialog = TestBed.inject(DialogService);
+    const companyService = TestBed.inject(EnterpriseService);
+    const comp = { id: '123'};
+
+    spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(comp)} as any);
+    spyOn(companyService, 'getUserEnterprise').and.returnValue(of({ companyName: 'test'} as any));
+
+    component.selectCompany(comp);
+
+    expect(companyService.getUserEnterprise).toHaveBeenCalledWith('123');
+    expect(component.applicationForm.get('companyName').value).toEqual('test');
   });
 });

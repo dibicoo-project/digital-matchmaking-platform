@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationService } from '@domain/application.service';
-import { Application } from '@domain/application-domain';
+import { ApplicationService } from '@domain/applications/application.service';
+import { Application } from '@domain/applications/application-domain';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from '@domain/dialog.service';
 

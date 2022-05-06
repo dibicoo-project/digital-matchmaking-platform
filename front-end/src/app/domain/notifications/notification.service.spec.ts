@@ -60,6 +60,16 @@ describe('NotificationService', () => {
     service.unread$.pipe(take(1)).subscribe(v => expect(v.length).toBe(2));
   });
 
+  it('should delete one', () => {
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    service['state'] = [{ id: '1', title: 'A' }, { id: '2', title: 'B' }] as any[];
+
+    service.delete('1');
+    service.all$.pipe(take(1)).subscribe(v => expect(v.length).toBe(1));
+    http.expectOne({ method: 'DELETE', url: '/api/user/notifications/1' }).error({} as any);
+    service.all$.pipe(take(1)).subscribe(v => expect(v.length).toBe(2));
+  });
+
   it('should mark all as read', () => {
     // eslint-disable-next-line @typescript-eslint/dot-notation
     service['state'] = [{ id: '1', title: 'A' }, { id: '2', title: 'B' }] as any[];

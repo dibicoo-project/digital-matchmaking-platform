@@ -5,20 +5,17 @@ import { CountriesService } from '@domain/countries/countries.service';
 import { CountrySelectComponent } from '@domain/countries/country-select/country-select.component';
 import { EnterpriseService } from '@domain/enterprises/enterprise.service';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { delay, filter, map, shareReplay } from 'rxjs/operators';
+import { delay, first, map, shareReplay } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Country } from '@domain/countries/country-domain';
-import { Enterprise, FilterDefinition, FilterGroup, Filters, FilterType } from '@domain/enterprises/enterprise-domain';
-import { Router } from '@angular/router';
+import { Enterprise } from '@domain/enterprises/enterprise-domain';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@root/app/auth/auth.service';
 import { DialogService } from '@domain/dialog.service';
+import {
+  emptyFilters, FilterDefinition, FilterGroup, Filters, filtersToParams, FilterType, paramsToFilters, updatedAgoLabel
+} from '@domain/enterprises/filters-domain';
 
-const emptyFilters = () => ({
-  'business-field': [],
-  'company-region': [],
-  'profile-updates': [],
-  'project-region': [],
-}) as Filters;
 
 @Component({
   selector: 'app-enterprise-matchmaking',
@@ -29,19 +26,17 @@ export class EnterpriseMatchmakingComponent implements OnInit {
 
   isSaved = false;
 
+  updatedAgoLabel = updatedAgoLabel;
+
   constructor(
     public countriesService: CountriesService,
     public categories: CategoryService,
     public enterpriseService: EnterpriseService,
     private router: Router,
+    private route: ActivatedRoute,
     public auth: AuthService,
     private dialog: DialogService
-  ) {
-    const filters = this.router.getCurrentNavigation()?.extras?.state?.filters;
-    if (filters) {
-      this.filtersSubject.next({ ...emptyFilters(), ...filters });
-    }
-  }
+  ) {  }
 
   filtersSubject = new BehaviorSubject<Filters>(emptyFilters());
 
@@ -49,12 +44,12 @@ export class EnterpriseMatchmakingComponent implements OnInit {
     return this.filtersSubject.getValue();
   }
 
-  get anyFilterSelected(): boolean {
-    return this.filters['business-field'].length > 0
-      || this.filters['company-region'].length > 0
-      || this.filters['profile-updates'].length > 0
-      || this.filters['project-region'].length > 0;
-  }
+  anyFilterSelected$ = this.filtersSubject.pipe(
+    map(filters => filters['business-field'].length > 0
+      || filters['company-region'].length > 0
+      || filters['profile-updates'].length > 0
+      || filters['project-region'].length > 0
+    ));
 
   getSelectedFilterCount(group: FilterGroup, ...types: FilterType[]) {
     return this.filters[group].filter(f => types.length === 0 || types.includes(f.type)).length;
@@ -119,10 +114,23 @@ export class EnterpriseMatchmakingComponent implements OnInit {
   ngOnInit(): void {
     this.enterpriseService.fetchPublic();
 
-    this.filtersSubject.subscribe(_ => {
+    combineLatest([
+      this.categories.all$,
+      this.route.queryParamMap.pipe(first(), map(paramsToFilters))
+    ]).pipe(
+      map(([categories, filters]) => {
+        filters['business-field'].forEach(item => item.label = categories.find(c => c.id === item.value)?.title);
+        return filters;
+      })
+    ).subscribe(filters => this.filtersSubject.next(filters));
+
+
+    this.filtersSubject.subscribe(filters => {
       this.router.navigate([], {
-        queryParams: { p: null },
-        queryParamsHandling: 'merge'
+        queryParams: {
+          ...filtersToParams(filters),
+          p: null
+        },
       });
     });
   }
@@ -132,7 +140,7 @@ export class EnterpriseMatchmakingComponent implements OnInit {
 
     if (group.every(one => one.type !== item.type || one.value !== item.value)) {
       if (groupKey === 'profile-updates') {
-        group.splice(0, 1);
+        group.splice(0);
       }
       group.push(item);
       group.sort((a, b) => String(a.label || a.value).localeCompare(String(b.label || b.value)));

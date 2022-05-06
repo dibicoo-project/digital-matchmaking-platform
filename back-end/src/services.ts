@@ -35,6 +35,7 @@ import { AnalyticsService } from './analytics/analytics.service';
 import { AnalyticsRepository } from './analytics/analytics.repository';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { ContactsService } from './contacts/contacts.service';
+import { SearchService } from './search/search.service';
 import { EmailService } from './emails/email.service';
 import * as mailjet from "node-mailjet";
 
@@ -45,7 +46,7 @@ export const bindServices = (container: Container) => {
 
   // Utils
   container.bind<AxiosStatic>('axios').toConstantValue(Axios);
-  container.bind(NodeCache).toConstantValue(new NodeCache());
+  container.bind(NodeCache).toConstantValue(new NodeCache({ useClones: false }));
   container.bind(ImageService).toConstantValue(new ImageService());
   container.bind(GeocodeService).toSelf().inSingletonScope();
   container.bind(EnvService).toSelf().inSingletonScope();
@@ -67,7 +68,7 @@ export const bindServices = (container: Container) => {
   container.bind(EnterpriseFiltersRepository).toSelf().inSingletonScope();
   container.bind(EnterpriseWatchlistRepository).toSelf().inSingletonScope();
   container.bind(InvitationRepository).toSelf().inSingletonScope();
-  
+
   container.bind(CategoryRepository).toSelf().inSingletonScope();
   container.bind(NotificationRepository).toSelf().inSingletonScope();
   container.bind(AnalyticsRepository).toSelf().inSingletonScope();
@@ -75,23 +76,24 @@ export const bindServices = (container: Container) => {
   // Services
   container.bind(Auth0UsersService).toSelf().inSingletonScope();
   container.bind(CategoryService).toSelf().inSingletonScope();
-  
+
   container.bind(EnterpriseService).toSelf().inSingletonScope();
   container.bind(EnterpriseFiltersService).toSelf().inSingletonScope();
   container.bind(EnterpriseShareService).toSelf().inSingletonScope();
   container.bind(EnterpriseWatchlistService).toSelf().inSingletonScope();
-  
+
   container.bind(ApplicationService).toSelf().inSingletonScope();
   container.bind(ApplicationFiltersService).toSelf().inSingletonScope();
-  
+
   container.bind(EnterpriseMatchmakingService).toSelf().inSingletonScope();
   container.bind(ApplicationMatchmakingService).toSelf().inSingletonScope();
   container.bind(MatchmakingFacade).toSelf().inSingletonScope();
-  
+
   container.bind(KnowledgeBaseService).toSelf().inSingletonScope();
   container.bind(CountriesService).toSelf().inSingletonScope();
   container.bind(NotificationService).toSelf().inSingletonScope();
   container.bind(AttachmentService).toSelf().inSingletonScope();
   container.bind(AnalyticsService).toSelf().inSingletonScope();
   container.bind(ContactsService).toSelf().inSingletonScope();
+  container.bind(SearchService).toSelf().inSingletonScope();
 };

@@ -32,6 +32,13 @@ export class PublicEnterpriseRepository extends RepositoryV2<PublicEnterprise> {
     return this.find(this.query);
   }
 
+  public async findLatest(num: number = 5) {
+    const query = this.query
+      .order('changedTs', { descending: true})
+      .limit(num);
+    return this.find(query);
+  }
+
   public async findByOwner(userName: string) {
     const query = this.query.filter('owners', userName);
     return this.find(query);

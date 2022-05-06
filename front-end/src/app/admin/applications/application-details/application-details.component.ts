@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { allDetails, Application } from '@domain/application-domain';
-import { ApplicationService } from '@domain/application.service';
+import { allDetails, Application } from '@domain/applications/application-domain';
+import { ApplicationService } from '@domain/applications/application.service';
 import { Attachment } from '@domain/attachments/attachment.domain';
 import { Category } from '@domain/categories/category-domain';
 import { CategoryService } from '@domain/categories/category.service';

@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { CategoryService } from '@domain/categories/category.service';
 import { DialogService } from '@domain/dialog.service';
 import { EMPTY, of, Subject } from 'rxjs';

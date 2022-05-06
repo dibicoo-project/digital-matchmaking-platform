@@ -1,9 +1,8 @@
 import { Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogService } from '@domain/dialog.service';
-import { EMPTY, Observable, of, throwError } from 'rxjs';
-import { catchError, filter, switchMap, tap } from 'rxjs/operators';
+import { EMPTY, Observable, of } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 import { Attachment } from '../attachment.domain';
 import { AttachmentEditDialogComponent } from '../attachment-edit-dialog/attachment-edit-dialog.component';
 

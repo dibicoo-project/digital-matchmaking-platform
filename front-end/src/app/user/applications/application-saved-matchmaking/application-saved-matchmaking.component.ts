@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FiltersBean } from '@domain/application-domain';
-import { ApplicationService } from '@domain/application.service';
+import { FiltersBean, filtersToParams } from '@domain/applications/filters-domain';
+import { ApplicationService } from '@domain/applications/application.service';
 
 @Component({
   selector: 'app-application-saved-matchmaking',
@@ -10,6 +10,8 @@ import { ApplicationService } from '@domain/application.service';
 export class ApplicationSavedMatchmakingComponent implements OnInit {
 
   list: FiltersBean[];
+
+  filtersToParams = filtersToParams;
 
   constructor(private service: ApplicationService) { }
 

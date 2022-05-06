@@ -25,6 +25,15 @@ describe('EnterpriseController', () => {
     expect(service.getPublicEnterprises).toHaveBeenCalled();
   });
 
+  it('should return latest enterprises', async () => {
+    spyOn(service, 'getLatestEnterprises').and.returnValue(Promise.resolve([{}, {}] as any));
+
+    const list = await controller.getLatestEnterprises();
+
+    expect(list.length).toBe(2);
+    expect(service.getLatestEnterprises).toHaveBeenCalled();
+  });
+
   it('should get public enterprise details', async () => {
     spyOn(service, 'getEnterpriseDetails').and.returnValue(Promise.resolve({} as any));
     await controller.getEnterpriseDetails('123');

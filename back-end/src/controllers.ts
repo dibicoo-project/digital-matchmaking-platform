@@ -6,6 +6,7 @@ import './applications/application.controller';
 import './applications/user-application.controller';
 import './applications/admin-application.controller';
 import './contacts/user-contacts.controller';
+import './search/search.controller';
 
 import './knowledge-base/knowledge-base.controller';
 import './notifications/notification.controller';

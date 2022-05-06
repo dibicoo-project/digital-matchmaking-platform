@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { allDetailsObject, Application } from '@domain/application-domain';
+import { allDetailsObject, Application } from '@domain/applications/application-domain';
 import { CategoryService } from '@domain/categories/category.service';
+import { DialogService } from '@domain/dialog.service';
+import { EnterpriseService } from '@domain/enterprises/enterprise.service';
 import * as moment from 'moment';
-import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { ApplicationWizardService } from './application-wizard.service';
 
 
@@ -28,6 +30,7 @@ export class ApplicationWizardComponent implements OnInit {
     details: this.fb.group(allDetailsObject),
     attachments: [[]],
     companyName: [undefined],
+    webPage: [null],
     contactLocation: [{}],
     contacts: [[], Validators.required],
     dueDate: [undefined, Validators.required]
@@ -39,7 +42,14 @@ export class ApplicationWizardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public service: ApplicationWizardService,
-    public categories: CategoryService) { }
+    public categories: CategoryService,
+    private companies: EnterpriseService,
+    private dialog: DialogService
+  ) { }
+
+  companies$ = this.companies.getUserEnterprises().pipe(
+    map(({ drafts }) => drafts.filter(d => !!d.companyName))
+  );
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -67,6 +77,11 @@ export class ApplicationWizardComponent implements OnInit {
     this.service.activeStep$.subscribe(step => this.router.navigate([], { fragment: step.code }));
 
     this.applicationForm.valueChanges.subscribe(val => {
+      if (!!val.webPage && !/^https?:\/\//.test(val.webPage)) {
+        val.webPage = 'http://' + val.webPage;
+        this.applicationForm.get('webPage').setValue(val.webPage, { emitEvent: false });
+      }
+
       this.service.updateValue({
         ...val,
         field: undefined,
@@ -78,6 +93,22 @@ export class ApplicationWizardComponent implements OnInit {
     this.service.applicationId$.subscribe(id => {
       this.router.navigate(['..', id], { preserveFragment: true, relativeTo: this.route, state: { savedNew: true } });
     });
+  }
+
+  selectCompany(template: any) {
+    this.dialog.open(template, { autoFocus: false }).afterClosed()
+      .pipe(
+        filter(res => !!res),
+        switchMap(res => this.companies.getUserEnterprise(res.id))
+      )
+      .subscribe(comp => {
+        this.applicationForm.patchValue({
+          companyName: comp.companyName,
+          webPage: comp.webPage,
+          contactLocation: comp.location,
+          contacts: comp.contacts
+        });
+      });
   }
 
   publish() {

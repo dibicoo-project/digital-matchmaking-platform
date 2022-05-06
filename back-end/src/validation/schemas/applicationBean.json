@@ -37,6 +37,21 @@
         "companyName": {
             "$ref": "http://dibicoo.org/common.json#/definitions/defaultString"
         },
+        "webPage": {
+            "anyOf": [
+                {
+                    "format": "uri",
+                    "type": "string"
+                },
+                {
+                    "maxLength": 0,
+                    "type": "string"
+                },
+                {
+                    "type":"null"
+                }
+            ]
+        },
         "contactLocation": {
             "$ref": "http://dibicoo.org/common.json#/definitions/Location"
         },
@@ -52,7 +67,7 @@
                 "null"
             ],
             "format": "date-time"
-        },        
+        },
         "rejectReason": {
             "anyOf": [
                 {

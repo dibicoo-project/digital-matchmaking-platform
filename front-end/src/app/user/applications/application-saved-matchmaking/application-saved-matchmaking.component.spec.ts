@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { EMPTY, of } from 'rxjs';
 
 import { ApplicationSavedMatchmakingComponent } from './application-saved-matchmaking.component';

@@ -8,11 +8,19 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { DevelopmentComponent } from './development/development.component';
 import { FgpComponent } from './fgp/fgp.component';
 import { FaqComponent } from './faq/faq.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'old',
     component: FrontPageComponent,
+    data: {
+      hideSidebar: true
+    }
+  },
+  {
+    path: '',
+    component: LandingPageComponent,
     data: {
       hideSidebar: true
     }

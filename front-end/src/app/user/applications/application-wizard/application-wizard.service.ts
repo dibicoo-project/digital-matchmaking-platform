@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { allDetails, Application } from '@domain/application-domain';
+import { allDetails, Application } from '@domain/applications/application-domain';
 import { BehaviorSubject, EMPTY, Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { allSteps, getDetailCodes, WizardState, WizardStep } from './application-wizard.domain';
 import * as clone from 'clone';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { distinctUntilObjChanged, select } from '@domain/rxjs-utils';
 
 @Injectable()

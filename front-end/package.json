@@ -31,6 +31,7 @@
     "@angular/router": "~11.2.5",
     "@auth0/auth0-spa-js": "^1.14.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "angular-responsive-carousel": "^2.1.2",
     "clean-deep": "^3.4.0",
     "clone": "^2.1.2",
     "d3-org-chart": "^2.5.4",

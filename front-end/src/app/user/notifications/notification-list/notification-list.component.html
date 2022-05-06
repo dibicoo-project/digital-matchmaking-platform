@@ -25,6 +25,9 @@
       <button mat-stroked-button *ngIf="!item.isRead" (click)="service.markAsRead(item.id)">
         <mat-icon>mark_email_read</mat-icon> Mark as read
       </button>
+      <button mat-stroked-button (click)="service.delete(item.id)">
+        <mat-icon>delete</mat-icon> Delete
+      </button>
     </mat-card-actions>
     <mat-card-content>
       <div class="notification__body" [innerHtml]="item.body"></div>

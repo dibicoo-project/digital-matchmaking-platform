@@ -52,10 +52,14 @@
       </ng-container>
     </ng-container>
 
-
     <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Company name', 
       a: published?.companyName, 
       b: pending?.companyName}">
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Website', 
+      a: published?.webPage, 
+      b: pending?.webPage}">
     </ng-container>
 
     <ng-container [ngTemplateOutlet]="valueRow" [ngTemplateOutletContext]="{ title: 'Contact location', 

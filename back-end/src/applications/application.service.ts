@@ -9,6 +9,7 @@ import { NotificationService } from '../notifications/notification.service';
 import { applicationPublished, applicationRejected, applicationUnpublished } from '../notifications/notification.templates';
 import { isValidApplicationBean as isValid, isValidPublicApplication } from '../validation/validators';
 import { MatchmakingFacade } from '../matchmaking/matchmaking.facade';
+import { shortText } from '../utils/shortText';
 
 @injectable()
 export class ApplicationService {
@@ -26,7 +27,7 @@ export class ApplicationService {
       id,
       mainCategoryId: item.mainCategoryId,
       categoryId: item.categoryId,
-      description: item.description,
+      description: shortText(item.description, 250),
       location: item.location,
       dueDate: item.dueDate,
       changedTs: item.changedTs,
@@ -37,9 +38,11 @@ export class ApplicationService {
   private toDetailsBean(item: Application | PublicApplication): ApplicationBean {
     return {
       ...this.toSimpleBean(item),
+      description: item.description, //full description
       details: item.details,
       attachments: item.attachments,
       companyName: item.companyName,
+      webPage: item.webPage,
       contactLocation: item.contactLocation,
       contacts: item.contacts
     };

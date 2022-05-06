@@ -16,7 +16,7 @@ import { DiBiCooMaterialModule } from './material.module';
 import { Router, Scroll, Event } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     }),
     DomainModule.forRoot(),
     AuthModule.forRoot(),
+    FormsModule,
     ReactiveFormsModule
   ],
   providers: [InfoWindowManager, GoogleMapsAPIWrapper, MarkerManager ],

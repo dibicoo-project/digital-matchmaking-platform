@@ -1,0 +1,113 @@
+<header class="page-header">
+  <ul class="breadcrumbs">
+    <li><a routerLink="">Home</a></li>
+    <li>{{kindLabel}}</li>
+  </ul>
+
+  <h1 class="search__header">
+    <label for="searchInput">
+      <mat-icon class="search__icon">search</mat-icon>
+    </label>
+    <input id="searchInput" class="search__input" [placeholder]="kindLabel" [formControl]="searchControl">
+  </h1>
+</header>
+<section class="page-content">
+  <mat-card *ngIf="emptyResults">
+    <h2 matCardTitle>Nothing found</h2>
+    <mat-card-content>
+      <p>Nothing found for your query. Try to refine it or use explorer.</p>
+    </mat-card-content>
+  </mat-card>
+
+  <ng-template #loading>
+    <div class="result-item__avatar result-item__avatar--skeleton"></div>
+    <div class="result-item__details result-item__details--skeleton">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </ng-template>
+
+  <mat-card *ngIf="results.companies?.length > 0" class="result__card">
+    <h2 matCardTitle>Companies</h2>
+    <mat-card-content>
+      <div class="result-item" *ngFor="let item of results.companies">
+        <ng-container *ngIf="companies.publicById$(item.ref) | async as entity; else loading">
+          <app-image-avatar class="result-item__avatar" [title]="entity.companyName" [imageUrl]="entity.imageUrl"
+            text=" ">
+          </app-image-avatar>
+          <div class="result-item__details">
+            <h3 class="result-item__title">{{entity.companyName}}</h3>
+            <p class="result-item__meta">
+              <span>
+                <mat-icon inline>event</mat-icon>
+                {{entity.changedTs | date}}
+              </span>
+              <span>
+                <mat-icon inline>location_on</mat-icon>
+                <app-location-text [location]="{ country: entity.location.country, city: entity.location.city }">
+                </app-location-text>
+              </span>
+            </p>
+            <p class="result-item__profile">
+              {{entity.companyProfile}}
+            </p>
+            <p class="result-item__terms">
+              {{item.flatTerms}}
+            </p>
+          </div>
+          <div class="result-item__actions">
+            <button mat-stroked-button [routerLink]="['/enterprises', item.ref]">View company profile</button>
+          </div>
+        </ng-container>
+      </div>
+      <button mat-button class=" showall" *ngIf="results.companies?.length < results.totalCompanies"
+        routerLink="../enterprises" queryParamsHandling="merge">
+        Show all {{results.totalCompanies}} found company profiles
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="results.applications?.length > 0" class="result__card">
+    <h2 matCardTitle>Business opportunities</h2>
+    <mat-card-content>
+      <div *ngFor="let item of results.applications" class="result-item">
+        <ng-container *ngIf="applications.publicById$(item.ref) | async as entity; else loading">
+          <app-image-avatar class="result-item__avatar" title=""
+            [imageUrl]="(categories.byId$(entity.categoryId) | async)?.imageUrl" text=" ">
+          </app-image-avatar>
+          <div class="result-item__details">
+            <h3 class="result-item__title">
+              {{(categories.byId$(entity.mainCategoryId) | async)?.title}} /
+              {{(categories.byId$(entity.categoryId) | async)?.title}}
+            </h3>
+            <p class="result-item__meta">
+              <span>
+                <mat-icon inline>event</mat-icon>
+                {{entity.dueDate | date}}
+              </span>
+              <span>
+                <mat-icon inline>location_on</mat-icon>
+                <app-location-text [location]="{ country: entity.location.country, city: entity.location.city }">
+                </app-location-text>
+              </span>
+            </p>
+            <p class="result-item__profile">
+              {{entity.description}}
+            </p>
+            <p class="result-item__terms">
+              {{item.flatTerms}}
+            </p>
+          </div>
+          <div class="result-item__actions">
+            <button mat-stroked-button [routerLink]="['/applications', item.ref]">View business opportunity</button>
+          </div>
+        </ng-container>
+      </div>
+      <button mat-button class="showall" *ngIf="results.applications?.length < results.totalApplications"
+        routerLink="../applications" queryParamsHandling="merge">
+        Show all {{results.totalApplications}} found business opportunities
+      </button>
+    </mat-card-content>
+  </mat-card>
+</section>

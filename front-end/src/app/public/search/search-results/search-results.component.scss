@@ -1,0 +1,128 @@
+@import "dibicoo-theme";
+
+.search__field {
+  width: 100%;
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.search__header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  background-color: white;
+  border: solid 1px $neutral-xlight;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  
+  &:focus-within {
+    border: solid 1px $accent;
+  }
+}
+
+.search__icon {
+  font-size: inherit;
+  line-height: inherit;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+}
+
+.search__input {
+  background-color: transparent;
+  color: $accent;
+  border: none;
+  outline: none;
+  flex: 1 1 auto;
+  padding: 0.5rem 0rem;
+  font: inherit;
+}
+
+.result__card {
+  & + & {
+    margin-top: 1rem;
+  }
+
+  .mat-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.showall {
+  height: 3rem;
+  margin-bottom: -1rem !important;
+  margin-right: -1rem;
+  margin-left: -1rem;
+  font-weight: bold;
+  border-top: solid 1px $neutral-light;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  border-top: solid 1px $neutral-light;
+  padding: 1rem 0;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  &__avatar {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    flex: 0 0 4rem;
+
+    &--skeleton {
+      @include loadingSkeleton;
+      border-radius: 50%;
+    }
+  }
+
+  &__details {
+    flex: 1 1 100%;
+    min-width: 0;
+
+    &--skeleton {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      div {
+        height: 1rem;
+        border-radius: 0.25rem;
+        @include loadingSkeleton;        
+      }
+    }
+  }
+
+  &__actions {
+    flex: 1 1 0;
+  }
+
+  &__title {
+    margin: 0 0 0.25rem 0;
+  }
+
+  &__meta {
+    margin: 0;
+    color: $neutral;
+    @include muted-icons;
+  }
+
+  &__terms {
+    color: $neutral;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  &__profile {
+    margin: 0.5rem 0;
+  }
+}

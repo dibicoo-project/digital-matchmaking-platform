@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FiltersBean } from '@domain/enterprises/enterprise-domain';
 import { EnterpriseService } from '@domain/enterprises/enterprise.service';
+import { FiltersBean, filtersToParams } from '@domain/enterprises/filters-domain';
 
 @Component({
   selector: 'app-enterprise-saved-matchmaking',
@@ -16,6 +16,8 @@ export class EnterpriseSavedMatchmakingComponent implements OnInit {
   ngOnInit(): void {
     this.service.getSavedMatchmaking().subscribe(list => this.list = list);
   }
+
+  filtersToParams = filtersToParams;
 
   delete(id: string) {
     const idx = this.list.findIndex(i => i.id === id);

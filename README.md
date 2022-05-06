@@ -17,8 +17,8 @@
 * Create indexes in Datastore
   * `gcloud datastore indexes create ~/.config/gcloud/emulators/datastore/WEB-INF/index.yaml`
 * Download database backup
-  * `gsutil cp -r gs://dibicoo-matchmaking-tool-backups/datastore/2021-11-28 .`
+  * `gsutil -m cp -r gs://dibicoo-matchmaking-tool-backups/datastore/2022-04-11 /tmp/backup`
 * Import data into emulator
-  * `curl -X POST localhost:8001/v1/projects/dibicoo-matchmaking-tool:import -d '{ "input_url":"/home/vitaljok/Projects/dibicoo-matchmaking-tool/backups/backups.overall_export_metadata" }'`
+  * `curl -X POST localhost:8001/v1/projects/dibicoo-matchmaking-tool:import -d '{ "input_url":"/tmp/backup/2022-04-11/2022-04-11.overall_export_metadata" }'`
 * Generate/Update JSON schema files
   * `npm run generateSchema -- -o src/enterprises/schemas/enterpriseBean.json EnterpriseBean`

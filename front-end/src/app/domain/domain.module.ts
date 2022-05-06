@@ -5,9 +5,9 @@ import { CategoryService } from './categories/category.service';
 import { EnterpriseService } from './enterprises/enterprise.service';
 import { DialogComponent } from './dialog/dialog.component';
 
-import { ApplicationService } from './application.service';
+import { ApplicationService } from './applications/application.service';
 import { DialogService } from './dialog.service';
-import { ApplicationCardComponent } from './application-card/application-card.component';
+import { ApplicationCardComponent } from './applications/application-card/application-card.component';
 import { RouterModule } from '@angular/router';
 import { LocationTextComponent } from './location/location-text/location-text.component';
 import { SvgAvatarComponent } from './svg-avatar/svg-avatar.component';
@@ -40,6 +40,7 @@ import { ContactsService } from './contacts/contacts.service';
 import { FixNewLinesPipe } from './pipes/fix-new-lines.pipe';
 import { EnterpriseWatchlistService } from './enterprises/enterprise-watchlist.service';
 import { CategoryChartComponent } from './categories/category-chart/category-chart.component';
+import { BackButtonDirective } from './back-button.directive';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,7 @@ import { CategoryChartComponent } from './categories/category-chart/category-cha
     AttachmentListComponent,
     AttachmentEditDialogComponent,
     TourComponent,
-    FixNewLinesPipe
+    BackButtonDirective
   ],
   exports: [
     ApplicationCardComponent,
@@ -90,7 +91,8 @@ import { CategoryChartComponent } from './categories/category-chart/category-cha
     FixNewLinesPipe,
     MultilineTextComponent,
     AttachmentListComponent,
-    TourComponent
+    TourComponent,
+    BackButtonDirective
   ],
   imports: [
     CommonModule,

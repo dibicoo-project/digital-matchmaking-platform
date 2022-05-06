@@ -6,9 +6,10 @@
   <h1>Companies matchmaking</h1>
 </header>
 <section class="page-content">
-  <p>Use this section to filter companies according to specific criteria and save filter combinations for later use.</p>
+  <p>Find your next business partner by using our filters to finetune your company search. This feature allows you to
+    save your search criteria and receive updates if new companies match your needs.</p>
 
-  <mat-card class="filter-options">    
+  <mat-card class="filter-options">
     <mat-card-header>
       <mat-icon mat-card-avatar>manage_search</mat-icon>
       <h2 mat-card-title>Find company profiles by...</h2>
@@ -73,7 +74,7 @@
         </app-country-select>
       </div>
     </mat-card-content>
-    <mat-card-actions *ngIf="anyFilterSelected">
+    <mat-card-actions *ngIf="anyFilterSelected$ | async">
       <div class="selected-filters">
         <mat-chip-list>
           <ng-container *ngFor="let grp of ['business-field', 'company-region', 'profile-updates', 'project-region']">
@@ -121,15 +122,15 @@
 
     <mat-menu #profileUpdates="matMenu" class="drop-down">
       <button mat-menu-item
-        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 2, label: 'Updated recenlty'});">
+        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 2, label: updatedAgoLabel(2)});">
         Recenlty
       </button>
       <button mat-menu-item
-        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 7, label: 'Updated last week'});">
+        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 7, label: updatedAgoLabel(7)});">
         Last week
       </button>
       <button mat-menu-item
-        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 30, label: 'Updated last month'});">
+        (click)="addFilter('profile-updates', {type: 'updatedAgo', value: 30, label: updatedAgoLabel(30)});">
         Last month
       </button>
     </mat-menu>

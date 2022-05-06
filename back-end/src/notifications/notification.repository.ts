@@ -52,8 +52,12 @@ export class NotificationRepository extends RepositoryV2<Notification> {
   public async saveMulti(entities: Notification[]) {
     await this.datastore.save(entities);
   }
-}
 
+  public async delete(userName: string, id: string): Promise<void> {
+    const key = this.datastore.key(['user', userName, this.kindName, this.datastore.int(id)]);
+    await this.datastore.delete(key)
+  }
+}
 
 @injectable()
 export class NotificationSettingsRepository extends RepositoryV2<NotificationSettings> {

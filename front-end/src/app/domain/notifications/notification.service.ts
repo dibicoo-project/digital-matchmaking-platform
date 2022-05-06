@@ -29,6 +29,21 @@ export class NotificationService {
 
   constructor(private http: HttpClient) { }
 
+  delete(id: string) {
+    const item = this.state.find(i => i.id === id);
+    if (item) {
+      this.state = [...this.state.filter(i => i.id !== id)];
+
+      this.http.delete<void>(`/api/user/notifications/${id}`)
+        .subscribe(
+          _ok => null,
+          _err => {
+            this.state = [...this.state, item];
+          }
+        );
+    }
+  }
+
   markAsRead(id: string) {
     const item = this.state.find(i => i.id === id);
     if (item) {

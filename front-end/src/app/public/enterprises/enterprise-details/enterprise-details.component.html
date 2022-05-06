@@ -25,13 +25,13 @@
     <div class="company-header__name-container">
       <h1 class="company-header__name">{{enterprise?.companyName}}</h1>
       <ul class="metadata">
-        <li>Updated: {{enterprise?.changedTs | date}}</li>
         <li>Address:
           <app-location-text [location]="enterprise?.location"></app-location-text>
         </li>
         <li *ngIf="enterprise?.webPage">Web page:
           <a target="_blank" [href]="enterprise.webPage">{{enterprise.webPage}}</a>
         </li>
+        <li>Updated: {{enterprise?.changedTs | date}}</li>
       </ul>
     </div>
   </div>
@@ -108,8 +108,7 @@
   </section>
 
   <footer>
-    <a mat-raised-button title="Back to all company profiles" color="primary" routerLink=".." fragment="list"
-      queryParamsHandling="merge">
+    <a mat-raised-button title="Back to all company profiles" color="primary" appBackButton>
       <mat-icon>arrow_left</mat-icon>
       Back
     </a>

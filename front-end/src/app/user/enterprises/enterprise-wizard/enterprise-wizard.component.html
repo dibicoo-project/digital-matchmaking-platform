@@ -44,11 +44,14 @@
           <input matInput formControlName="companyName" maxlength="250" required>
         </mat-form-field>
 
-        <mat-form-field class="param-row">
+        <mat-form-field class="param-row mat-form-field--long-hint">
           <mat-label>Company profile</mat-label>
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10" maxlength="2000"
             required #profileText formControlName="companyProfile"></textarea>
-          <mat-hint>Brief description of the company profile</mat-hint>
+          <mat-hint>To improve the visibility of your profile you might fill in: Company characterisation, experiences,
+            products, references, geographic focus (e.g. where have you been active before/where do you want to become
+            active etc.), and some keywords/hashtags for search. First 250 characters will be shown on the card in the
+            company explorer.</mat-hint>
           <mat-hint align="end">{{profileText.value?.length}}/2000</mat-hint>
         </mat-form-field>
 
@@ -96,7 +99,8 @@
           <mat-checkbox formControlName="displayOnGlobalMap" color="primary">
             Display company on the global map
           </mat-checkbox>
-          <p class="addinf">By selecting this checkbox, you agree that the company address will be visible to all users of the platform.</p>
+          <p class="addinf">By selecting this checkbox, you agree that the company address will be visible to all users
+            of the platform.</p>
           <p class="addinf">Provided contact information will be visible for all platform users. Read more about privacy
             <a routerLink="/privacy" target="_blank">here</a>.
           </p>
@@ -106,7 +110,8 @@
 
       <mat-card-content class="step-content" [class.active]="activeStep.code === 'business'" formGroupName="business">
         <p>Categories relevant to the company business field.</p>
-        <p>Please choose at least one category or specify a sub-category. This category will be used for company filtering
+        <p>Please choose at least one category or specify a sub-category. This category will be used for company
+          filtering
           and automatic matching with the business opportunities.</p>
 
         <div class="param-row category-grid">

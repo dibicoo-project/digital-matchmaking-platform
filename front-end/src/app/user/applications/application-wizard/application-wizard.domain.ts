@@ -1,4 +1,4 @@
-import { allDetails, Application, DetailCode, DetailItem } from '@domain/application-domain';
+import { allDetails, Application, DetailCode, DetailItem } from '@domain/applications/application-domain';
 
 export interface WizardState {
   steps: WizardStep[];
@@ -22,7 +22,7 @@ export interface WizardStep {
 }
 
 export const allSteps: WizardStep[] = [
-  { name: 'Search for', code: 'business', isPending: true, status: 'invalid', icon: 'view_quilt', isFirst: true },
+  { name: 'Looking for', code: 'business', isPending: true, status: 'invalid', icon: 'view_quilt', isFirst: true },
   { name: 'General description', code: 'general', isPending: true, status: 'invalid', icon: 'description' },
   { name: 'Specific details', code: 'details', isPending: true, status: 'invalid', icon: 'list', hidden: true },
   { name: 'Attachments', code: 'attachments', isPending: true, status: 'invalid', icon: 'note_add' },

@@ -65,6 +65,18 @@ describe('EnterpriseService', () => {
       expect(publicRepository.findAll).toHaveBeenCalled();
     });
 
+    it('should get latest enterprises', async () => {
+      spyOn(publicRepository, 'findLatest').and.returnValue(
+        Promise.resolve([{ ...data, logoId: '123' }, data]));
+
+      const list: any[] = await service.getLatestEnterprises();
+
+      expect(list.length).toBe(1);
+      expect(list[0].companyName).toEqual('testing');
+      expect(list[0].companyProfile).toBeUndefined();
+      expect(publicRepository.findLatest).toHaveBeenCalled();
+    });
+
     it('should get enterprise details', async () => {
       spyOn(publicRepository, 'findOne').and.returnValue(Promise.resolve(data));
 

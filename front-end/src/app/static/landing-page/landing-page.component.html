@@ -1,0 +1,209 @@
+<section class="header hero section">
+  <div class="header__content">
+    <img class="header__logo" src="assets/logo.png" />
+    <h1 class="header__title">Biogas and Gasification Matchmaking Platform</h1>
+    <h2 class="header__subtitle">The only matchmaking platform for biogas and gasification you will ever need.</h2>
+    <div class="header__actions">
+      <a class="header__button" mat-raised-button color="accent" routerLink="/user/enterprises">
+        Join platform
+      </a>
+      <a class="header__button" mat-stroked-button color="accent" routerLink="." fragment="learnMore">
+        Learn more
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="latest section">
+  <h1 class="section__header">Join over 150 companies around the world</h1>
+  <ul class="latest__list">
+    <li class="latest__item" *ngFor="let item of latest" [title]="item.companyName">
+      <a [routerLink]="['/enterprises', item.id]">
+        <img class="latest__logo" [src]="item.imageUrl" [alt]="item.companyName">
+      </a>
+    </li>
+  </ul>
+</section>
+
+<section id="learnMore" class="tour tour--companies section hero">
+  <div class="tour__side">
+    <h2 class="tour__header">Company profiles</h2>
+    <p class="tour__description">Leading stakeholders in the biogas and gasification sectors</p>
+    <ul class="tour__links">
+      <li class="tour__link">
+        <a routerLink="/enterprises">Explore by categories</a>
+      </li>
+      <li class="tour__link">
+        <a routerLink="/enterprises/globalmap">View on map</a>
+      </li>
+      <li class="tour__link">
+        <a routerLink="/enterprises/matchmaking">Define custom search</a>
+      </li>
+      <li class="tour__link">
+        <a routerLink="/user/enterprises/new">Register your company</a>
+      </li>
+    </ul>
+  </div>
+
+  <carousel class="tour__content" height="600" cellsToShow="1" [dots]="true">
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/companies-by-category.png">
+      <p class="slide__label">Explore profiles of the world leading companies and enterpreneurs in the biogas and
+        gasification sector. Browse companies by comprehensive hierarchy of categories.</p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/companies-on-map.png">
+      <p class="slide__label">View registered companies on the global map provided on the platform.
+        Browse companies within two main categories &mdash; <em>Anaerobic digestion</em> and <em>Gasification</em>
+        &mdash; and see their key projects around the globe.</p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/company-filters.png">
+      <p class="slide__label">Find your next business partner by defining custom filters and enhancing company search
+        options. Browse company profiles only relevant to selected criteria.</p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/company-filters-saved.png">
+      <p class="slide__label">Save defined search criteria for later use and receive system notification when new
+        registered company matches your needs.</p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/company-contact.png">
+      <p class="slide__label">Send a direct message to the company to start the collaboration or add the company
+        profile to your individual watchlist.</p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/company-wizard.png">
+      <p class="slide__label">Create your own company profile by completing step-by-step wizard.
+        It will be published for all platform users after review by platform administrators.
+      </p>
+    </div>
+  </carousel>
+</section>
+
+<section class="feedback section">
+  <h1 class="section__header">From our partners</h1>
+  <ul class="feedback__list">
+    <li class="feedback__item" *ngFor="let item of feedbacks">
+      <div class="feedback__avatar feedback__avatar--placeholder" *ngIf="!item.loaded"></div>
+      <img class="feedback__avatar" [hidden]="!item.loaded" [src]="item.avatarUrl" (load)="item.loaded = true" />
+      <h2 class="feedback__name">{{item.name}}</h2>
+      <p class="feedback__title">{{item.title}}</p>
+      <blockquote class="feedback__text">{{item.text}}</blockquote>
+    </li>
+  </ul>
+</section>
+
+<section id="learnMore2" class="tour tour--applications section hero">
+  <div class="tour__side">
+    <h2 class="tour__header">Business opportunities</h2>
+    <p class="tour__description">Counterparties presenting their needs and looking for business cooperation</p>
+    <ul class="tour__links">
+      <li class="tour__link">
+        <a routerLink="/applications">Browse opportunities</a>
+      </li>
+      <li class="tour__link">
+        <a routerLink="/user/applications/new">Post your business need</a>
+      </li>
+    </ul>
+  </div>
+
+  <carousel class="tour__content" height="600" cellsToShow="1" [dots]="true">
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/bo-filters.png">
+      <p class="slide__label">Create cooperative connections and realize business opportunities. Explore the list of
+        available offers or use custom filters to find only relevant records.
+      </p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/bo-filters-saved.png">
+      <p class="slide__label">Save defined search criteria for later use and receive system notification when new
+        business opportunity matches your requests.</p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/bo-wizard.png">
+      <p class="slide__label">Post your business needs, project ideas and specific requests looking for
+        building a successful business cooperation. It will be published for all platform users after review by platform
+        administrators.</p>
+    </div>
+  </carousel>
+</section>
+
+<section class="virtual-tour section">
+  <h1 class="section__header">Take a look on our virtual study tours</h1>
+  <iframe width="600" height="338" class="virtual-tour__video"
+    src="https://www.youtube.com/embed?listType=playlist&list=PL_SPyUTjUkVTrrOw1iDRwfHVoXLThJPTZ"
+    title="YouTube video player" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>
+</section>
+
+<section id="learnMore3" class="tour tour--knowledge-base section hero">
+  <div class="tour__side">
+    <h2 class="tour__header">Knowledge base</h2>
+    <p class="tour__description">Biogas and gasification related literature sources and factsheets</p>
+    <ul class="tour__links">
+      <li class="tour__link">
+        <a routerLink="/knowledge-base/factsheets">Read factsheets</a>
+      </li>
+      <li class="tour__link">
+        <a routerLink="/knowledge-base/literature">Browse literature sources</a>
+      </li>
+      <li class="tour__link">
+        <a routerLink="/knowledge-base/links">Explore videos</a>
+      </li>
+    </ul>
+  </div>
+
+  <carousel class="tour__content" height="600" cellsToShow="1" [dots]="true">
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/kb-factsheets.png">
+      <p class="slide__label">Are you new to the biogas and gasification sector? Take a look in our developed
+        factsheets. Factsheets summarise basic elements of the biogas plants and presents this information in an
+        understandable way.
+      </p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/kb-literature.png">
+      <p class="slide__label">Get insight into the biogas and gasification sector by browsing the list of
+        relevant literature sources selected by our experts. Lireaterure sources are organized by various topics
+        including
+        biogas, biomethane, safety of biogas and others.</p>
+    </div>
+    <div class="carousel-cell slide">
+      <img class="slide__image" src="/assets/slides/kb-videos.png">
+      <p class="slide__label">Watch selected videos related to the biogas and gasifiation sector. Take a look on DiBiCoo
+        webinars and virtual biogas plants study tours around the globe.</p>
+    </div>
+  </carousel>
+</section>
+
+<section class="section join">
+  <h1 class="join__title">Get started for free!<br /> No hidden costs.</h1>
+  <div class="join__actions">
+    <h2 class="join__subtitle">
+      Create your company profile, business opportunity or use all the platform features.
+    </h2>
+    <a class="join__button" mat-raised-button color="accent" routerLink="/user/enterprises">
+      Join platform
+    </a>
+  </div>
+</section>
+
+<section class="privacy__message">
+  <p>Read more about your content, rights and liability in the <a routerLink="privacy">Privacy statement</a>.</p>
+  <p>Also visit <strong>DiBiCoo</strong> project <a href="http://dibicoo.org/" target="_blank">web page</a> for more
+    information about collaboration between European biogas industries and stakeholders from emerging and developing
+    markets.</p>
+</section>
+<section class="eu">
+  <a href="https://cordis.europa.eu/project/id/857804" target="_blank">
+    <img class="eu__flag" src="assets/eu-flag.svg" />
+  </a>
+  <p class="eu__description">
+    This project has received funding from the European Union's Horizon 2020 research and innovation programme
+    under grant agreement No. 857804.
+    The sole responsibility for the content of this website lies with the authors. It does not necessarily reflect
+    the opinion of the EU.
+  </p>
+</section>

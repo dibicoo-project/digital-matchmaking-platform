@@ -8,6 +8,7 @@ interface ApplicationBase extends BaseEntity {
   details?: { [key: string]: string | number };
   attachments?: Attachment[];
   companyName: string;
+  webPage?: string;
   contactLocation: Location;
   contacts: ContactItem[];
   dueDate: Date | string;

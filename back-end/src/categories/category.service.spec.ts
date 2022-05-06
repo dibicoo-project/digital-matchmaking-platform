@@ -6,11 +6,13 @@ import { CategoryRepository } from './category.repository';
 import { StorageService } from '../common/storage.service';
 import { Category } from './category.domain';
 import { Datastore } from '@google-cloud/datastore';
+import NodeCache from 'node-cache';
 
 describe('CategoryService', () => {
 
   let repository: CategoryRepository;
   let storage: StorageService;
+  let cache: NodeCache;
   let service: CategoryService;
 
   const data = {
@@ -22,7 +24,8 @@ describe('CategoryService', () => {
   beforeEach(() => {
     repository = createMock(CategoryRepository);
     storage = createMock(StorageService);
-    service = new CategoryService(repository, storage);
+    cache = new NodeCache();
+    service = new CategoryService(repository, storage, cache);
   });
 
   it('should get all categories', async () => {
@@ -117,6 +120,20 @@ describe('CategoryService', () => {
     expect(repository.findOne).toHaveBeenCalledWith('987');
     expect(storage.uploadCategoryImage).toHaveBeenCalledWith('987', 'binary');
     expect(repository.save).toHaveBeenCalledWith(jasmine.objectContaining({ imageHash: 'new' }), '987');
+  });
+
+  it('should get and cache all categories', async () => {
+    spyOn(repository, 'findAll').and.returnValue(Promise.resolve([{}, {}] as any));
+    const list = await service.getAllCached();
+    expect(list.length).toBe(2);
+    expect(cache.get<any[]>('allCategories')?.length).toBe(2);
+  });
+
+  it('should get all categories from cache', async () => {
+    spyOn(repository, 'findAll');
+    cache.set('allCategories', [{}, {}, {}]);
+    const list = await service.getAllCached();
+    expect(list.length).toBe(3);
   });
 
 });

@@ -38,7 +38,8 @@ $section-gap: 3rem;
   &__header {
     flex: 1 1 100%;
     display: flex;
-    align-items: center !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
     margin-bottom: $section-gap;
   }
 }

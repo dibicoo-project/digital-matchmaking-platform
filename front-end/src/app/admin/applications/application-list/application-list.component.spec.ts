@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApplicationListComponent } from './application-list.component';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogService } from '@domain/dialog.service';
 import { EMPTY, of } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Application } from '@domain/application-domain';
+import { Application } from '@domain/applications/application-domain';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 

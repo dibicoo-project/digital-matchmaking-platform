@@ -7,10 +7,17 @@
 
     <a routerLink="" class="brand">
       <img src="assets/logo.png" />
-      <span *ngIf="(isHandset$ | async) === false">Biogas and Gasification Matchmaking Platform</span>
+      <span>Biogas and Gasification Matchmaking Platform</span>
     </a>
 
     <span class="mr-auto"></span>
+
+    <form *ngIf="showSearch$ | async" class="search" (ngSubmit)="doSearch(searchInput.value); searchInput.value = ''">
+      <label for="searchInput">
+        <mat-icon class="search__icon">search</mat-icon>
+      </label>
+      <input id="searchInput" class="search__input" placeholder="Search" #searchInput>
+    </form>
 
     <mat-menu #infoMenu="matMenu" xPosition="before">
       <button mat-menu-item routerLink="about">
@@ -30,6 +37,10 @@
         Feedback <mat-icon inline>open_in_new</mat-icon>
       </a>      
     </mat-menu>
+
+    <button mat-icon-button class="search-button" routerLink="/search/all">
+      <mat-icon>search</mat-icon>
+    </button>
 
     <button mat-icon-button [matMenuTriggerFor]="infoMenu">
       <mat-icon>info</mat-icon>
@@ -101,7 +112,7 @@
 
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
         <img src="{{profile.picture}}" class="user-avatar" alt="User avatar" />
-        <span *ngIf="(isHandset$ | async) === false" class="pl-1"> {{profile.name}}</span>
+        <span  class="user-name"> {{profile.name}}</span>
       </button>
     </ng-container>
     <button mat-button (click)="auth.login()" *ngIf="!auth.loggedIn">
@@ -111,19 +122,23 @@
   </mat-toolbar>
 </header>
 <mat-sidenav-container autosize>
-  <mat-sidenav #sidebar class="sidebar" fixedInViewport="true" [fixedTopGap]="(isHandset$ | async) ? 56 : 64"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(showSidebar$ | async) === true && (isHandset$ | async) === false">
+  <mat-sidenav #sidebar class="sidebar" fixedInViewport="true" [fixedTopGap]="(isSmall$ | async) ? 56 : 64"
+    [attr.role]="(isSmall$ | async) ? 'dialog' : 'navigation'" [mode]="(isSmall$ | async) ? 'over' : 'side'"
+    [opened]="(showSidebar$ | async) === true && (isSmall$ | async) === false">
     <mat-nav-list>
       <div mat-subheader>
         Company profiles
       </div>
       <a mat-list-item routerLink="enterprises" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-        <mat-icon svgIcon="companies-explorer"></mat-icon> Companies explorer
+        <!-- <mat-icon svgIcon="companies-explorer"></mat-icon> -->
+        <mat-icon>business</mat-icon>
+        Companies explorer
       </a>
       <a mat-list-item routerLink="enterprises/matchmaking" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}">
-        <mat-icon svgIcon="companies-matchmaking"></mat-icon> Companies matchmaking
+        <!-- <mat-icon svgIcon="companies-matchmaking"></mat-icon> -->
+        <mat-icon>manage_search</mat-icon>
+        Companies matchmaking
       </a>
       <a mat-list-item routerLink="user/enterprises/matchmaking" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
@@ -132,7 +147,9 @@
       </a>
       <a mat-list-item routerLink="enterprises/globalmap" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}">
-        <mat-icon svgIcon="companies-global-map"></mat-icon> Companies on global map
+        <!-- <mat-icon svgIcon="companies-global-map"></mat-icon> -->
+        <mat-icon>map</mat-icon>
+        Companies on global map
       </a>
       <a mat-list-item routerLink="user/enterprises/watchlist" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
@@ -152,7 +169,9 @@
         Business opportunities
       </div>
       <a mat-list-item routerLink="applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-        <mat-icon svgIcon="business-opportunities"></mat-icon> All business opportunities
+        <!-- <mat-icon svgIcon="business-opportunities"></mat-icon> -->
+        <mat-icon>chat</mat-icon>
+        All business opportunities
       </a>
       <a mat-list-item routerLink="user/applications/matchmaking" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
@@ -175,10 +194,13 @@
         Knowledge base
       </div>
       <a mat-list-item routerLink="knowledge-base/factsheets" routerLinkActive="active">
-        <mat-icon svgIcon="factsheets"></mat-icon> Factsheets
+        <!-- <mat-icon svgIcon="factsheets"></mat-icon> -->
+        <mat-icon>school</mat-icon> 
+        Factsheets
       </a>
       <a mat-list-item routerLink="knowledge-base/literature" routerLinkActive="active">
-        <mat-icon svgIcon="literature-sources"></mat-icon>
+        <!-- <mat-icon svgIcon="literature-sources"></mat-icon> -->
+        <mat-icon>book</mat-icon>
         Literature sources
       </a>
       <a mat-list-item routerLink="knowledge-base/links" routerLinkActive="active">
@@ -188,7 +210,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="content">
-    <main [style.margin-top]="(isHandset$ | async) ? '56px' : '64px'">
+    <main>
       <div class="outlet" [class.full-width]="(fullWidth$ | async) === true">
         <router-outlet></router-outlet>
       </div>

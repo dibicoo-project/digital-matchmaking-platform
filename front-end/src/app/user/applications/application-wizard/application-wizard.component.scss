@@ -219,6 +219,16 @@
   }
 }
 
+.company__avatar {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+}
+
+.company__empty:not(:first-child) {
+  display: none;
+}
+
 /* Footer */
 button.right {
   margin-left: auto;

@@ -9,6 +9,7 @@ import { ApplicationDetailsComponent } from './applications/application-details/
 import { EnterpriseMatchmakingComponent } from './enterprises/enterprise-matchmaking/enterprise-matchmaking.component';
 import { enterpriseMatchmakingTour, enterprisesTour, applicationTour } from '@domain/tours';
 import { ApplicationMatchmakingComponent } from './applications/application-matchmaking/application-matchmaking.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,22 @@ const routes: Routes = [
       {
         path: ':applicationId',
         component: ApplicationDetailsComponent
+      }
+    ]
+  },
+  {
+    path: 'search',
+    children: [
+      {
+        path: ':kind',
+        component: SearchResultsComponent,
+        data: {
+          hideSearch: true
+        }
+      },
+      {
+        path: '',
+        redirectTo: 'all'
       }
     ]
   },

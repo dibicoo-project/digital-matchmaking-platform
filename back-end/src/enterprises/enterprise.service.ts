@@ -12,6 +12,7 @@ import { isValidEnterpriseBean as isValid, isValidPublicEnterprise } from '../va
 import { AnalyticsService } from '../analytics/analytics.service';
 import { ContactMessage } from '../common/common.domain';
 import { MatchmakingFacade } from '../matchmaking/matchmaking.facade';
+import { shortText } from '../utils/shortText';
 
 @injectable()
 export class EnterpriseService {
@@ -35,6 +36,7 @@ export class EnterpriseService {
     return {
       id,
       companyName: item.companyName,
+      companyProfile: shortText(item.companyProfile, 250),
       location: item.location,
       webPage: item.webPage,
       imageUrl: this.getLogoUrl(item),
@@ -96,6 +98,14 @@ export class EnterpriseService {
   public async getEnterpriseDetails(id: string): Promise<EnterpriseBean> {
     const entity = await this.getPublicEnterprise(id);
     return this.toDetailsBean(entity);
+  }
+
+  public async getLatestEnterprises() {
+    const latest = await this.publicRepository.findLatest();
+    return latest
+      .filter(rec => !!rec.logoId)
+      .map(rec => this.toSimpleBean(rec))
+      .map(({id, companyName, imageUrl}) => ({id, companyName, imageUrl}));
   }
 
 

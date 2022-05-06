@@ -2,8 +2,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Application, FilterDefinition, Filters } from '@domain/application-domain';
-import { ApplicationService } from '@domain/application.service';
+import { Application } from '@domain/applications/application-domain';
+import { ApplicationService } from '@domain/applications/application.service';
+import { emptyFilters, Filters } from '@domain/applications/filters-domain';
 import { CategoryService } from '@domain/categories/category.service';
 import { CountriesService } from '@domain/countries/countries.service';
 import { DialogService } from '@domain/dialog.service';
@@ -36,7 +37,7 @@ describe('ApplicationMatchmakingComponent', () => {
         {
           provide: CategoryService,
           useValue: {
-            getCategories: () => EMPTY
+            all$: of([])
           }
         },
         {
@@ -142,7 +143,7 @@ describe('ApplicationMatchmakingComponent', () => {
     const service = TestBed.inject(ApplicationService);
     spyOn(service, 'saveMatchmaking').and.returnValue(of(null));
 
-    component.filtersSubject.next({} as Filters);
+    component.filtersSubject.next(emptyFilters());
     component.saveFilters();
 
     expect(dialog.inputDialog).toHaveBeenCalled();

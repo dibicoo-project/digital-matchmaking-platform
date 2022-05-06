@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApplicationListComponent } from './application-list.component';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { EMPTY, of } from 'rxjs';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';

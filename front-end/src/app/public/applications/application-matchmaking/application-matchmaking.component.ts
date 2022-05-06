@@ -1,8 +1,11 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { Router } from '@angular/router';
-import { Application, FilterDefinition, FilterGroup, Filters, FilterType } from '@domain/application-domain';
-import { ApplicationService } from '@domain/application.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Application } from '@domain/applications/application-domain';
+import {
+  emptyFilters, FilterDefinition, FilterGroup, Filters, filtersToParams, FilterType, paramsToFilters
+} from '@domain/applications/filters-domain';
+import { ApplicationService } from '@domain/applications/application.service';
 import { CategoryService } from '@domain/categories/category.service';
 import { CountriesService } from '@domain/countries/countries.service';
 import { Country } from '@domain/countries/country-domain';
@@ -10,14 +13,7 @@ import { CountrySelectComponent } from '@domain/countries/country-select/country
 import { DialogService } from '@domain/dialog.service';
 import { AuthService } from '@root/app/auth/auth.service';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { delay, map, shareReplay } from 'rxjs/operators';
-
-
-const emptyFilters = () => ({
-  'business-field': [],
-  'project-region': [],
-}) as Filters;
-
+import { delay, first, map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-application-matchmaking',
@@ -33,6 +29,7 @@ export class ApplicationMatchmakingComponent implements OnInit {
     public categories: CategoryService,
     public applicationService: ApplicationService,
     private router: Router,
+    private route: ActivatedRoute,
     public auth: AuthService,
     private dialog: DialogService
   ) {
@@ -48,10 +45,9 @@ export class ApplicationMatchmakingComponent implements OnInit {
     return this.filtersSubject.getValue();
   }
 
-  get anyFilterSelected(): boolean {
-    return this.filters['business-field'].length > 0
-      || this.filters['project-region'].length > 0;
-  }
+  anyFilterSelected$ = this.filtersSubject.pipe(
+    map(filters => filters['business-field'].length > 0 || filters['project-region'].length > 0)
+  );
 
   getSelectedFilterCount(group: FilterGroup, ...types: FilterType[]) {
     return this.filters[group].filter(f => types.length === 0 || types.includes(f.type)).length;
@@ -99,10 +95,23 @@ export class ApplicationMatchmakingComponent implements OnInit {
   ngOnInit(): void {
     this.applicationService.fetchPublic();
 
-    this.filtersSubject.subscribe(_ => {
+    combineLatest([
+      this.categories.all$,
+      this.route.queryParamMap.pipe(first(), map(paramsToFilters))
+    ]).pipe(
+      map(([categories, filters]) => {
+        filters['business-field'].forEach(item => item.label = categories.find(c => c.id === item.value)?.title);
+        return filters;
+      })
+    ).subscribe(filters => this.filtersSubject.next(filters));
+
+
+    this.filtersSubject.subscribe(filters => {
       this.router.navigate([], {
-        queryParams: { p: null },
-        queryParamsHandling: 'merge'
+        queryParams: {
+          ...filtersToParams(filters),
+          p: null
+        },
       });
     });
   }
@@ -140,7 +149,7 @@ export class ApplicationMatchmakingComponent implements OnInit {
       this.filters['business-field']?.map(f => f.label)?.join(' or '),
       this.filters['project-region']?.map(f => f.value)?.join(' or ')
     ].filter(f => !!f)
-    .join(' in ');
+      .join(' in ');
 
     this.dialog.inputDialog('Save matchmaking filters',
       'For easear overview you can label the selected matchmaking filters',

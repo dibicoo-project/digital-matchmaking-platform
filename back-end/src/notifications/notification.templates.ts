@@ -252,9 +252,10 @@ export const applicationMatchedToCompany = (applicationId: string, companyId: st
 // });
 
 export const contactMessage = (companyName: string, name: string, email: string, message: string, userName: string): Notification => ({
-  title: 'Your company got new message',
+  title: 'Your company received a new message',
   body: `<strong>${name}</strong> (<a href="mailto:${email}">${email}</a>) is sending the message to your company <strong>${companyName}</strong>: 
-  <blockquote>${message}</blockquote>`,
+  <blockquote>${message}</blockquote>
+  Please, use provided e-mail for further communication.`,
   icon: NotificationIcon.matchmaking,
   source: NotificationSource.companyProfile,
   links: [],

@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ShowHideStyleBuilder } from '@angular/flex-layout';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CategoryService } from '@domain/categories/category.service';
@@ -8,6 +7,7 @@ import { CountriesService } from '@domain/countries/countries.service';
 import { DialogService } from '@domain/dialog.service';
 import { Enterprise } from '@domain/enterprises/enterprise-domain';
 import { EnterpriseService } from '@domain/enterprises/enterprise.service';
+import { emptyFilters } from '@domain/enterprises/filters-domain';
 import { AuthService } from '@root/app/auth/auth.service';
 import { BehaviorSubject, EMPTY, of, Subject } from 'rxjs';
 
@@ -37,7 +37,7 @@ describe('EnterpriseMatchmakingComponent', () => {
         {
           provide: CategoryService,
           useValue: {
-            getCategories: () => EMPTY
+            all$: of([])
           }
         },
         {
@@ -164,11 +164,10 @@ describe('EnterpriseMatchmakingComponent', () => {
     const service = TestBed.inject(EnterpriseService);
     spyOn(service, 'saveMatchmaking').and.returnValue(of(null));
 
-    component.filtersSubject.next({} as any);
+    component.filtersSubject.next(emptyFilters());
     component.saveFilters();
 
     expect(dialog.inputDialog).toHaveBeenCalled();
     expect(service.saveMatchmaking).toHaveBeenCalledWith({ label: 'lorem', filters: {} } as any);
-
   });
 });

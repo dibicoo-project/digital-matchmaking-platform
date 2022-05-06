@@ -117,6 +117,10 @@
 
   .mat-form-field {
     width: 100%;
+
+    &--long-hint {
+      margin-bottom: 1rem;
+    }
   }
 
   .mat-2-line {

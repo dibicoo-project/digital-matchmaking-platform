@@ -34,6 +34,7 @@
       <div>
         <h3 class="section__title" *ngIf="app?.companyName">{{app?.companyName}}</h3>
         <app-location-text class="section__content" [location]="app?.contactLocation"></app-location-text>
+        <p *ngIf="app?.webPage"><a [href]="app.webPage" target="_blank">{{app.webPage}}</a></p>
       </div>
     </div>
 

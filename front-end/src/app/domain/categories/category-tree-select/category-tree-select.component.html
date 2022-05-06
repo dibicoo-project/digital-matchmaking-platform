@@ -2,14 +2,23 @@
   <mat-tree-node *matTreeNodeDef="let node" class="tree-node-leaf">
     <mat-checkbox [checked]="node.isSelected" (change)="nodeClicked(node)" color="primary">
       {{node.title}}
+      <mat-icon color="accent" class="description-icon" *ngIf="node.description" [matTooltip]="node.description"
+        matTooltipPosition="after" matTooltipClass="tooltip-large">
+        help_outline
+      </mat-icon>
     </mat-checkbox>
   </mat-tree-node>
   <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-    <button mat-flat-button [attr.aria-label]="'toggle ' + node.title" matTreeNodeToggle type="button" class="tree-toggle">
+    <button mat-flat-button [attr.aria-label]="'toggle ' + node.title" matTreeNodeToggle type="button"
+      class="tree-toggle">
       <mat-icon class="mat-icon-rtl-mirror">
         {{isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
       {{node.title}}
+      <mat-icon color="accent" class="description-icon" *ngIf="node.description" [matTooltip]="node.description"
+        matTooltipPosition="after" matTooltipClass="tooltip-large">
+        help_outline
+      </mat-icon>
     </button>
     <div [class.tree-node-closed]="!isExpanded(node)" class="tree-nested">
       <ng-container matTreeNodeOutlet></ng-container>

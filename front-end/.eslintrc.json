@@ -51,7 +51,8 @@
         "@typescript-eslint/member-ordering": [
           "off"
         ],
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "radix": ["error", "as-needed"]
       }
     },
     {

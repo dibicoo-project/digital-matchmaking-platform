@@ -34,6 +34,7 @@
     height: 7rem;
     text-align: center;
     padding-top: 1rem;
+    padding-bottom: 1rem;
     
     app-image-avatar {
       max-height: 100%;
@@ -42,11 +43,22 @@
   }
 
   .mat-card-header {
-    text-align: center;
-    justify-content: center;
-    .mat-card-title {
+    display: flex;
+    flex-wrap: wrap;
+    .company-name {
+      margin: 0 0 0.5rem;
+      flex: 1 1 100%;
       word-break: break-word;
     }
+
+    .metadata {
+      color: $neutral;     
+      flex: 1 1 100%; 
+    }
+  }
+
+  .mat-card-content {
+    margin-bottom: 0;
   }
 
   .mat-card-actions {

@@ -36,7 +36,7 @@ export type LatLng = [number, number] | undefined;
 export interface Attachment {
   fileName: string;
   id?: string;
-  comment: string;
+  description: string;
 }
 
 export interface ContactMessage {

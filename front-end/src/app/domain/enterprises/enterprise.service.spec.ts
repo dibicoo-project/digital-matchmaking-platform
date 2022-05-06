@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Enterprise, FiltersBean } from './enterprise-domain';
+import { Enterprise } from './enterprise-domain';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { EnterpriseService } from './enterprise.service';

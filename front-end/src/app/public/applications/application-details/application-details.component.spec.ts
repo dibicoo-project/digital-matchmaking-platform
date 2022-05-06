@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApplicationDetailsComponent } from './application-details.component';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { EMPTY, of } from 'rxjs';
 import { CategoryService } from '@domain/categories/category.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DialogService } from '@domain/dialog.service';
 import { LocationTextComponent } from '@domain/location/location-text/location-text.component';
-import { Application } from '@domain/application-domain';
+import { Application } from '@domain/applications/application-domain';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FixNewLinesPipe } from '@domain/pipes/fix-new-lines.pipe';
 

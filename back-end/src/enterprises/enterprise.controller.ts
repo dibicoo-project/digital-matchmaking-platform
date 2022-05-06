@@ -13,6 +13,11 @@ export class EnterpriseController {
     return await this.service.getPublicEnterprises();
   }
 
+  @httpGet('/latest')
+  public async getLatestEnterprises() {
+    return await this.service.getLatestEnterprises();
+  }
+
   @httpGet('/:id')
   public async getEnterpriseDetails(@requestParam('id') id: string) {
     return await this.service.getEnterpriseDetails(id);

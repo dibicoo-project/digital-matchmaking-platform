@@ -1,6 +1,6 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Application } from '@domain/application-domain';
-import { ApplicationService } from '@domain/application.service';
+import { Application } from '@domain/applications/application-domain';
+import { ApplicationService } from '@domain/applications/application.service';
 import { EMPTY, of, throwError } from 'rxjs';
 import { pairwise, skip } from 'rxjs/operators';
 import { WizardStep } from './application-wizard.domain';

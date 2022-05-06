@@ -91,13 +91,23 @@ section.page-content {
   margin-right: auto;
 }
 
+.bullet {  
+  display: inline-block;
+  padding: 0 0.5rem;
+
+  &::after {
+    content: "\2022";
+  }
+}
+
 .mat-form-field-suffix {
   bottom: -0.25rem;
 }
 
-.hint-tooltip {
+.tooltip-large {
   white-space: pre-line;
   max-width: 40rem !important;
+  font-size: 12px;
 }
 
 // TODO: increase font size for all forms
@@ -114,6 +124,8 @@ section.page-content {
     }
   }
 }
+
+
 
 // Intro.js
 .introjs-tooltip-header {

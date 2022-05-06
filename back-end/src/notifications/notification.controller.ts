@@ -1,6 +1,7 @@
 import {
-  controller, httpGet, requestParam, requestBody, principal, httpPatch, httpPost, httpPut
+  controller, httpGet, requestParam, requestBody, principal, httpPatch, httpPost, httpPut, httpDelete, response
 } from 'inversify-express-utils';
+import express from 'express';
 import { DiBiCooPrincipal } from '../security/principal';
 import { AuthGuard } from '../security/auth-guard';
 import { NotificationService } from './notification.service';
@@ -37,6 +38,16 @@ export class NotificationController {
                           @requestBody() { isRead }: any) {
     return await this.service.markAsRead(user, id, isRead);
   }
+
+  @httpDelete('/:id')
+  public async delete(@principal() user: DiBiCooPrincipal,
+                      @requestParam('id') id: string,
+                      @response() res: express.Response) {
+    await this.service.delete(user, id);
+    return res.sendStatus(204);
+  }
+
+  
 
   @httpPost('/testAll', AuthGuard.isInRole('admin'))
   public async testAll(@principal() user: DiBiCooPrincipal) {

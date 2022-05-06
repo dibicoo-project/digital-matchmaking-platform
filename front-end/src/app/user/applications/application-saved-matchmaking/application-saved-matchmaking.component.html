@@ -28,7 +28,7 @@
     </mat-card-header>
 
     <mat-card-actions>
-      <button mat-stroked-button routerLink="/applications" [state]="{ filters: item.filters}">
+      <button mat-stroked-button routerLink="/applications" [queryParams]="filtersToParams(item.filters)">
         <mat-icon>visibility</mat-icon> View business opportunities
       </button>
       <button mat-stroked-button (click)="delete(item.id)">

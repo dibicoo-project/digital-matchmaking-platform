@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationService } from '@domain/application.service';
+import { ApplicationService } from '@domain/applications/application.service';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from '@domain/categories/category.service';
 import { switchMap } from 'rxjs/operators';
-import { allDetails, Application } from '@domain/application-domain';
+import { allDetails, Application } from '@domain/applications/application-domain';
 import { DialogService } from '@domain/dialog.service';
 import { Category } from '@domain/categories/category-domain';
 

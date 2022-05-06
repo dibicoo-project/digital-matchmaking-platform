@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://dibicoo-matchmaking-tool.appspot.com/",
+    "target": "https://biogasplatform.eu/",
     "changeOrigin": true,
     "logLevel": "debug"
   }

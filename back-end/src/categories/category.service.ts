@@ -7,11 +7,13 @@ import { CategoryRepository } from './category.repository';
 import { notFound, badRequest } from '../utils/common-responses';
 import { DiBiCooPrincipal } from '../security/principal';
 import { Query } from '@google-cloud/datastore';
+import NodeCache from 'node-cache';
+import { listenerCount } from 'process';
 
 @injectable()
 export class CategoryService {
 
-  constructor(private repository: CategoryRepository, private storage: StorageService) { }
+  constructor(private repository: CategoryRepository, private storage: StorageService, private cache: NodeCache) { }
 
   private toBean(item: Category): CategoryBean {
     const id: string = plainId(item);
@@ -107,5 +109,14 @@ export class CategoryService {
       .forEach(async e => await this.storage.deleteCategoryImage(plainId(e)));
 
     await this.repository.delete(keysToDelete);
+  }
+
+  public async getAllCached() {
+    let all = this.cache.get<Category[]>('allCategories');
+    if (!all) {
+      all = await this.repository.findAll();
+      this.cache.set('allCategories', all, 15 * 60);
+    }
+    return all;
   }
 }

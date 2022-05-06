@@ -11,7 +11,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { DevelopmentComponent } from './development/development.component';
 import { FgpComponent } from './fgp/fgp.component';
 import { FaqComponent } from './faq/faq.component';
-
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 
 @NgModule({
@@ -23,12 +24,14 @@ import { FaqComponent } from './faq/faq.component';
     ContactUsComponent,
     DevelopmentComponent,
     FgpComponent,
-    FaqComponent
+    FaqComponent,
+    LandingPageComponent
   ],
   imports: [
     CommonModule,
     DiBiCooMaterialModule,
-    StaticRoutingModule
+    StaticRoutingModule,
+    IvyCarouselModule
   ]
 })
 export class StaticModule { }

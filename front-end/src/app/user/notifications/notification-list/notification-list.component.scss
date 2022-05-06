@@ -13,6 +13,7 @@
 
   &.unread {
     border-left: solid 5px $accent;
+    background-color: $bg-accent-xlight;
   }
 
   @include muted-icons;
@@ -31,6 +32,14 @@
     margin: 0;
     padding: 0;
     flex: 0 0 auto;
+
+    button {
+      margin: 0;
+    }
+
+    button + button {
+      margin-left: 0.5rem;
+    }
   }
 
   .mat-card-content {

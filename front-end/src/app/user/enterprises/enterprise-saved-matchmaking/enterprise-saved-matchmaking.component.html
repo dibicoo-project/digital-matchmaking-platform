@@ -28,7 +28,7 @@
     </mat-card-header>
 
     <mat-card-actions>
-      <button mat-stroked-button routerLink="/enterprises/matchmaking" [state]="{ filters: item.filters}">
+      <button mat-stroked-button routerLink="/enterprises/matchmaking" [queryParams]="filtersToParams(item.filters)">
         <mat-icon>visibility</mat-icon> View companies
       </button>
       <button mat-stroked-button (click)="delete(item.id)">
