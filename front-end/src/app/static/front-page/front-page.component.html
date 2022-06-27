@@ -82,11 +82,33 @@
       </a>
     </mat-card-actions>
   </mat-card>
-    
+
+  <div class="feedback">
+    <h1 class="feedback__header">From our partners</h1>
+    <ul class="feedback__list">
+      <li class="feedback__item" *ngFor="let item of feedbacks">
+        <div class="feedback__avatar feedback__avatar--placeholder" *ngIf="!item.loaded"></div>
+        <img class="feedback__avatar" [hidden]="!item.loaded" [src]="item.avatarUrl" (load)="item.loaded = true" />
+        <h2 class="feedback__name">{{item.name}}</h2>
+        <p class="feedback__title">{{item.title}}</p>
+        <blockquote class="feedback__text">{{item.text}}</blockquote>
+      </li>
+    </ul>
+  </div>
+
+  <div class="video">
+    <h1 class="video__header">Take a look on our promotional video</h1>
+    <iframe width="600" height="338" class="video__player" src="https://www.youtube.com/embed/QSV_WaTVpLw"
+      title="Biogas and Gasification Matchmaking Platform Explainer" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+
   <div class="message">
     <p>Read more about your content, rights and liability in the <a routerLink="privacy">Privacy statement</a>.</p>
     <p>Also visit <strong>DiBiCoo</strong> project <a href="http://dibicoo.org/" target="_blank">web page</a> for more
-      information about collaboration between European biogas industries and stakeholders from emerging and developing markets.</p>
+      information about collaboration between European biogas industries and stakeholders from emerging and developing
+      markets.</p>
   </div>
 
   <footer fxFlex="70%" fxFlex.lt-md="0 0 calc(100%-2rem)" fxLayout="row nowrap" fxLayout.lt-sm="column"

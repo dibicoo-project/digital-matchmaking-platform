@@ -11,6 +11,8 @@
     margin-top: 0.5rem;
   }
 
+  position: static;
+
   &.unread {
     border-left: solid 5px $accent;
     background-color: $bg-accent-xlight;

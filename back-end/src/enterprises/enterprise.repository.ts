@@ -44,20 +44,8 @@ export class PublicEnterpriseRepository extends RepositoryV2<PublicEnterprise> {
     return this.find(query);
   }
 
-  public async findChangedAfter(ts: Date) {
-    const query = this.query.filter('changedTs', '>=', ts).select('__key__');
+  public async findChangedBefore(ts: Date) {
+    const query = this.query.filter('changedTs', '<', ts);
     return this.find(query);
-  }
-
-  public async findByProjectCountry(country: string) {
-    return this.find(this.query.filter('keyProjects.location.country', country).select('__key__'));
-  }
-
-  public async findByCountry(country: string) {
-    return this.find(this.query.filter('location.country', country).select('__key__'));
-  }
-
-  public async findByCategoryId(categoryId: string) {
-    return this.find(this.query.filter('categoryIds', categoryId).select('__key__'));
   }
 }

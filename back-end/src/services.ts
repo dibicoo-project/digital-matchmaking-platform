@@ -9,6 +9,7 @@ import { EnterpriseWatchlistRepository } from './enterprises/enterprise-watchlis
 import { EnterpriseService } from './enterprises/enterprise.service';
 import { EnterpriseWatchlistService } from './enterprises/enterprise-watchlist.service';
 import { EnterpriseShareService } from './enterprises/enterprise-share.service';
+import { EnterpriseCronService } from './enterprises/enterprise-cron.service';
 import { CategoryRepository } from './categories/category.repository';
 import { CategoryService } from './categories/category.service';
 import { ApplicationService } from './applications/application.service';
@@ -81,6 +82,7 @@ export const bindServices = (container: Container) => {
   container.bind(EnterpriseFiltersService).toSelf().inSingletonScope();
   container.bind(EnterpriseShareService).toSelf().inSingletonScope();
   container.bind(EnterpriseWatchlistService).toSelf().inSingletonScope();
+  container.bind(EnterpriseCronService).toSelf().inSingletonScope();
 
   container.bind(ApplicationService).toSelf().inSingletonScope();
   container.bind(ApplicationFiltersService).toSelf().inSingletonScope();

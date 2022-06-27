@@ -17,10 +17,11 @@ header.page-header {
   color: $accent;
   border-bottom: solid 1px $accent-xlight;
   margin: 2rem 2rem 1rem;
+
   @include layout-bp(lt-sm) {
     margin: 1rem;
   }
-    
+
   ul.breadcrumbs {
     flex: 1 1 100%;
     list-style: none;
@@ -33,7 +34,7 @@ header.page-header {
         color: $accent;
       }
 
-      & + li:before {
+      &+li:before {
         content: "\00a0/\00a0";
       }
     }
@@ -48,12 +49,13 @@ header.page-header {
   }
 
   .controls {
-    margin-bottom: 1rem;    
+    margin-bottom: 1rem;
   }
 }
 
 section.page-content {
   margin: 0 2rem;
+
   @include layout-bp(lt-sm) {
     margin: 0 1rem;
   }
@@ -91,7 +93,7 @@ section.page-content {
   margin-right: auto;
 }
 
-.bullet {  
+.bullet {
   display: inline-block;
   padding: 0 0.5rem;
 
@@ -118,6 +120,7 @@ section.page-content {
 
   .mat-hint {
     font-size: 13px;
+
     .mat-icon {
       font-size: 16px;
       vertical-align: middle;
@@ -128,10 +131,21 @@ section.page-content {
 
 
 // Intro.js
-.introjs-tooltip-header {
-  display: none;
-}
+.introjs-tooltip {
+  .introjs-tooltip-header {
+    display: none;
+  }
 
-.introjs-tooltiptext {
-  padding: 1rem 1rem 0.25rem;
+  .introjs-tooltiptext {
+    padding: 1rem 1rem 0.25rem;
+  }
+
+  .introjs-skipbutton {
+    display: none;
+  }
+
+  &.wide {
+    max-width: 600px;
+    min-width: 500px;
+  }
 }

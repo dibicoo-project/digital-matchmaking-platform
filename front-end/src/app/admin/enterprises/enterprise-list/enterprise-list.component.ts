@@ -4,6 +4,7 @@ import { EnterpriseService } from '@domain/enterprises/enterprise.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, switchMap } from 'rxjs/operators';
 import { DialogService } from '@domain/dialog.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-enterprise-list',
@@ -13,6 +14,7 @@ import { DialogService } from '@domain/dialog.service';
 export class EnterpriseListComponent implements OnInit {
   pending: Enterprise[];
   reported: Enterprise[];
+  outdated: Enterprise[];
   published: Enterprise[];
   selectedTab = null;
 
@@ -28,10 +30,12 @@ export class EnterpriseListComponent implements OnInit {
   }
 
   private fetch() {
-    this.service.getAdminEnterprises().subscribe(({pending, published}) => {
+    this.service.getAdminEnterprises().subscribe(({ pending, published }) => {
       this.pending = pending;
       this.published = published;
       this.reported = published.filter(one => one.reports?.length > 0);
+      this.outdated = published.filter(one => moment().subtract(7, 'months').isAfter(one.outdatedNotificationTs))
+        .sort((a, b) => new Date(b.changedTs).getDate() - new Date(a.changedTs).getDate());
     });
   }
 

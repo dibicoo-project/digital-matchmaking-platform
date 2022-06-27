@@ -6,23 +6,23 @@
   bottom: 1rem;
   z-index: 5;
 
-  background-color: $neutral;
+  background-color: darkorange;
   border: 0;
   outline: none;
-  border-radius: 1.5rem;
-  padding: 0.75rem;
-  // vertical-align: middle;
-  color: $neutral-xlight;
+  border-radius: 4rem;
+  padding: 2rem;
+  color: white;
   cursor: pointer;
   
   .icon {
     font-weight: bold;
     display: inline-block;
-    width: 1.5rem;
+    width: 2rem;
     height: 1.5rem;
     padding: 0;
-    margin: 0;
+    margin: 0;    
     vertical-align: middle;
+    font-size: 2.5rem;
   }
 
   .text {
@@ -33,15 +33,16 @@
     vertical-align: middle;
     padding: 0;
     margin: 0; 
-    color: $neutral;
+    color: white;
+    font-size: 1.5rem;
+    line-height: 2rem;
     transition: max-width 0.5s, color 0.5s, padding 0.5s;
   }
 
   &:hover {
     .text {
       max-width: 10rem;
-      padding-right: 0 0.5rem;
-      color: $neutral-xlight;
+      padding: 0 0.5rem;
     }
   }
 }

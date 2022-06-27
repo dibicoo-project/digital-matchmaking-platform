@@ -35,7 +35,15 @@
         href="https://docs.google.com/forms/d/e/1FAIpQLSfzwMA99cBBHpYuDhF8GM3hmKMVzc1rNRolhSOjgb3NrWWTrQ/viewform"
         target="_blank">
         Feedback <mat-icon inline>open_in_new</mat-icon>
-      </a>      
+      </a>
+      <button mat-menu-item *ngIf="auth.loggedIn" (click)="startWelcomeTour()">
+        Welcome tour
+      </button>
+      <a mat-menu-item
+        href="https://www.youtube.com/watch?v=QSV_WaTVpLw"
+        target="_blank">
+        Promotional video <mat-icon inline>open_in_new</mat-icon>
+      </a>
     </mat-menu>
 
     <button mat-icon-button class="search-button" routerLink="/search/all">
@@ -67,7 +75,7 @@
               </button>
               <h3>{{item.title}}</h3>
               <div class="notification-item__body" [innerHtml]="item.body"></div>
-              <p>
+              <p class="notification-item__links">
                 <ng-container *ngFor="let link of item.links">
                   <a *ngIf="!link.external" [routerLink]="link.url" [fragment]="link.fragment">{{link.label}}</a>
                   <a *ngIf="link.external" [href]="link.url" target="_blank">{{link.label}}</a>
@@ -112,7 +120,7 @@
 
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
         <img src="{{profile.picture}}" class="user-avatar" alt="User avatar" />
-        <span  class="user-name"> {{profile.name}}</span>
+        <span class="user-name"> {{profile.name}}</span>
       </button>
     </ng-container>
     <button mat-button (click)="auth.login()" *ngIf="!auth.loggedIn">
@@ -126,87 +134,93 @@
     [attr.role]="(isSmall$ | async) ? 'dialog' : 'navigation'" [mode]="(isSmall$ | async) ? 'over' : 'side'"
     [opened]="(showSidebar$ | async) === true && (isSmall$ | async) === false">
     <mat-nav-list>
-      <div mat-subheader>
-        Company profiles
+      <div class="nav-section-companies">
+        <div mat-subheader>
+          Company profiles
+        </div>
+        <a mat-list-item routerLink="enterprises" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <!-- <mat-icon svgIcon="companies-explorer"></mat-icon> -->
+          <mat-icon>business</mat-icon>
+          Companies explorer
+        </a>
+        <a mat-list-item routerLink="enterprises/matchmaking" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">
+          <!-- <mat-icon svgIcon="companies-matchmaking"></mat-icon> -->
+          <mat-icon>manage_search</mat-icon>
+          Companies matchmaking
+        </a>
+        <a mat-list-item routerLink="user/enterprises/matchmaking" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+          <span class="sub"></span>
+          <mat-icon>playlist_add_check</mat-icon>Saved filters
+        </a>
+        <a mat-list-item routerLink="enterprises/globalmap" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">
+          <!-- <mat-icon svgIcon="companies-global-map"></mat-icon> -->
+          <mat-icon>map</mat-icon>
+          Companies on global map
+        </a>
+        <a mat-list-item routerLink="user/enterprises/watchlist" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+          <mat-icon>star</mat-icon> My watchlist
+        </a>
+        <a mat-list-item routerLink="user/enterprises" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+          <mat-icon>person</mat-icon> My companies
+        </a>
+        <a mat-list-item routerLink="user/enterprises/new" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+          <span class="sub"></span>
+          <mat-icon>add</mat-icon> Add company profile
+        </a>
       </div>
-      <a mat-list-item routerLink="enterprises" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-        <!-- <mat-icon svgIcon="companies-explorer"></mat-icon> -->
-        <mat-icon>business</mat-icon>
-        Companies explorer
-      </a>
-      <a mat-list-item routerLink="enterprises/matchmaking" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}">
-        <!-- <mat-icon svgIcon="companies-matchmaking"></mat-icon> -->
-        <mat-icon>manage_search</mat-icon>
-        Companies matchmaking
-      </a>
-      <a mat-list-item routerLink="user/enterprises/matchmaking" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
-        <span class="sub"></span>
-        <mat-icon>playlist_add_check</mat-icon>Saved filters
-      </a>
-      <a mat-list-item routerLink="enterprises/globalmap" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}">
-        <!-- <mat-icon svgIcon="companies-global-map"></mat-icon> -->
-        <mat-icon>map</mat-icon>
-        Companies on global map
-      </a>
-      <a mat-list-item routerLink="user/enterprises/watchlist" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
-        <mat-icon>star</mat-icon> My watchlist
-      </a>
-      <a mat-list-item routerLink="user/enterprises" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-        *ngIf="auth.loggedIn">
-        <mat-icon>person</mat-icon> My companies
-      </a>
-      <a mat-list-item routerLink="user/enterprises/new" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
-        <span class="sub"></span>
-        <mat-icon>add</mat-icon> Add company profile
-      </a>
       <mat-divider></mat-divider>
-      <div mat-subheader>
-        Business opportunities
+      <div class="nav-section-bo">
+        <div mat-subheader>
+          Business opportunities
+        </div>
+        <a mat-list-item routerLink="applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <!-- <mat-icon svgIcon="business-opportunities"></mat-icon> -->
+          <mat-icon>chat</mat-icon>
+          All business opportunities
+        </a>
+        <a mat-list-item routerLink="user/applications/matchmaking" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+          <span class="sub"></span>
+          <mat-icon>playlist_add_check</mat-icon>Saved filters
+        </a>
+        <a mat-list-item routerLink="user/applications" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+          <mat-icon>person</mat-icon>
+          My business opportunities
+        </a>
+        <a mat-list-item routerLink="user/applications/new" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+          <span class="sub"></span>
+          <mat-icon>add</mat-icon>
+          Add business opportunity
+        </a>
       </div>
-      <a mat-list-item routerLink="applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-        <!-- <mat-icon svgIcon="business-opportunities"></mat-icon> -->
-        <mat-icon>chat</mat-icon>
-        All business opportunities
-      </a>
-      <a mat-list-item routerLink="user/applications/matchmaking" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
-        <span class="sub"></span>
-        <mat-icon>playlist_add_check</mat-icon>Saved filters
-      </a>
-      <a mat-list-item routerLink="user/applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-        *ngIf="auth.loggedIn">
-        <mat-icon>person</mat-icon>
-        My business opportunities
-      </a>
-      <a mat-list-item routerLink="user/applications/new" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
-        <span class="sub"></span>
-        <mat-icon>add</mat-icon>
-        Add business opportunity
-      </a>
       <mat-divider></mat-divider>
-      <div mat-subheader>
-        Knowledge base
+      <div class="nav-section-knowledge">
+        <div mat-subheader>
+          Knowledge base
+        </div>
+        <a mat-list-item routerLink="knowledge-base/factsheets" routerLinkActive="active">
+          <!-- <mat-icon svgIcon="factsheets"></mat-icon> -->
+          <mat-icon>school</mat-icon>
+          Factsheets
+        </a>
+        <a mat-list-item routerLink="knowledge-base/literature" routerLinkActive="active">
+          <!-- <mat-icon svgIcon="literature-sources"></mat-icon> -->
+          <mat-icon>book</mat-icon>
+          Literature sources
+        </a>
+        <a mat-list-item routerLink="knowledge-base/links" routerLinkActive="active">
+          <mat-icon>open_in_new</mat-icon>
+          Links and Videos
+        </a>
       </div>
-      <a mat-list-item routerLink="knowledge-base/factsheets" routerLinkActive="active">
-        <!-- <mat-icon svgIcon="factsheets"></mat-icon> -->
-        <mat-icon>school</mat-icon> 
-        Factsheets
-      </a>
-      <a mat-list-item routerLink="knowledge-base/literature" routerLinkActive="active">
-        <!-- <mat-icon svgIcon="literature-sources"></mat-icon> -->
-        <mat-icon>book</mat-icon>
-        Literature sources
-      </a>
-      <a mat-list-item routerLink="knowledge-base/links" routerLinkActive="active">
-        <mat-icon>open_in_new</mat-icon>
-        Links and Videos
-      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="content">

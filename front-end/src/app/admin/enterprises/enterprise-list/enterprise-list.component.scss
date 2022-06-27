@@ -19,4 +19,9 @@ app-enterprise-card {
   button {
     margin-bottom: 0.5rem;
   }
+
+  .outdated__label {
+    color: $warn;
+
+  }
 }

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AgmCoreModule } from '@agm/core';
 
 import { PublicRoutingModule } from './public-routing.module';
 import { EnterpriseListComponent } from './enterprises/enterprise-list/enterprise-list.component';
@@ -17,6 +16,8 @@ import { EnterpriseMatchmakingComponent } from './enterprises/enterprise-matchma
 import { ApplicationMatchmakingComponent } from './applications/application-matchmaking/application-matchmaking.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { SearchService } from './search/search.service';
+import { Loader } from '@googlemaps/js-api-loader';
+import { environment } from '@root/environments/environment';
 
 
 @NgModule({
@@ -37,11 +38,14 @@ import { SearchService } from './search/search.service';
     DiBiCooMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    AgmCoreModule,
     DomainModule
   ],
   providers: [
-    SearchService
+    SearchService,
+    {
+      provide: Loader,
+      useFactory: () => new Loader({ apiKey: environment.googleApiKey })
+    }
   ]
 })
 export class PublicModule { }

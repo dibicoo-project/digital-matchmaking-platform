@@ -20,6 +20,7 @@
         </app-enterprise-card>
       </div>
     </mat-tab>
+
     <mat-tab>
       <ng-template mat-tab-label>
         <span [matBadge]="reported?.length" matBadgeOverlap="false" matBadgeSize="small">Reported</span>
@@ -30,7 +31,15 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="published?.length" matBadgeOverlap="false" matBadgeSize="small">Published</span>
+        <span [matBadge]="outdated?.length" matBadgeOverlap="false" matBadgeSize="small">Outdated</span>
+      </ng-template>
+      <ng-container *ngTemplateOutlet="companyList; context: { $implicit: outdated }">
+      </ng-container>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="published?.length" matBadgeOverlap="false" matBadgeSize="small">All published</span>
       </ng-template>
       <ng-container *ngTemplateOutlet="companyList; context: { $implicit: published }">
       </ng-container>
@@ -40,6 +49,9 @@
   <ng-template #companyList let-companies>
     <div class="company__list">
       <app-enterprise-card *ngFor="let one of companies" [enterprise]="one">
+        <p class="outdated__label" *ngIf="one.outdatedNotificationTs">
+          Outdated profile notified on {{one.outdatedNotificationTs | date}}.
+        </p>
         <button mat-stroked-button color="primary" [routerLink]="['/enterprises', one.id]">
           <mat-icon>view_list</mat-icon> Show details
         </button>
@@ -60,9 +72,12 @@
   <ng-template #reportDialog let-data>
     <h2 mat-dialog-title>Company reports</h2>
     <div mat-dialog-content>
-      <p *ngFor="let rep of data">
-        <span class="date">{{rep.ts | date:'medium'}}</span> {{rep.message}}
-      </p>
+      <dl>
+        <ng-container *ngFor="let rep of data">
+          <dt><strong>{{rep.ts | date:'yyyy.MM.dd HH:mm'}}</strong></dt>
+          <dd>{{rep.message}}</dd>
+        </ng-container>
+      </dl>
     </div>
     <div mat-dialog-actions>
       <button mat-button mat-dialog-close>Close</button>

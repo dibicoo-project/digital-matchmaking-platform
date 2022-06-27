@@ -1,42 +1,33 @@
-<div class="page-wrapper" *ngIf="!mediaAccepted">
-  <div class="media-message">
+<div class="page-wrapper">
+  <div class="media-message" [hidden]="mediaAccepted">
     <p>
       You have not accepted <strong>media cookies</strong>, thus we can't show you a map.
       If you want to review your cookies settings, please, <a href=""
         (click)="cookies.reset(); $event.preventDefault();">click here</a>!
     </p>
   </div>
-</div>
-<div class=" page-wrapper" *ngIf="mediaAccepted">
-  <div class="map-container">
-    <agm-map [latitude]="20" [longitude]="10" [zoom]="3" (mapClick)="markerClicked()">
-      <agm-marker *ngFor="let ent of enterprisesVisible" [latitude]="ent.latlng[0]" [longitude]="ent.latlng[1]"
-        (markerClick)="markerClicked(iw)" [iconUrl]="getMarkerIcon()">
-        <agm-info-window #iw>
-          <app-enterprise-card [enterprise]="ent">
-            <button mat-stroked-button color="primary" [routerLink]="['/enterprises', ent.id]">
-              View profile
-            </button>
-          </app-enterprise-card>
-        </agm-info-window>
-      </agm-marker>
-
-      <agm-marker *ngFor="let item of projectsVisible" [latitude]="item.latlng[0]" [longitude]="item.latlng[1]"
-        (markerClick)="markerClicked(projectIw)" [iconUrl]="getProjectMarkerIcon()">
-        <agm-info-window #projectIw>
-          <h2>{{item.title}}</h2>
-          <p>
-            <app-location-text [location]="item.location"></app-location-text>
-          </p>
-          <p>
-            <a [routerLink]="['..', item.company.id]">{{item.company.companyName}}</a>
-          </p>        
-        </agm-info-window>
-      </agm-marker>
-    </agm-map>
+  <div class="map-container" #mapContainer [hidden]="!mediaAccepted">
   </div>
 
-  <div class="filters">
+  <div #infoTemplate>
+    <app-enterprise-card *ngIf="selectedCompany" [enterprise]="selectedCompany">
+      <button mat-stroked-button color="primary" [routerLink]="['/enterprises', selectedCompany.id]">
+        View profile
+      </button>
+    </app-enterprise-card>
+    <ng-container *ngIf="selectedProject">
+      <h3>{{selectedProject.title}}</h3>
+      <p>
+        <app-location-text [location]="selectedProject.location"></app-location-text>
+      </p>
+      <p>
+        <a [routerLink]="['..', selectedProject.company.id]">{{selectedProject.company.companyName}}</a>
+      </p>
+    </ng-container>
+  </div>
+
+
+  <div class="filters" [hidden]="!mediaAccepted">
     <mat-radio-group [(ngModel)]="selectedCategoryId" (ngModelChange)="updateMarkers()">
       <mat-list>
         <mat-list-item *ngFor="let cat of categories">

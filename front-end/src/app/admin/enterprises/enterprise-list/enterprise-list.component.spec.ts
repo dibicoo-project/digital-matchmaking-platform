@@ -48,14 +48,28 @@ describe('EnterpriseListComponent', () => {
   });
 
   it('should load enterprise list on init', () => {
+    jasmine.clock().mockDate(new Date('2022-06-14'));
+
     const service = TestBed.inject(EnterpriseService);
     spyOn(service, 'getAdminEnterprises').and.returnValue(
-      of({ pending: [{}, {}], published: [{ reports: [] }, { reports: [{}] }, {}] } as any));
+      of({
+        pending: [{}, {}],
+        published: [
+          { reports: [] },
+          { reports: [{}] },
+          {},
+          { outdatedNotificationTs: new Date('2021-11-13') },
+          { outdatedNotificationTs: new Date('2021-11-15') }
+        ]
+      } as any));
 
     component.ngOnInit();
-    expect(component.published.length).toBe(3);
+    expect(component.published.length).toBe(5);
+    expect(component.outdated.length).toBe(1);
     expect(component.reported.length).toBe(1);
     expect(component.pending.length).toBe(2);
+
+    jasmine.clock().uninstall();
   });
 
   it('should change enterprise status', () => {

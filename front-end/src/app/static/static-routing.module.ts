@@ -12,14 +12,14 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
   {
-    path: 'old',
+    path: '',
     component: FrontPageComponent,
     data: {
       hideSidebar: true
     }
   },
   {
-    path: '',
+    path: 'new',
     component: LandingPageComponent,
     data: {
       hideSidebar: true

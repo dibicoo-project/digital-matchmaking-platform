@@ -64,10 +64,9 @@ describe('EnterpriseListPagedComponent', () => {
   });
 
   it('should show companies in pages', (done) => {
-    // eslint-disable-next-line @typescript-eslint/dot-notation
-    component['pageSize'] = 2;
     component.currentSort = 'cn';
-    component.currentPage = 1;
+    component.updatePage(1, 2); // run twice as first run will update only page size
+    component.updatePage(1, 2);
 
     component.pagedList$.subscribe(list => {
       expect(list.map(c => c.companyName)).toEqual(['C', 'D']);

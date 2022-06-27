@@ -9,6 +9,7 @@ type SortType = 'ts' | 'cn' | 'cnr';
 
 interface State {
   page: number;
+  pageSize: number;
   sort: SortType;
 }
 
@@ -19,7 +20,7 @@ interface State {
 })
 export class EnterpriseListPagedComponent implements OnInit {
 
-  private pageSize = 12;
+  private defaultPageSize = 12;
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
@@ -27,37 +28,50 @@ export class EnterpriseListPagedComponent implements OnInit {
   list$: Observable<Enterprise[]>;
   pagedList$: Observable<Enterprise[]>;
 
-  stateSubject = new BehaviorSubject({ page: 0, sort: 'ts' } as State);
+  private stateSubject = new BehaviorSubject<State>({ page: 0, pageSize: this.defaultPageSize, sort: 'ts' });
+
+  get state() {
+    return this.stateSubject.getValue();
+  }
 
   get currentSort() {
-    return this.stateSubject.getValue().sort;
+    return this.state.sort;
   }
 
   set currentSort(sort: SortType) {
-    this.stateSubject.next({ sort, page: 0 });
+    this.stateSubject.next({ ...this.state, sort, page: 0 });
   }
 
   get currentPage() {
-    return this.stateSubject.getValue().page;
+    return this.state.page;
   }
 
-  set currentPage(page: number) {
-    this.stateSubject.next({ ...this.stateSubject.getValue(), page });
+  get currentPageSize() {
+    return this.state.pageSize;
+  }
+
+  updatePage(page: number, pageSize: number) {
+    if (this.state.pageSize !== pageSize) {
+      this.stateSubject.next({ ...this.state, pageSize, page: 0 });
+    } else {
+      this.stateSubject.next({ ...this.state, page });
+    }
   }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
       const sort = params.get('s') as SortType;
-      const page = parseInt(params.get('p'), 10);
+      const page = parseInt(params.get('p'));
+      const pageSize = parseInt(params.get('ipp'));
 
-      this.stateSubject.next({ sort: sort || 'ts', page: page || 0 });
+      this.stateSubject.next({ sort: sort || 'ts', page: page || 0, pageSize: pageSize || this.defaultPageSize });
     });
 
     this.pagedList$ = combineLatest([
       this.list$,
       this.stateSubject.pipe(distinctUntilObjChanged())
     ]).pipe(
-      map(([all, { sort, page }]) => {
+      map(([all, { sort, page, pageSize }]) => {
         const list = [...all];
         list.sort((a, b) => {
           switch (sort) {
@@ -71,21 +85,23 @@ export class EnterpriseListPagedComponent implements OnInit {
           return 0;
         });
 
-        return list.slice(page * this.pageSize, (page + 1) * this.pageSize);
+        return list.slice(page * pageSize, (page + 1) * pageSize);
       }),
       shareReplay(1)
     );
 
-    this.stateSubject.pipe(distinctUntilObjChanged()).subscribe(({ sort, page }) => {
-      this.router.navigate([], {
-        queryParams: {
-          s: sort !== 'ts' ? sort : null,
-          p: page > 0 ? page : null
-        },
-        queryParamsHandling: 'merge',
-        state: { noScroll: true }
+    this.stateSubject.pipe(distinctUntilObjChanged())
+      .subscribe(({ sort, page, pageSize }) => {
+        this.router.navigate([], {
+          queryParams: {
+            s: sort !== 'ts' ? sort : null,
+            p: page > 0 ? page : null,
+            ipp: pageSize !== this.defaultPageSize ? pageSize : null
+          },
+          queryParamsHandling: 'merge',
+          state: { noScroll: true }
+        });
       });
-    });
   }
 
 }

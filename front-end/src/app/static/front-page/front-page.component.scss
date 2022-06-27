@@ -84,6 +84,105 @@ header {
   }
 }
 
+
+.feedback {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    list-style: none;
+    padding: 0 3rem;
+
+    @include layout-bp(lt-md) {
+      padding: 0 1.5rem;
+      grid-template-columns: 0.5fr;
+    }
+
+    @include layout-bp(lt-sm) {
+      padding: 0 0.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    margin: 0;
+    gap: 2rem;
+  }
+
+  &__item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+
+    @include layout-bp(lt-md) {
+      flex-basis: 40%;
+    }
+
+    @include layout-bp(lt-sm) {
+      flex-basis: 100%;
+    }
+  }
+
+  &__avatar {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    border: solid 1px $neutral-light;
+
+    &--placeholder {
+      background-color: $bg-neutral-light;
+      margin: 0 auto;
+    }
+  }
+
+  &__name {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    margin-bottom: 0;
+    color: $default-muted;
+  }
+
+  &__text {
+    margin: 0 0.5rem;
+
+    &::before {
+      color: $neutral-light;
+      font-size: 3em;
+      line-height: 2rem;
+      font-family: "Material Icons";
+      display: block;
+      content: "\201C";
+    }
+  }
+}
+
+.video {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  @include layout-bp(lt-sm) {
+    &__player {
+      width: 100vw;
+      height: 100vw*9/16;
+    }
+  }
+}
+
 .message {
   text-align: center;
   padding: 2rem 0.5rem;

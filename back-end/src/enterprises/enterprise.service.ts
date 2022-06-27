@@ -13,6 +13,7 @@ import { AnalyticsService } from '../analytics/analytics.service';
 import { ContactMessage } from '../common/common.domain';
 import { MatchmakingFacade } from '../matchmaking/matchmaking.facade';
 import { shortText } from '../utils/shortText';
+import moment from 'moment';
 
 @injectable()
 export class EnterpriseService {
@@ -105,7 +106,7 @@ export class EnterpriseService {
     return latest
       .filter(rec => !!rec.logoId)
       .map(rec => this.toSimpleBean(rec))
-      .map(({id, companyName, imageUrl}) => ({id, companyName, imageUrl}));
+      .map(({ id, companyName, imageUrl }) => ({ id, companyName, imageUrl }));
   }
 
 
@@ -248,7 +249,8 @@ export class EnterpriseService {
       published: allPublic.sort(this.defaultOrder)
         .map(rec => ({
           ...this.toSimpleBean(rec),
-          reports: rec.reports
+          reports: rec.reports,
+          outdatedNotificationTs: rec.outdatedNotificationTs
         }))
     };
   }
@@ -289,7 +291,8 @@ export class EnterpriseService {
         ...one,
         pendingReview: undefined,
         rejectReason: undefined,
-        reports: []
+        reports: [],
+        outdatedNotificationTs: undefined
       } as PublicEnterprise;
 
       if (pub.displayOnGlobalMap) {

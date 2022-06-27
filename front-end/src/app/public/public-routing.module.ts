@@ -7,7 +7,7 @@ import { EnterpriseInviteComponent } from './enterprises/enterprise-invite/enter
 import { ApplicationListComponent } from './applications/application-list/application-list.component';
 import { ApplicationDetailsComponent } from './applications/application-details/application-details.component';
 import { EnterpriseMatchmakingComponent } from './enterprises/enterprise-matchmaking/enterprise-matchmaking.component';
-import { enterpriseMatchmakingTour, enterprisesTour, applicationTour } from '@domain/tours';
+import { enterpriseMatchmakingTour, enterprisesTour, enterpriseTour, applicationsTour } from '@domain/tours';
 import { ApplicationMatchmakingComponent } from './applications/application-matchmaking/application-matchmaking.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 
@@ -42,7 +42,10 @@ const routes: Routes = [
       },
       {
         path: ':enterpriseId',
-        component: EnterpriseDetailsComponent
+        component: EnterpriseDetailsComponent,
+        data: {
+          tour: enterpriseTour
+        }
       }
     ]
   },
@@ -50,16 +53,10 @@ const routes: Routes = [
     path: 'applications',
     children: [
       {
-        path: 'list',
-        component: ApplicationListComponent,
-        data: {
-          tour: applicationTour
-        }
-      },
-      {
         path: '',
         component: ApplicationMatchmakingComponent,
         data: {
+          tour: applicationsTour
         }
       },
       {

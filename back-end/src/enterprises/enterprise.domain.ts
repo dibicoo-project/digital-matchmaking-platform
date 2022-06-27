@@ -34,6 +34,7 @@ export interface Enterprise extends EnterpriseBase {
 
 export interface PublicEnterprise extends EnterpriseBase {
   reports?: Array<{ ts: Date, message: string }>;
+  outdatedNotificationTs?: Date;
 }
 
 interface EnterpriseBeanBase extends Omit<Enterprise & PublicEnterprise, 'owners' | 'changedBy'> {

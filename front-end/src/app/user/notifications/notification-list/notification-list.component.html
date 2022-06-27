@@ -15,7 +15,7 @@
 </header>
 <section class="page-content">
 
-  <mat-card *ngFor="let item of service.all$ | async" [class.unread]="!item.isRead" [id]="item.id">
+  <mat-card class="notification" *ngFor="let item of service.all$ | async" [class.unread]="!item.isRead" [id]="item.id">
     <mat-card-header>
       <mat-icon mat-card-avatar>{{item.icon}}</mat-icon>
       <h2 mat-card-title>{{item.title}}</h2>

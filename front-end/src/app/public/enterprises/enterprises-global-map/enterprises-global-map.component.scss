@@ -26,13 +26,10 @@
     top: 0;
     right: 0;
     left: 0;
+    height: calc(100vh - 64px);
 
-    agm-map {
-      height: calc(100vh - 64px);
-
-      @include layout-bp(lt-sm) {
-        height: calc(100vh - 56px);
-      }
+    @include layout-bp(lt-sm) {
+      height: calc(100vh - 56px);
     }
   }
 

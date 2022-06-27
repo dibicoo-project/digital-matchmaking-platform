@@ -131,6 +131,7 @@ export class EnterpriseMatchmakingComponent implements OnInit {
           ...filtersToParams(filters),
           p: null
         },
+        queryParamsHandling: 'merge'
       });
     });
   }

@@ -42,8 +42,9 @@
         </mat-button-toggle-group>
       </div>
 
-      <mat-paginator class="paginator" [length]="totalCount" pageSize="12" hidePageSize="true" [pageIndex]="currentPage"
-        (page)="currentPage = $event.pageIndex">
+      <mat-paginator class="paginator" [length]="totalCount" [pageSize]="currentPageSize"
+        [pageSizeOptions]="[12,30,120,300]" [pageIndex]="currentPage" showFirstLastButtons="true"
+        (page)="updatePage($event.pageIndex, $event.pageSize)">
       </mat-paginator>
     </div>
 
@@ -54,9 +55,10 @@
     </div>
 
     <div class="company-list-footer">
-      <mat-paginator class="paginator" [length]="totalCount" pageSize="12" hidePageSize="true" [pageIndex]="currentPage"
-        (page)="currentPage = $event.pageIndex">
-      </mat-paginator>
+      <mat-paginator class="paginator" [length]="totalCount" [pageSize]="currentPageSize"
+      [pageSizeOptions]="[12,30,120,300]" [pageIndex]="currentPage" showFirstLastButtons="true"
+      (page)="updatePage($event.pageIndex, $event.pageSize)">
+    </mat-paginator>
     </div>
   </div>
 </ng-container>

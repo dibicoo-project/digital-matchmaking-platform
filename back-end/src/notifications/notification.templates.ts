@@ -106,6 +106,29 @@ export const companyMatched = (companyId: string, companyName: string, filterLab
   emailSent: false
 });
 
+
+export const companyProfileOutdated = (companyId: string, companyName: string): Notification => ({
+  title: `${companyName} profile is outdated`,
+  body: `<p>The profile of your company <strong>${companyName}</strong> seems to be outdated. 
+    Unfortunatelly, it has not been updated for <strong>more than a year</strong>.
+    We believe you have actual updates to share with the platform users.
+    Please, review and update your profile by publishing up-to-date information.</p>
+    <p>To maintain high quality of the platform content the administrators may unpublish outdated company profiles.</p>`,
+  icon: NotificationIcon.negative,
+  source: NotificationSource.companyProfile,
+  links: [
+    { label: 'Update profile', url: `/user/enterprises/${companyId}` },
+    { label: 'Contact us', url: '/contact-us' }
+  ],
+  data: {
+    companyId
+  },
+  ts: new Date(),
+  isRead: false,
+  emailSent: false
+});
+
+
 export const applicationPublished = (applicationId: string): Notification => ({
   title: 'Your business opportunity is published',
   body: `We are happy to inform You that Your business opportunity is published online on the Biogas and Gasification Matchmaking Platform.

@@ -4,8 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 
-import { AgmCoreModule } from '@agm/core';
-import { InfoWindowManager, GoogleMapsAPIWrapper, MarkerManager } from '@agm/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -28,15 +26,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     DiBiCooMaterialModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleApiKey
-    }),
     DomainModule.forRoot(),
     AuthModule.forRoot(),
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [InfoWindowManager, GoogleMapsAPIWrapper, MarkerManager ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

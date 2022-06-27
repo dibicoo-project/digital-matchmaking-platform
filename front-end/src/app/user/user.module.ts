@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRoutingModule } from './user-routing.module';
 import { EnterpriseListComponent } from './enterprises/enterprise-list/enterprise-list.component';
 
-import { AgmCoreModule } from '@agm/core';
 import { ApplicationListComponent } from './applications/application-list/application-list.component';
 import { DomainModule } from '@domain/domain.module';
 import { EnterpriseShareComponent } from './enterprises/enterprise-share/enterprise-share.component';
@@ -46,7 +45,6 @@ const originFactory = () => window.location.origin;
     DiBiCooMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    AgmCoreModule,
     DomainModule
   ],
   providers: [

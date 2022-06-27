@@ -5,13 +5,16 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleComponent } from './article/article.component';
 import { FactsheetsComponent } from './factsheets/factsheets.component';
 import { LiteratureComponent } from './literature/literature.component';
-import { literatureTour } from '@domain/tours';
+import { factsheetsTour, linksTour, literatureTour } from '@domain/tours';
 import { LinksComponent } from './links/links.component';
 
 const routes: Routes = [
   {
     path: 'factsheets',
-    component: FactsheetsComponent
+    component: FactsheetsComponent,
+    data: {
+      tour: factsheetsTour
+    }
   },
   {
     path: 'literature',
@@ -22,7 +25,10 @@ const routes: Routes = [
   },
   {
     path: 'links',
-    component: LinksComponent
+    component: LinksComponent,
+    data: {
+      tour: linksTour
+    }
   },
   {
     path: 'factsheets/:id',

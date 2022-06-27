@@ -38,6 +38,7 @@ export interface Enterprise {
   isPublic: boolean;
   pendingReview: boolean;
   rejectReason: string;
+  outdatedNotificationTs: Date;
 }
 
 export interface Invitation {

@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth/auth.service';
 import { Observable, combineLatest, timer } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map, shareReplay, filter, switchMap, switchMapTo } from 'rxjs/operators';
+import { map, shareReplay, filter, switchMap, switchMapTo, tap, delay } from 'rxjs/operators';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NotificationService } from '@domain/notifications/notification.service';
 import { TrackingService } from '@domain/tracking.service';
 import { FormBuilder } from '@angular/forms';
 import { DiBiCooCookieService } from '@domain/dibicoo-cookie.service';
+import { startFirstVisitTour } from '@domain/tours';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,9 @@ export class AppComponent implements OnInit {
   fullWidth$: Observable<boolean>;
   showTour$: Observable<boolean>;
   showSearch$: Observable<boolean>;
+  showFirstVisitTour$: Observable<boolean>;
+
+  startWelcomeTour = startFirstVisitTour;
 
   private isActive = true;
 
@@ -92,12 +96,14 @@ export class AppComponent implements OnInit {
       map(data => data.tour != null)
     );
 
-    this.showTour$ = data$.pipe(
-      map(data => data.tour != null)
-    );
-
     this.showSearch$ = data$.pipe(
       map(data => !data.hideSearch)
+    );
+
+    this.showFirstVisitTour$ = data$.pipe(
+      map(data => data.firstVisitTour),
+      filter(firstVisit => firstVisit),
+      filter(_ => localStorage.getItem('firstVisit') == null)
     );
 
     navigationEnd$.subscribe((ev: NavigationEnd) => tracking.pageView(ev.urlAfterRedirects));
@@ -125,6 +131,14 @@ export class AppComponent implements OnInit {
       switchMap(_ => timer(2000, 3 * 60 * 1000)),
       filter(_ => this.isActive)
     ).subscribe(_ => this.notifications.fetch());
+
+    this.showFirstVisitTour$
+      .pipe(
+        delay(1000)
+      )
+      .subscribe(firstVisit => {
+        startFirstVisitTour();
+      });
   }
 
   saveCookiePreferences() {
@@ -140,6 +154,6 @@ export class AppComponent implements OnInit {
   }
 
   doSearch(query: string) {
-    this.router.navigate(['/search/all'], { queryParams: { q : query}});
+    this.router.navigate(['/search/all'], { queryParams: { q: query } });
   }
 }

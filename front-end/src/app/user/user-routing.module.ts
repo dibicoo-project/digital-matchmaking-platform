@@ -10,13 +10,18 @@ import { NotificationListComponent } from './notifications/notification-list/not
 import { EnterpriseStatisticsComponent } from './enterprises/enterprise-statistics/enterprise-statistics.component';
 import { EnterpriseSavedMatchmakingComponent } from './enterprises/enterprise-saved-matchmaking/enterprise-saved-matchmaking.component';
 import { EnterpriseWatchlistComponent } from './enterprises/enterprise-watchlist/enterprise-watchlist.component';
-import { myCompaniesTour, addCompaniesTour, myOpportunitiesTour, addOpportunitiesTour, shareCompaniesTour } from '@domain/tours';
+import {
+  myCompaniesTour, addCompaniesTour, myOpportunitiesTour, addOpportunitiesTour, shareCompaniesTour, notificationsTour
+} from '@domain/tours';
 import { NotificationSettingsComponent } from './notifications/notification-settings/notification-settings.component';
 import { ApplicationSavedMatchmakingComponent } from './applications/application-saved-matchmaking/application-saved-matchmaking.component';
 
 const routes: Routes = [
   {
     path: 'enterprises',
+    data: {
+      firstVisitTour: true
+    },
     children: [
       {
         path: '',
@@ -59,6 +64,9 @@ const routes: Routes = [
   },
   {
     path: 'applications',
+    data: {
+      firstVisitTour: true
+    },
     children: [
       {
         path: 'matchmaking',
@@ -89,11 +97,13 @@ const routes: Routes = [
       },
       {
         path: '',
-        component: NotificationListComponent
+        component: NotificationListComponent,
+        data: {
+          tour: notificationsTour
+        }
       },
     ]
   },
-
 ];
 
 @NgModule({

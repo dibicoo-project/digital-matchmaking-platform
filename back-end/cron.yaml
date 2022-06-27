@@ -8,3 +8,8 @@ cron:
   url: /api/cron/notifications/emails
   schedule: every 12 hours
   target: back-end
+
+- description: "Send notifications for outdated profiles"
+  url: /api/cron/companies/outdated/notify
+  schedule: every 24 hours
+  target: back-end
